@@ -1,0 +1,121 @@
+@import './variables.css';
+
+.experience {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  padding: var(--space-12) var(--space-8);
+}
+
+.experience h2 {
+  text-align: center;
+  font-family: var(--font-heading);
+  font-size: var(--text-5xl);
+  font-weight: var(--font-semibold);
+  margin-bottom: var(--space-8);
+  color: var(--text-primary);
+}
+
+.experience-item {
+  position: relative;
+  background-color: var(--bg-surface);
+  padding: var(--space-6);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  margin: 0 auto var(--space-12);
+  max-width: 600px;
+  transition: var(--transition-base);
+  opacity: 0;
+  animation: fadeIn var(--duration-500) var(--ease-out) forwards;
+}
+
+.experience-item::before {
+  content: '';
+  position: absolute;
+  top: var(--space-6);
+  left: var(--space-6);
+  width: var(--space-3);
+  height: var(--space-3);
+  background-color: var(--color-secondary-300);
+  border: 3px solid var(--bg-primary);
+  border-radius: 50%;
+}
+
+.experience-item:hover {
+  box-shadow: var(--shadow-xl);
+  transform: scale(1.02);
+}
+
+.experience-item h3 {
+  margin-left: var(--space-10);
+  font-family: var(--font-heading);
+  font-size: var(--text-2xl);
+  font-weight: var(--font-bold);
+  color: var(--text-accent);
+  margin-bottom: var(--space-2);
+}
+
+.location {
+  margin-left: var(--space-10);
+  font-style: italic;
+  font-size: var(--text-sm);
+  margin-bottom: var(--space-4);
+  color: var(--text-tertiary);
+}
+
+.experience-item ul {
+  list-style: none;
+  margin-top: var(--space-4);
+  padding-left: var(--space-10);
+}
+
+.experience-item li {
+  position: relative;
+  margin-bottom: var(--space-3);
+  color: var(--text-secondary);
+}
+
+.experience-item li::before {
+  content: '▹';
+  
+  left: 0;
+  color: var(--color-secondary-200);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .experience {
+    padding: var(--space-10) var(--space-6);
+  }
+
+  .experience-item {
+    padding: var(--space-6);
+    max-width: 100%;
+    margin: var(--space-6) var(--space-4);
+  }
+
+  .experience-item h3,
+  .location,
+  .experience-item ul {
+    margin-left: var(--space-8);
+    padding-left: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .experience {
+    padding: var(--space-8) var(--space-4);
+  }
+
+  .experience h2 {
+    font-size: var(--text-3xl);
+    margin-bottom: var(--space-6);
+  }
+}

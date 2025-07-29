@@ -1,0 +1,487 @@
+@import './variables.css';
+
+/* Breathing Glow Animation */
+@keyframes breathingGlow {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+    box-shadow: var(--shadow-glow-md);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05) rotate(1deg);
+    box-shadow: var(--shadow-glow-lg);
+    opacity: 0.9;
+  }
+}
+
+/* Bounce In Animation for Initial Load */
+@keyframes bounceIn {
+  0% {
+    transform: scale(0.5) rotate(0deg);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.2) rotate(-2deg);
+    opacity: 1;
+  }
+  80% {
+    transform: scale(0.9) rotate(2deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+/* Wiggle Attention Animation */
+@keyframes wiggleAttention {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  15% {
+    transform: rotate(5deg);
+  }
+  30% {
+    transform: rotate(-5deg);
+  }
+  45% {
+    transform: rotate(4deg);
+  }
+  60% {
+    transform: rotate(-4deg);
+  }
+  75% {
+    transform: rotate(2deg);
+  }
+}
+
+/* Hover Rotation Animation */
+@keyframes rotateHover {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  100% {
+    transform: rotate(360deg) scale(1.1);
+  }
+}
+
+/* Click Feedback Animation */
+@keyframes clickFeedback {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes floatHint {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes modalOpen {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes typingDots {
+  0%, 80%, 100% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+  40% {
+    transform: translateY(-4px);
+    opacity: 1;
+  }
+}
+
+.nyx-floating-button {
+  /* Positioning & Layout */
+  position: fixed;
+  bottom: var(--space-10);
+  right: var(--space-8);
+  width: var(--space-14);
+  height: var(--space-14);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  overflow: hidden;
+
+  /* Visual Styles */
+  color: var(--text-primary);
+  background: linear-gradient(135deg, var(--color-secondary-600) 0%, var(--color-secondary-500) 100%), var(--bg-glass);
+  background-blend-mode: overlay;
+  backdrop-filter: blur(var(--blur-base));
+  -webkit-backdrop-filter: blur(var(--blur-base));
+  border: 2px solid var(--color-secondary-400);
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-glow-md);
+  z-index: var(--z-modal);
+
+  /* Animation Performance */
+  transform-origin: center;
+  will-change: transform;
+
+  /* Custom Properties for Animation Timing */
+  --btn-breath-duration: var(--duration-1000);
+  --btn-breath-ease: var(--ease-in-out);
+  --btn-bounce-duration: var(--duration-500);
+  --btn-attention-duration: var(--duration-800);
+  --btn-hover-duration: var(--duration-300);
+  --btn-click-duration: var(--duration-150);
+
+  /* Base Breathing Glow Animation */
+  animation: breathingGlow var(--btn-breath-duration) var(--btn-breath-ease) infinite;
+  transition: transform var(--duration-150) var(--ease-out), box-shadow var(--duration-150) var(--ease-out);
+}
+
+/* ChatbotLogo integration */
+.chat-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.chat-logo .chatbot-logo-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  transform-origin: center;
+}
+
+/* Fallback emoji if ChatbotLogo fails */
+.chat-logo:empty::before {
+  content: "🤖";
+  font-size: var(--text-3xl);
+  pointer-events: none;
+}
+
+/* Active State: Bounce In on Chat Open */
+.nyx-floating-button--active {
+  animation: bounceIn var(--btn-bounce-duration) var(--ease-bounce) both;
+}
+
+/* Periodic Attention State */
+.nyx-floating-button--attention {
+  animation: wiggleAttention var(--btn-attention-duration) var(--ease-in-out) infinite;
+}
+
+/* Hover & Focus Interaction */
+.nyx-floating-button:hover,
+.nyx-floating-button:focus {
+  animation: rotateHover var(--btn-hover-duration) var(--ease-out) both;
+  outline: none;
+}
+
+/* Click / Tap Feedback */
+.nyx-floating-button:active {
+  animation: clickFeedback var(--btn-click-duration) var(--ease-out) both;
+}
+
+/* Accessibility: Reduced Motion Preference */
+@media (prefers-reduced-motion: reduce) {
+  .nyx-floating-button,
+  .nyx-floating-button--active,
+  .nyx-floating-button--attention,
+  .nyx-floating-button:hover,
+  .nyx-floating-button:focus,
+  .nyx-floating-button:active {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+.nyx-hint {
+  position: fixed;
+  bottom: calc(var(--space-10) + var(--space-6));
+  right: var(--space-8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--color-secondary-300);
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  animation: floatHint var(--duration-2000) var(--ease-in-out) infinite;
+  z-index: calc(var(--z-modal) - 1);
+}
+
+.nyx-hint .arrow {
+  width: 0;
+  height: 0;
+  margin-top: var(--space-1);
+  border-left: var(--space-1) solid transparent;
+  border-right: var(--space-1) solid transparent;
+  border-top: 8px solid var(--color-secondary-300);
+}
+
+.chat-modal {
+  position: fixed;
+  bottom: calc(var(--space-10) + var(--space-6));
+  right: var(--space-8);
+  width: 320px;
+  max-width: 90vw;
+  height: 400px;
+  max-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: var(--z-modal);
+  background: var(--bg-glass);
+  backdrop-filter: blur(var(--blur-lg));
+  -webkit-backdrop-filter: blur(var(--blur-lg));
+  border: 1px solid var(--color-secondary-500);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg), var(--shadow-glow-md);
+  color: var(--text-primary);
+  animation: modalOpen var(--duration-200) var(--ease-out) both;
+}
+
+.chat-header {
+  padding: var(--space-3) var(--space-4);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: var(--font-semibold);
+  font-size: var(--text-lg);
+  background: linear-gradient(135deg, var(--color-secondary-600), var(--color-secondary-700));
+  border-bottom: 2px solid var(--color-secondary-400);
+}
+
+.chat-header .close-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: var(--text-xl);
+  cursor: pointer;
+  transition: color var(--duration-150) var(--ease-out), box-shadow var(--duration-150) var(--ease-out);
+  border-radius: var(--radius-sm);
+}
+
+.chat-header .close-btn:hover,
+.chat-header .close-btn:focus {
+  color: var(--color-secondary-200);
+  box-shadow: var(--shadow-glow-sm);
+  outline: none;
+}
+
+.chat-body {
+  flex: 1;
+  padding: var(--space-3);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.chat-msg {
+  padding: var(--space-3);
+  max-width: 80%;
+  border-radius: var(--radius-md);
+  line-height: 1.4;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.chat-msg.user {
+  align-self: flex-end;
+  background-color: var(--color-secondary-600);
+  color: var(--text-primary);
+  border-bottom-right-radius: 0;
+  box-shadow: var(--shadow-glow-sm);
+}
+
+.chat-msg.nyx {
+  align-self: flex-start;
+  padding: var(--space-3);
+  background: linear-gradient(135deg, var(--color-secondary-300), var(--color-secondary-200));
+  color: var(--text-inverse);
+  border-bottom-left-radius: 0;
+  box-shadow: var(--shadow-glow-sm);
+}
+
+.chat-msg.loading {
+  align-self: center;
+  background: transparent;
+  padding: var(--space-2);
+}
+
+.chat-msg.loading::after {
+  content: '';
+  display: inline-block;
+  width: var(--space-4);
+  height: var(--space-4);
+  border: var(--input-border-width) solid var(--text-secondary);
+  border-top-color: var(--color-secondary-400);
+  border-radius: var(--radius-full);
+  animation: spinner var(--duration-500) var(--ease-in-out) infinite;
+}
+
+.chat-msg.nyx.typing {
+  background: transparent;
+  color: var(--text-secondary);
+}
+
+.typing-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.typing-indicator span {
+  display: block;
+  width: var(--space-2);
+  height: var(--space-2);
+  background: var(--color-secondary-400);
+  border-radius: var(--radius-full);
+  animation: typingDots var(--duration-1000) var(--ease-in-out) infinite;
+}
+
+.typing-indicator span:nth-child(2) {
+  animation-delay: 160ms;
+}
+
+.typing-indicator span:nth-child(3) {
+  animation-delay: 320ms;
+}
+
+.chat-input {
+  display: flex;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  background: var(--bg-glass);
+  backdrop-filter: blur(var(--blur-sm));
+  -webkit-backdrop-filter: blur(var(--blur-sm));
+  border-top: 1px solid var(--color-secondary-500);
+}
+
+.chat-input input {
+  flex: 1;
+  background: var(--color-secondary-800);
+  border: none;
+  padding: var(--space-2);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  outline: none;
+  transition: box-shadow var(--duration-150) var(--ease-out);
+}
+
+.chat-input input:focus {
+  box-shadow: 0 0 0 3px var(--color-secondary-400);
+}
+
+.chat-input input::placeholder {
+  color: var(--text-muted);
+}
+
+.chat-input button {
+  padding: var(--space-2) var(--space-4);
+  background: linear-gradient(135deg, var(--color-secondary-500), var(--color-secondary-400));
+  color: var(--text-inverse);
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background var(--duration-150) var(--ease-out), transform var(--duration-150) var(--ease-out), box-shadow var(--duration-150) var(--ease-out);
+  box-shadow: var(--shadow-sm);
+}
+
+.chat-input button:hover,
+.chat-input button:focus {
+  background: linear-gradient(135deg, var(--color-secondary-600), var(--color-secondary-500));
+  transform: scale(1.05);
+  box-shadow: var(--shadow-glow-sm);
+  outline: none;
+}
+
+@media (max-width: var(--breakpoint-sm)) {
+  .chat-modal {
+    bottom: var(--space-8);
+    right: var(--space-4);
+    width: 90vw;
+    height: 60vh;
+  }
+}
+
+/* Speech Bubble Fade In Animation */
+@keyframes speechBubbleFadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(10px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+/* Speech Bubble Styles */
+.nyx-speech-bubble {
+  position: fixed;
+  bottom: calc(var(--space-10) + var(--space-2));
+  right: calc(var(--space-8) + var(--space-14) + var(--space-3));
+  background: linear-gradient(135deg, var(--color-secondary-600), var(--color-secondary-500));
+  color: var(--text-primary);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  white-space: nowrap;
+  z-index: calc(var(--z-modal) - 1);
+  animation: speechBubbleFadeIn var(--duration-300) var(--ease-out) both;
+  box-shadow: var(--shadow-md), var(--shadow-glow-sm);
+  border: 1px solid var(--color-secondary-400);
+  backdrop-filter: blur(var(--blur-sm));
+  -webkit-backdrop-filter: blur(var(--blur-sm));
+}
+
+/* Speech Bubble Pointer */
+.speech-pointer {
+  position: absolute;
+  top: 50%;
+  right: -8px;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-left: 8px solid var(--color-secondary-600);
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+}
+
+/* Speech Bubble Responsive */
+@media (max-width: var(--breakpoint-sm)) {
+  .nyx-speech-bubble {
+    bottom: calc(var(--space-8) + var(--space-2));
+    right: calc(var(--space-4) + var(--space-14) + var(--space-2));
+    font-size: var(--text-xs);
+    padding: var(--space-1) var(--space-2);
+  }
+}
+
+/* Speech Bubble Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .nyx-speech-bubble {
+    animation: none !important;
+  }
+}
