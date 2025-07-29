@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/nyxfolio/static/css/main.35bcfc7b.css",
-    "main.js": "/nyxfolio/static/js/main.673207ad.js",
-    "index.html": "/nyxfolio/index.html",
-    "main.35bcfc7b.css.map": "/nyxfolio/static/css/main.35bcfc7b.css.map",
-    "main.673207ad.js.map": "/nyxfolio/static/js/main.673207ad.js.map"
+    "main.css": "/static/css/main.35bcfc7b.css",
+    "main.js": "/static/js/main.90150c17.js",
+    "index.html": "/index.html",
+    "main.35bcfc7b.css.map": "/static/css/main.35bcfc7b.css.map",
+    "main.90150c17.js.map": "/static/js/main.90150c17.js.map"
   },
   "entrypoints": [
     "static/css/main.35bcfc7b.css",
-    "static/js/main.673207ad.js"
+    "static/js/main.90150c17.js"
   ]
 }
