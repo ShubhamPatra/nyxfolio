@@ -12,7 +12,7 @@ router.post("/", async (req, res) => {
   if (!message) return res.status(400).json({ error: "Message is required" });
 
   try {
-    const memory = fs.readFileSync("data/memory.txt", "utf-8");
+    const memory = fs.readFileSync("/etc/secrets/memory.txt", "utf-8");
 
     // Construct messages for OpenRouter
     const messages = [
