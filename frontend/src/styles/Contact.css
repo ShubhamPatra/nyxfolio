@@ -139,5 +139,50 @@
   }
   .contact-buttons {
     gap: var(--space-4);
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .email-button,
+  .resume-button {
+    width: 100%;
+    max-width: 280px;
+    min-height: 48px; /* Better touch target */
+  }
+}
+
+@media (max-width: var(--breakpoint-sm)) {
+  .contact {
+    padding: var(--space-8) var(--space-3);
+  }
+  
+  .contact h2 {
+    font-size: var(--text-2xl);
+  }
+  
+  .contact p {
+    font-size: var(--text-sm);
+  }
+  
+  .contact-form {
+    gap: var(--space-3);
+  }
+  
+  .contact-form input,
+  .contact-form textarea {
+    padding: var(--space-2-5) var(--space-3);
+    font-size: var(--text-sm);
+  }
+}
+
+@media (max-width: var(--breakpoint-xs)) {
+  .contact {
+    padding: var(--space-6) var(--space-2);
+  }
+  
+  .email-button,
+  .resume-button {
+    max-width: 100%;
+    padding: var(--space-3) var(--space-4);
   }
 }

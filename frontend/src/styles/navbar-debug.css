@@ -1,0 +1,72 @@
+/* Temporary debug styles - remove after testing */
+
+/* Force all menu items to be visible for debugging */
+.navbar-links li {
+  background: rgba(255, 0, 0, 0.1) !important;
+  border: 1px solid red !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.navbar-links li a {
+  background: rgba(0, 255, 0, 0.1) !important;
+  border: 1px solid green !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  color: white !important;
+}
+
+/* Debug mobile menu */
+@media screen and (max-width: 768px) {
+  .navbar-links.active {
+    background: rgba(0, 0, 255, 0.3) !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    height: auto !important;
+    max-height: none !important;
+  }
+  
+  .navbar-links.active li {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  
+  .navbar-links.active li a {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+}
+
+/* Debug hamburger */
+.navbar-toggle {
+  background: rgba(255, 255, 0, 0.5) !important;
+  border: 2px solid yellow !important;
+}
+
+/* Show which class is active */
+.navbar.mobile::before {
+  content: "MOBILE MODE";
+  position: absolute;
+  top: -20px;
+  left: 0;
+  background: red;
+  color: white;
+  padding: 2px 5px;
+  font-size: 10px;
+}
+
+.navbar.desktop::before {
+  content: "DESKTOP MODE";
+  position: absolute;
+  top: -20px;
+  left: 0;
+  background: blue;
+  color: white;
+  padding: 2px 5px;
+  font-size: 10px;
+}

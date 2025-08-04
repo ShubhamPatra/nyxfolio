@@ -5,9 +5,35 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* Prevent horizontal scrolling on mobile */
+  overflow-x: hidden;
+  /* Improve touch scrolling on iOS */
+  -webkit-overflow-scrolling: touch;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+/* Improve focus visibility for better accessibility */
+*:focus {
+  outline: 2px solid var(--color-secondary-400);
+  outline-offset: 2px;
+}
+
+/* Ensure smooth scrolling works on all browsers */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Improve text selection */
+::selection {
+  background-color: var(--color-secondary-400);
+  color: var(--text-inverse);
+}
+
+::-moz-selection {
+  background-color: var(--color-secondary-400);
+  color: var(--text-inverse);
 }

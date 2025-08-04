@@ -1,12 +1,43 @@
 import React, { useState, useRef, useEffect } from "react";
-import "../styles/Navbar.css";
+import "../styles/navbar-final.css";
 import { FaGithub, FaLinkedin, FaEnvelope, FaBars, FaTimes } from "react-icons/fa";
 import Logo from "./Logo";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const navLinksRef = useRef(null);
   const toggleButtonRef = useRef(null);
+
+  // Check if screen is mobile size
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []);
+
+  // Close menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (isMenuOpen && 
+          navLinksRef.current && 
+          !navLinksRef.current.contains(event.target) &&
+          toggleButtonRef.current &&
+          !toggleButtonRef.current.contains(event.target)) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isMenuOpen]);
 
   // Close menu on Escape and return focus to toggle button
   useEffect(() => {
@@ -24,21 +55,51 @@ const Navbar = () => {
     };
   }, [isMenuOpen]);
 
-  // When menu opens, focus first link
+  // Debug effect to log state changes
   useEffect(() => {
-    if (isMenuOpen && navLinksRef.current) {
-      const firstLink = navLinksRef.current.querySelector("a");
-      firstLink && firstLink.focus();
+    console.log('=== NAVBAR DEBUG ===');
+    console.log('isMobile:', isMobile);
+    console.log('isMenuOpen:', isMenuOpen);
+    console.log('Window width:', window.innerWidth);
+    
+    const navLinksElement = document.querySelector('.navbar-links');
+    if (navLinksElement) {
+      console.log('Menu element classes:', navLinksElement.className);
+      console.log('Menu element display:', getComputedStyle(navLinksElement).display);
+      console.log('Number of menu items found:', navLinksElement.querySelectorAll('li').length);
     }
-  }, [isMenuOpen]);
+    console.log('====================');
+  }, [isMobile, isMenuOpen]);
 
   const handleToggleMenu = () => {
-    setIsMenuOpen((prev) => !prev);
+    console.log('=== MENU TOGGLE CLICKED ===');
+    console.log('Before toggle - isMenuOpen:', isMenuOpen);
+    console.log('Before toggle - navbar classes:', document.querySelector('.navbar')?.className);
+    console.log('Before toggle - menu classes:', document.querySelector('.navbar-links')?.className);
+    
+    setIsMenuOpen((prev) => {
+      const newState = !prev;
+      console.log('Menu state changing from', prev, 'to', newState);
+      
+      // Force update the DOM immediately for debugging
+      setTimeout(() => {
+        const menuElement = document.querySelector('.navbar-links');
+        if (menuElement) {
+          console.log('After state change - menu classes:', menuElement.className);
+          console.log('After state change - computed display:', getComputedStyle(menuElement).display);
+          console.log('After state change - has active class:', menuElement.classList.contains('active'));
+        }
+      }, 10);
+      
+      return newState;
+    });
+    console.log('==============================');
   };
 
   const handleLinkClick = (e) => {
     e.preventDefault();
     const href = e.currentTarget.getAttribute("href");
+    
     if (href && href.startsWith("#")) {
       const targetId = href.slice(1);
       const targetEl = document.getElementById(targetId);
@@ -46,6 +107,8 @@ const Navbar = () => {
         targetEl.scrollIntoView({ behavior: "smooth" });
       }
     }
+    
+    // Always close mobile menu when link is clicked
     if (isMenuOpen) {
       setIsMenuOpen(false);
       if (toggleButtonRef.current) {
@@ -55,9 +118,9 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="navbar">
+    <nav className={`navbar ${isMobile ? 'mobile' : 'desktop'}`}>
       <a href="/" className="navbar-logo">
-        <Logo size="md" type="full" className="navbar-logo-component" />
+        <Logo size="md" type={isMobile ? "icon" : "full"} className="navbar-logo-component" />
       </a>
 
       <button
@@ -74,9 +137,9 @@ const Navbar = () => {
       <ul
         id="navbar-links"
         ref={navLinksRef}
-        className={`navbar-links ${isMenuOpen ? "active" : ""}`}
-        role="menu"
-        aria-hidden={!isMenuOpen}
+        className={`navbar-links ${isMenuOpen ? "active" : ""} ${isMobile ? "mobile" : "desktop"}`}
+        role={isMobile ? "menu" : ""}
+        aria-hidden={isMobile ? !isMenuOpen : false}
       >
         <li role="none">
           <a role="menuitem" href="#hero" onClick={handleLinkClick}>

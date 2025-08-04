@@ -91,13 +91,53 @@
 .level-5 .skill-level-fill { width: 100%; }
 
 /* Responsive Adjustments */
-@media (max-width: var(--breakpoint-sm)) {
+@media (max-width: var(--breakpoint-md)) {
   .skills {
     padding: var(--space-12) var(--space-4);
     gap: var(--space-6);
   }
+  
+  .skills h2 {
+    font-size: var(--text-3xl);
+    margin-bottom: var(--space-6);
+  }
+  
   .skills-category {
     flex: 1 1 100%;
     max-width: 100%;
+  }
+}
+
+@media (max-width: var(--breakpoint-sm)) {
+  .skills {
+    padding: var(--space-8) var(--space-3);
+    gap: var(--space-4);
+  }
+  
+  .skills h2 {
+    font-size: var(--text-2xl);
+    margin-bottom: var(--space-4);
+  }
+  
+  .skills-category {
+    padding: var(--space-4);
+  }
+  
+  .skills-category h3 {
+    font-size: var(--text-lg);
+  }
+  
+  .skills-category p {
+    font-size: var(--text-sm);
+  }
+}
+
+@media (max-width: var(--breakpoint-xs)) {
+  .skills {
+    padding: var(--space-6) var(--space-2);
+  }
+  
+  .skills-category {
+    padding: var(--space-3);
   }
 }

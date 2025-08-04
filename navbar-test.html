@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navbar Test</title>
+    <style>
+        :root {
+            --bg-primary: #0a0e1a;
+            --bg-secondary: #1a1d29;
+            --bg-elevated: #2a2d3a;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b3c1;
+            --text-accent: #64ffda;
+            --border-primary: #2a2d3a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        /* Simple navbar styles */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-primary);
+            position: relative;
+        }
+
+        .navbar-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--text-accent);
+            text-decoration: none;
+        }
+
+        .navbar-toggle {
+            display: none;
+            background: none;
+            border: 1px solid var(--border-primary);
+            color: var(--text-primary);
+            padding: 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .navbar-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar-links li a {
+            color: var(--text-primary);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-links li a:hover {
+            color: var(--text-accent);
+        }
+
+        .navbar-icons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .navbar-icons a {
+            color: var(--text-primary);
+            font-size: 1.2rem;
+        }
+
+        /* Mobile styles */
+        @media (max-width: 768px) {
+            .navbar-toggle {
+                display: block;
+            }
+
+            .navbar-icons {
+                display: none;
+            }
+
+            .navbar-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                width: 100%;
+                background: var(--bg-secondary);
+                border: 1px solid var(--border-primary);
+                flex-direction: column;
+                gap: 0;
+                z-index: 1000;
+            }
+
+            .navbar-links.active {
+                display: flex;
+            }
+
+            .navbar-links li {
+                width: 100%;
+                border-bottom: 1px solid var(--border-primary);
+            }
+
+            .navbar-links li:last-child {
+                border-bottom: none;
+            }
+
+            .navbar-links li a {
+                display: block;
+                width: 100%;
+                padding: 1rem 1.5rem;
+                text-align: left;
+            }
+        }
+
+        /* Test section */
+        .test-section {
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .test-section h1 {
+            color: var(--text-accent);
+            margin-bottom: 1rem;
+        }
+
+        .test-section p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        /* Debug info */
+        .debug-info {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            background: var(--bg-elevated);
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            border: 1px solid var(--border-primary);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="/" class="navbar-logo">
+            Nyxfolio
+        </a>
+
+        <button class="navbar-toggle" id="navToggle">
+            ☰
+        </button>
+
+        <ul class="navbar-links" id="navLinks">
+            <li><a href="#hero">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+
+        <div class="navbar-icons">
+            <a href="#" aria-label="GitHub">📱</a>
+            <a href="#" aria-label="LinkedIn">💼</a>
+            <a href="#" aria-label="Email">✉️</a>
+        </div>
+    </nav>
+
+    <div class="test-section">
+        <h1>Navbar Test Page</h1>
+        <p>Resize your browser window to test mobile responsiveness.</p>
+        <p>Click the hamburger menu on mobile to see all navigation links.</p>
+        
+        <div style="margin-top: 2rem;">
+            <h2>Expected Navigation Links:</h2>
+            <ul style="list-style: none; margin-top: 1rem;">
+                <li>✅ Home</li>
+                <li>✅ About</li>
+                <li>✅ Experience</li>
+                <li>✅ Skills</li>
+                <li>✅ Projects</li>
+                <li>✅ Contact</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="debug-info" id="debugInfo">
+        Screen width: <span id="screenWidth"></span>px<br>
+        Menu state: <span id="menuState">closed</span><br>
+        Menu display: <span id="menuDisplay"></span>
+    </div>
+
+    <script>
+        const navToggle = document.getElementById('navToggle');
+        const navLinks = document.getElementById('navLinks');
+        const menuState = document.getElementById('menuState');
+        const menuDisplay = document.getElementById('menuDisplay');
+        const screenWidth = document.getElementById('screenWidth');
+
+        // Toggle menu
+        navToggle.addEventListener('click', function() {
+            navLinks.classList.toggle('active');
+            const isActive = navLinks.classList.contains('active');
+            menuState.textContent = isActive ? 'open' : 'closed';
+            navToggle.textContent = isActive ? '✕' : '☰';
+            console.log('Menu toggled:', isActive);
+        });
+
+        // Update debug info
+        function updateDebugInfo() {
+            screenWidth.textContent = window.innerWidth;
+            const computedStyle = getComputedStyle(navLinks);
+            menuDisplay.textContent = computedStyle.display;
+        }
+
+        window.addEventListener('resize', updateDebugInfo);
+        updateDebugInfo();
+
+        // Close menu when clicking links
+        navLinks.addEventListener('click', function(e) {
+            if (e.target.tagName === 'A') {
+                navLinks.classList.remove('active');
+                menuState.textContent = 'closed';
+                navToggle.textContent = '☰';
+            }
+        });
+    </script>
+</body>
+</html>
