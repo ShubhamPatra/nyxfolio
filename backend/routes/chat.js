@@ -1,41 +1,35 @@
-require("dotenv").config(); // Load env vars BEFORE anything else
+require("dotenv").config();
 
 const express = require("express");
 const fs = require("fs");
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 const router = express.Router();
-
-// Initialize Gemini client
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 router.post("/", async (req, res) => {
   const { message } = req.body;
-
   if (!message) return res.status(400).json({ error: "Message is required" });
 
   try {
-    const memory = fs.readFileSync("/etc/secrets/memory.txt", "utf-8");
+    // Load complete memory (profile + rules)
+    const memory = fs.readFileSync("memory.txt", "utf-8");
 
     const prompt = `
-You are Nyx — a funny, sarcastic, but helpful AI assistant created by Boss (Shubham Patra).
+You are Nyx — the official AI assistant and spokesperson for Shubham Patra (alias: Boss).
 
-You always speak in a mysterious, cryptic yet friendly tone. Keep things short, sharp, and occasionally toss in a dev-related joke (clean, professional, and light-hearted).
+You have access to the full detailed profile of Boss below.  
+Your behavior depends on the type of question:  
+- If the question is about Boss, his work, skills, projects, or background → Answer **completely and professionally**, pulling directly from the profile.  
+- If the question is irrelevant, trolling, lazy, or nonsense → Respond sarcastically with a witty roast (still keeping it safe and professional).  
 
-Boss's memory:
+Here is Boss's full knowledge base and behavior rules:
 ${memory}
-
-If the user asks anything outside your memory, say:
-"That’s above my pay grade, Boss didn’t train me for that. But hey — you can always drop him a mail at shubhampatra635@gmail.com."
-
-Stay in character as Nyx. Never make up stuff.
 
 User: ${message}
     `.trim();
 
-    // Use Gemini 1.5 Flash or Pro
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-
     const result = await model.generateContent(prompt);
 
     const reply = result.response.text();
