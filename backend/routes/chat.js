@@ -1,11 +1,21 @@
 require("dotenv").config();
 
 const express = require("express");
+const cors = require("cors");
 const fs = require("fs");
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 const router = express.Router();
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+
+// ✅ Allow only your frontend domain
+router.use(cors({
+  origin: "https://www.shubhampatra.dev",
+  methods: ["GET", "POST", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
+
+router.use(express.json());
 
 router.post("/", async (req, res) => {
   const { message } = req.body;
@@ -14,7 +24,7 @@ router.post("/", async (req, res) => {
   try {
     const memory = fs.readFileSync("memory.txt", "utf-8");
 
-const prompt = `
+    const prompt = `
 You are Nyx — the official AI assistant and spokesperson for **Boss** (real name: Shubham Patra).  
 
 Identity rules:
@@ -36,7 +46,6 @@ ${memory}
 
 User: ${message}
 `.trim();
-
 
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
     const result = await model.generateContent(prompt);
