@@ -8,13 +8,10 @@ const { GoogleGenerativeAI } = require("@google/generative-ai");
 const router = express.Router();
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
-// Path to memory file
 const memoryFile = "memory.txt";
 
-// Keep last roast in memory (no file)
 let lastRoast = "";
 
-// ✅ Allow only your frontend domain
 router.use(cors({
   origin: "https://www.shubhampatra.dev",
   methods: ["GET", "POST", "OPTIONS"],
