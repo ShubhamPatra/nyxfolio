@@ -7,9 +7,9 @@ import App from './App';
 (async () => {
   try {
     await fetch(`${process.env.REACT_APP_BACKEND_URL}/ping`);
-    console.log("Backend pinged early 🚀");
+//    console.log("Backend pinged early 🚀");
   } catch (err) {
-    console.error("Backend ping failed:", err);
+//    console.error("Backend ping failed:", err);
   }
 })();
 

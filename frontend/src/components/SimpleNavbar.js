@@ -5,7 +5,7 @@ const SimpleNavbar = () => {
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
-    console.log('Menu toggled:', !isMenuOpen);
+//    console.log('Menu toggled:', !isMenuOpen);
   };
 
   return (

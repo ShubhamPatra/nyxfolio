@@ -24,11 +24,13 @@ const Navbar = () => {
   // Close menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (isMenuOpen && 
-          navLinksRef.current && 
-          !navLinksRef.current.contains(event.target) &&
-          toggleButtonRef.current &&
-          !toggleButtonRef.current.contains(event.target)) {
+      if (
+        isMenuOpen && 
+        navLinksRef.current && 
+        !navLinksRef.current.contains(event.target) &&
+        toggleButtonRef.current &&
+        !toggleButtonRef.current.contains(event.target)
+      ) {
         setIsMenuOpen(false);
       }
     };
@@ -55,45 +57,8 @@ const Navbar = () => {
     };
   }, [isMenuOpen]);
 
-  // Debug effect to log state changes
-  useEffect(() => {
-    console.log('=== NAVBAR DEBUG ===');
-    console.log('isMobile:', isMobile);
-    console.log('isMenuOpen:', isMenuOpen);
-    console.log('Window width:', window.innerWidth);
-    
-    const navLinksElement = document.querySelector('.navbar-links');
-    if (navLinksElement) {
-      console.log('Menu element classes:', navLinksElement.className);
-      console.log('Menu element display:', getComputedStyle(navLinksElement).display);
-      console.log('Number of menu items found:', navLinksElement.querySelectorAll('li').length);
-    }
-    console.log('====================');
-  }, [isMobile, isMenuOpen]);
-
   const handleToggleMenu = () => {
-    console.log('=== MENU TOGGLE CLICKED ===');
-    console.log('Before toggle - isMenuOpen:', isMenuOpen);
-    console.log('Before toggle - navbar classes:', document.querySelector('.navbar')?.className);
-    console.log('Before toggle - menu classes:', document.querySelector('.navbar-links')?.className);
-    
-    setIsMenuOpen((prev) => {
-      const newState = !prev;
-      console.log('Menu state changing from', prev, 'to', newState);
-      
-      // Force update the DOM immediately for debugging
-      setTimeout(() => {
-        const menuElement = document.querySelector('.navbar-links');
-        if (menuElement) {
-          console.log('After state change - menu classes:', menuElement.className);
-          console.log('After state change - computed display:', getComputedStyle(menuElement).display);
-          console.log('After state change - has active class:', menuElement.classList.contains('active'));
-        }
-      }, 10);
-      
-      return newState;
-    });
-    console.log('==============================');
+    setIsMenuOpen((prev) => !prev);
   };
 
   const handleLinkClick = (e) => {
@@ -141,53 +106,19 @@ const Navbar = () => {
         role={isMobile ? "menu" : ""}
         aria-hidden={isMobile ? !isMenuOpen : false}
       >
-        <li role="none">
-          <a role="menuitem" href="#hero" onClick={handleLinkClick}>
-            Home
-          </a>
-        </li>
-        <li role="none">
-          <a role="menuitem" href="#about" onClick={handleLinkClick}>
-            About
-          </a>
-        </li>
-        <li role="none">
-          <a role="menuitem" href="#experience" onClick={handleLinkClick}>
-            Experience
-          </a>
-        </li>
-        <li role="none">
-          <a role="menuitem" href="#skills" onClick={handleLinkClick}>
-            Skills
-          </a>
-        </li>
-        <li role="none">
-          <a role="menuitem" href="#projects" onClick={handleLinkClick}>
-            Projects
-          </a>
-        </li>
-        <li role="none">
-          <a role="menuitem" href="#contact" onClick={handleLinkClick}>
-            Contact
-          </a>
-        </li>
+        <li role="none"><a role="menuitem" href="#hero" onClick={handleLinkClick}>Home</a></li>
+        <li role="none"><a role="menuitem" href="#about" onClick={handleLinkClick}>About</a></li>
+        <li role="none"><a role="menuitem" href="#experience" onClick={handleLinkClick}>Experience</a></li>
+        <li role="none"><a role="menuitem" href="#skills" onClick={handleLinkClick}>Skills</a></li>
+        <li role="none"><a role="menuitem" href="#projects" onClick={handleLinkClick}>Projects</a></li>
+        <li role="none"><a role="menuitem" href="#contact" onClick={handleLinkClick}>Contact</a></li>
       </ul>
 
       <div className="navbar-icons">
-        <a
-          href="https://github.com/ShubhamPatra"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="GitHub"
-        >
+        <a href="https://github.com/ShubhamPatra" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
           <FaGithub />
         </a>
-        <a
-          href="https://www.linkedin.com/in/patrashubham/"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="LinkedIn"
-        >
+        <a href="https://www.linkedin.com/in/patrashubham/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
           <FaLinkedin />
         </a>
         <a href="mailto:shubhampatra635@gmail.com" aria-label="Email">
