@@ -2,11 +2,70 @@ import React from "react";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 
 const SEO = () => {
+  const nameVariants = [
+    "Shubham Patra", "Shubham P", "S. Patra", "ShubhamPatra", "Shubham_Patra",
+    "patrashubham", "patraShubham", "PatraShubham", "patra_shubham", "Patra_Shsubham"
+  ];
+
+  const keywords = [
+    "Developer", "Full Stack Developer", "Web Developer", "Portfolio", "Dev Portfolio"
+  ];
+
+  const locations = ["Cuttack", "Bhubaneswar", "Odisha"];
+  const educations = ["SOA", "ITER"];
+
+  // Generate all meaningful combinations
+  const alternateNames = [];
+
+  nameVariants.forEach(name => {
+    // Name alone
+    alternateNames.push(name);
+
+    // Name + Keyword
+    keywords.forEach(keyword => {
+      alternateNames.push(`${name} ${keyword}`);
+
+      // Name + Keyword + Location
+      locations.forEach(location => {
+        alternateNames.push(`${name} ${keyword} ${location}`);
+
+        // Name + Keyword + Location + Education
+        educations.forEach(edu => {
+          alternateNames.push(`${name} ${keyword} ${location} ${edu}`);
+        });
+
+        // Name + Keyword + Education
+        educations.forEach(edu => {
+          alternateNames.push(`${name} ${keyword} ${edu}`);
+        });
+      });
+    });
+
+    // Name + Location
+    locations.forEach(location => {
+      alternateNames.push(`${name} ${location}`);
+
+      // Name + Location + Education
+      educations.forEach(edu => {
+        alternateNames.push(`${name} ${location} ${edu}`);
+      });
+    });
+
+    // Name + Education
+    educations.forEach(edu => {
+      alternateNames.push(`${name} ${edu}`);
+    });
+  });
+
+  // Remove duplicates
+  const uniqueAlternateNames = [...new Set(alternateNames)];
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Person",
     "name": "Shubham Patra",
-    "url": "https://shubhampatra.dev",
+    "alternateName": uniqueAlternateNames,
+    "url": "https://www.shubhampatra.dev",
     "sameAs": [
       "https://github.com/ShubhamPatra",
       "https://www.linkedin.com/in/patrashubham/"
@@ -54,27 +113,9 @@ const SEO = () => {
       }
     ],
     "knowsAbout": [
-      "Full Stack Developer",
-      "Web Developer",
-      "MERN Developer",
-      "Frontend Developer",
-      "Backend Developer",
-      "Software Developer",
-      "Java",
-      "C",
-      "C++",
-      "JavaScript",
-      "PHP",
-      "React.js",
-      "HTML5",
-      "CSS3",
-      "Node.js",
-      "Express.js",
-      "MongoDB",
-      "MySQL",
-      "Data Structures",
-      "Algorithms",
-      "Problem Solving"
+      "Full Stack Developer","Web Developer","MERN Developer","Frontend Developer","Backend Developer",
+      "Software Developer","Java","C","C++","JavaScript","PHP","React.js","HTML5","CSS3",
+      "Node.js","Express.js","MongoDB","MySQL","Data Structures","Algorithms","Problem Solving"
     ],
     "hasOccupation": [
       {
@@ -120,14 +161,14 @@ const SEO = () => {
         />
         <meta name="author" content="Shubham Patra" />
         <meta name="robots" content="index, follow" />
-        <link rel="canonical" href="https://shubhampatra.dev" />
+        <link rel="canonical" href="https://www.shubhampatra.dev" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="Shubham Patra | Full Stack Developer Portfolio" />
         <meta
           property="og:description"
           content="Shubham Patra – Final-year B.Tech student, Full Stack Developer, Web Developer, MERN Developer creating real-time web apps and AI assistants."
         />
-        <meta property="og:url" content="https://shubhampatra.dev" />
+        <meta property="og:url" content="https://www.shubhampatra.dev" />
         <meta property="og:site_name" content="ShubhamPatra.dev" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Shubham Patra | Full Stack Developer Portfolio" />
