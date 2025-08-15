@@ -55,19 +55,17 @@ function Skills() {
       <section className="skills" id="skills">
         <h2 id="skills-heading">🧠 Skills &amp; Tools</h2>
         {skillsData.map((category) => (
-          <div className="skills-category" key={category.category}>
-            <h3>{category.category}</h3>
-            <ul
-              className="skill-list"
-              aria-label={`${category.category} skills`}
-            >
+          <section
+            className="skills-category"
+            key={category.category}
+            aria-labelledby={`${category.category}-heading`}
+          >
+            <h3 id={`${category.category}-heading`}>{category.category}</h3>
+            <ul aria-label={`${category.category} skills`}>
               {category.skills.map((skill) => {
                 const IconComponent = skill.icon;
                 return (
-                  <li
-                    className={`skill-item level-${skill.level}`}
-                    key={skill.name}
-                  >
+                  <li className={`skill-item level-${skill.level}`} key={skill.name}>
                     <div className="skill-card">
                       <IconComponent
                         className="skill-icon"
@@ -78,6 +76,10 @@ function Skills() {
                     </div>
                     <div
                       className="skill-level"
+                      role="progressbar"
+                      aria-valuenow={skill.level}
+                      aria-valuemin={0}
+                      aria-valuemax={5}
                       aria-label={`${skill.name} proficiency level ${skill.level} out of 5`}
                     >
                       <div className="skill-level-fill"></div>
@@ -86,7 +88,7 @@ function Skills() {
                 );
               })}
             </ul>
-          </div>
+          </section>
         ))}
       </section>
     </section>

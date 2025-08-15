@@ -7,27 +7,30 @@ const experiences = [
     role: "Full Stack Developer Intern",
     company: "Kurators",
     location: "Remote",
-    startDate: "2025-07",
+    startDate: "July 2025",
     endDate: "Present",
     responsibilities: [
-      "Working on real-world web applications in a fast-paced startup environment.",
-      "Collaborating in Agile sprints, writing scalable code, and handling production features.",
-      "Gaining hands-on experience in React, Node.js, MongoDB, and modern dev workflows."
+      "Developing real-world web applications in a fast-paced startup environment.",
+      "Collaborating in Agile sprints, writing scalable code, and managing production-level features.",
+      "Gaining hands-on experience with React, Node.js, MongoDB, and modern web development workflows."
     ]
   }
 ];
 
 const Experience = () => {
   return (
-    <section className="section">
+    <section className="section" aria-labelledby="experience-heading">
       <section className="experience" id="experience">
-        <h2>Experience</h2>
+        <h2 id="experience-heading">💼 Professional Experience</h2>
         {experiences.map((exp) => (
           <article key={exp.id} className="experience-item">
-            <h3>{exp.role} – {exp.company}</h3>
-            <p className="location">{exp.location}</p>
-            <p className="location">{exp.startDate} – {exp.endDate}</p>
-            <ul>
+            <header>
+              <h3>{exp.role} – {exp.company}</h3>
+              <p className="location">
+                <time dateTime={exp.startDate}>{exp.startDate}</time> – <time dateTime={exp.endDate}>{exp.endDate}</time> | {exp.location}
+              </p>
+            </header>
+            <ul aria-label={`Responsibilities and achievements at ${exp.company}`}>
               {exp.responsibilities.map((item, idx) => (
                 <li key={idx}>{item}</li>
               ))}

@@ -1,5 +1,6 @@
 import React from "react";
 import "./styles/App.css";
+import SEO from "./components/SEO"; // import the SEO component
 import Hero from "./components/Hero";
 import ChatModal from "./components/ChatModal";
 import Projects from "./components/Projects";
@@ -13,6 +14,9 @@ import Experience from "./components/Experience";
 function App() {
   return (
     <div className="app">
+      <React.Fragment>
+        <SEO />
+      </React.Fragment>
       <Navbar />
       <Hero />
       <About />

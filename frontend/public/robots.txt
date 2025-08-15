@@ -1,3 +1,13 @@
-# https://www.robotstxt.org/robotstxt.html
+# Allow all web crawlers to access your site
 User-agent: *
-Disallow:
+Disallow: /node_modules/
+Disallow: /build/
+Disallow: /scripts/
+Disallow: /static/js/*.map
+Disallow: /static/css/*.map
+
+# Specify sitemap location
+Sitemap: https://www.shubhampatra.dev/sitemap.xml
+
+# Crawl-delay (optional, to reduce server load)
+Crawl-delay: 10
