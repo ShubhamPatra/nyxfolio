@@ -48,7 +48,7 @@ function About() {
             are core principles I follow.
           </p>
           <p>
-            I’m currently open to <strong>full-time software development opportunities</strong>
+            I’m currently open to <strong>full-time software development opportunities </strong>
             where I can contribute to impactful products, grow as a developer, and be
             part of a team that values both creativity and code quality.
           </p>
