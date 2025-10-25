@@ -286,29 +286,49 @@ Reply to this email to respond to ${name}
     let userMessage = "Failed to send message. Please try again later.";
     
     // Detailed error logging and user-friendly messages
-    if (error.code === "EAUTH" || error.responseCode === 535) {
-      console.error("\n❌ AUTHENTICATION ERROR ❌");
-      console.error("Gmail credentials are incorrect or not set up properly.");
-      console.error("\nPlease follow these steps:");
-      console.error("1. Check that EMAIL_USER and EMAIL_PASS are set in environment");
-      console.error("2. Make sure you're using a Gmail App Password (not your regular password)");
-      console.error("3. Enable 2FA on your Gmail account first");
-      console.error("\nCurrent EMAIL_USER:", process.env.EMAIL_USER || "NOT SET");
-      console.error("EMAIL_PASS is set:", !!process.env.EMAIL_PASS ? "Yes" : "No");
-      
-      userMessage = "Email service authentication failed. Please try emailing directly.";
-    } else if (error.code === "ESOCKET" || error.code === "ETIMEDOUT" || error.message.includes('timeout')) {
-      console.error("\n❌ CONNECTION TIMEOUT ❌");
-      console.error("Cannot connect to Gmail SMTP server.");
-      console.error("This might be due to:");
-      console.error("1. Firewall blocking SMTP ports (587/465)");
-      console.error("2. Network restrictions on hosting platform");
-      console.error("3. Gmail temporarily blocking the connection");
-      
-      userMessage = "Connection timeout. Please try emailing directly or try again later.";
-    } else if (error.code === "ECONNECTION") {
-      console.error("Connection error. SMTP server unreachable");
-      userMessage = "Cannot reach email server. Please try emailing directly.";
+    if (USE_RESEND) {
+      console.error("\n❌ RESEND ERROR ❌");
+      if (error.code === "EAUTH" || error.responseCode === 535) {
+        console.error("Resend API key is invalid or not set.");
+        console.error("Current RESEND_API_KEY:", process.env.RESEND_API_KEY ? "Set (starts with: " + process.env.RESEND_API_KEY.substring(0, 6) + "...)" : "NOT SET");
+        userMessage = "Email service authentication failed. Please contact the site administrator.";
+      } else {
+        console.error("Resend service error. Check API key and from email.");
+        console.error("From Email:", process.env.RESEND_FROM_EMAIL || "NOT SET");
+      }
+    } else if (USE_SENDGRID) {
+      console.error("\n❌ SENDGRID ERROR ❌");
+      if (error.code === "EAUTH" || error.responseCode === 535) {
+        console.error("SendGrid API key is invalid or not set.");
+        userMessage = "Email service authentication failed. Please contact the site administrator.";
+      }
+    } else {
+      // Gmail errors
+      if (error.code === "EAUTH" || error.responseCode === 535) {
+        console.error("\n❌ AUTHENTICATION ERROR ❌");
+        console.error("Gmail credentials are incorrect or not set up properly.");
+        console.error("\nPlease follow these steps:");
+        console.error("1. Check that EMAIL_USER and EMAIL_PASS are set in environment");
+        console.error("2. Make sure you're using a Gmail App Password (not your regular password)");
+        console.error("3. Enable 2FA on your Gmail account first");
+        console.error("\nCurrent EMAIL_USER:", process.env.EMAIL_USER || "NOT SET");
+        console.error("EMAIL_PASS is set:", !!process.env.EMAIL_PASS ? "Yes" : "No");
+        
+        userMessage = "Email service authentication failed. Please try emailing directly.";
+      } else if (error.code === "ESOCKET" || error.code === "ETIMEDOUT" || error.message.includes('timeout')) {
+        console.error("\n❌ CONNECTION TIMEOUT ❌");
+        console.error("Cannot connect to Gmail SMTP server.");
+        console.error("This might be due to:");
+        console.error("1. Firewall blocking SMTP ports (587/465)");
+        console.error("2. Network restrictions on hosting platform (Render blocks SMTP)");
+        console.error("3. Gmail temporarily blocking the connection");
+        console.error("\n💡 SOLUTION: Use Resend or SendGrid instead!");
+        
+        userMessage = "Connection timeout. Please try emailing directly or try again later.";
+      } else if (error.code === "ECONNECTION") {
+        console.error("Connection error. SMTP server unreachable");
+        userMessage = "Cannot reach email server. Please try emailing directly.";
+      }
     }
 
     res.status(500).json({
@@ -350,19 +370,33 @@ app.listen(PORT, () => {
   `);
   
   // Check environment variables
-  console.log("\n📧 Email Configuration:");
-  console.log("EMAIL_USER:", process.env.EMAIL_USER || "❌ NOT SET");
-  console.log("EMAIL_PASS:", process.env.EMAIL_PASS ? "✓ Set" : "❌ NOT SET");
+  console.log("\n📧 Email Service Configuration:");
   
-  if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
-    console.log("\n⚠️  WARNING: Email credentials not configured!");
-    console.log("The contact form will not work until you:");
-    console.log("1. Create a .env file in the contact-backend folder");
-    console.log("2. Add EMAIL_USER and EMAIL_PASS");
-    console.log("3. See GMAIL_SETUP.md for detailed instructions\n");
+  if (process.env.RESEND_API_KEY) {
+    console.log("✓ Resend API Key: Set");
+    console.log("✓ Service: Resend (recommended)");
+    console.log("  From Email:", process.env.RESEND_FROM_EMAIL || process.env.EMAIL_USER || "❌ NOT SET");
+    console.log("  To Email:", process.env.RECIPIENT_EMAIL || process.env.EMAIL_USER || "❌ NOT SET");
+  } else if (process.env.SENDGRID_API_KEY) {
+    console.log("✓ SendGrid API Key: Set");
+    console.log("✓ Service: SendGrid");
+    console.log("  From Email:", process.env.SENDGRID_FROM_EMAIL || process.env.EMAIL_USER || "❌ NOT SET");
+    console.log("  To Email:", process.env.RECIPIENT_EMAIL || process.env.EMAIL_USER || "❌ NOT SET");
+  } else if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
+    console.log("⚠️  Service: Gmail (may not work on Render)");
+    console.log("  EMAIL_USER:", process.env.EMAIL_USER);
+    console.log("  EMAIL_PASS: Set");
+    console.log("\n⚠️  WARNING: Gmail SMTP is blocked on most hosting platforms!");
+    console.log("  Consider using Resend or SendGrid instead.");
   } else {
-    console.log("✓ Email credentials configured\n");
+    console.log("❌ No email service configured!");
+    console.log("\nPlease set one of the following:");
+    console.log("1. RESEND_API_KEY + RESEND_FROM_EMAIL (recommended)");
+    console.log("2. SENDGRID_API_KEY + SENDGRID_FROM_EMAIL");
+    console.log("3. EMAIL_USER + EMAIL_PASS (Gmail - may not work)");
   }
+  
+  console.log("\n");
 });
 
 // Graceful shutdown
