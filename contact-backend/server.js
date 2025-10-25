@@ -3,6 +3,9 @@ const cors = require("cors");
 const nodemailer = require("nodemailer");
 const dotenv = require("dotenv");
 
+// Check if using SendGrid
+const USE_SENDGRID = process.env.SENDGRID_API_KEY ? true : false;
+
 // Load environment variables
 dotenv.config();
 
@@ -104,17 +107,49 @@ app.post("/api/contact", async (req, res) => {
   }
 
   try {
-    // Create transporter
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-      }
-    });
+    // Create transporter based on available service
+    let transporter;
+    
+    if (USE_SENDGRID) {
+      // SendGrid configuration (recommended for production)
+      transporter = nodemailer.createTransport({
+        host: "smtp.sendgrid.net",
+        port: 587,
+        secure: false,
+        auth: {
+          user: "apikey",
+          pass: process.env.SENDGRID_API_KEY
+        }
+      });
+      console.log("Using SendGrid for email delivery");
+    } else {
+      // Gmail configuration (for development/testing)
+      transporter = nodemailer.createTransport({
+        service: "gmail",
+        host: "smtp.gmail.com",
+        port: 587,
+        secure: false, // Use TLS
+        auth: {
+          user: process.env.EMAIL_USER,
+          pass: process.env.EMAIL_PASS
+        },
+        tls: {
+          rejectUnauthorized: false
+        },
+        connectionTimeout: 10000, // 10 seconds
+        greetingTimeout: 10000,
+        socketTimeout: 10000
+      });
+      console.log("Using Gmail for email delivery");
+    }
 
-    // Verify transporter configuration
-    await transporter.verify();
+    // Verify transporter configuration with timeout
+    await Promise.race([
+      transporter.verify(),
+      new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('SMTP verification timeout')), 10000)
+      )
+    ]);
 
     // Email HTML template
     const htmlTemplate = `
@@ -205,17 +240,28 @@ Reply to this email to respond to ${name}
     `;
 
     // Email options
+    const fromEmail = USE_SENDGRID 
+      ? process.env.SENDGRID_FROM_EMAIL || process.env.EMAIL_USER
+      : process.env.EMAIL_USER;
+    
+    const toEmail = process.env.RECIPIENT_EMAIL || process.env.EMAIL_USER;
+    
     const mailOptions = {
-      from: `"Portfolio Contact Form" <${process.env.EMAIL_USER}>`,
-      to: process.env.EMAIL_USER,
+      from: `"Portfolio Contact Form" <${fromEmail}>`,
+      to: toEmail,
       replyTo: email,
       subject: `Portfolio Contact from ${name}`,
       html: htmlTemplate,
       text: textTemplate
     };
 
-    // Send email
-    const info = await transporter.sendMail(mailOptions);
+    // Send email with timeout
+    const info = await Promise.race([
+      transporter.sendMail(mailOptions),
+      new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('Email send timeout')), 15000)
+      )
+    ]);
 
     console.log(`Email sent successfully: ${info.messageId}`);
 
@@ -227,6 +273,8 @@ Reply to this email to respond to ${name}
 
   } catch (error) {
     console.error("Error sending email:", error);
+    console.error("Error code:", error.code);
+    console.error("Error message:", error.message);
     
     let userMessage = "Failed to send message. Please try again later.";
     
@@ -235,16 +283,25 @@ Reply to this email to respond to ${name}
       console.error("\n❌ AUTHENTICATION ERROR ❌");
       console.error("Gmail credentials are incorrect or not set up properly.");
       console.error("\nPlease follow these steps:");
-      console.error("1. Check that EMAIL_USER and EMAIL_PASS are set in .env");
+      console.error("1. Check that EMAIL_USER and EMAIL_PASS are set in environment");
       console.error("2. Make sure you're using a Gmail App Password (not your regular password)");
-      console.error("3. See GMAIL_SETUP.md for detailed instructions");
+      console.error("3. Enable 2FA on your Gmail account first");
       console.error("\nCurrent EMAIL_USER:", process.env.EMAIL_USER || "NOT SET");
       console.error("EMAIL_PASS is set:", !!process.env.EMAIL_PASS ? "Yes" : "No");
       
-      userMessage = "Email service is not configured. Please contact the site administrator.";
-    } else if (error.code === "ESOCKET") {
-      console.error("Network error. Check internet connection");
-      userMessage = "Network error. Please check your connection and try again.";
+      userMessage = "Email service authentication failed. Please try emailing directly.";
+    } else if (error.code === "ESOCKET" || error.code === "ETIMEDOUT" || error.message.includes('timeout')) {
+      console.error("\n❌ CONNECTION TIMEOUT ❌");
+      console.error("Cannot connect to Gmail SMTP server.");
+      console.error("This might be due to:");
+      console.error("1. Firewall blocking SMTP ports (587/465)");
+      console.error("2. Network restrictions on hosting platform");
+      console.error("3. Gmail temporarily blocking the connection");
+      
+      userMessage = "Connection timeout. Please try emailing directly or try again later.";
+    } else if (error.code === "ECONNECTION") {
+      console.error("Connection error. SMTP server unreachable");
+      userMessage = "Cannot reach email server. Please try emailing directly.";
     }
 
     res.status(500).json({
