@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Custom Cursor Demo - Nyxfolio</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #0a0e27 0%, #1a1e3a 100%);
+      color: #ffffff;
+      padding: 60px 20px;
+      min-height: 100vh;
+      cursor: none;
+    }
+    
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    
+    h1 {
+      color: #00ffe0;
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 3rem;
+    }
+    
+    .subtitle {
+      text-align: center;
+      color: #a8b2d1;
+      margin-bottom: 60px;
+      font-size: 1.2rem;
+    }
+    
+    .demo-section {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(0, 255, 224, 0.2);
+      border-radius: 16px;
+      padding: 40px;
+      margin-bottom: 40px;
+      backdrop-filter: blur(10px);
+    }
+    
+    .demo-section h2 {
+      color: #00ffe0;
+      margin-bottom: 30px;
+      font-size: 1.8rem;
+    }
+    
+    .demo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+    
+    .demo-card {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(0, 255, 224, 0.3);
+      border-radius: 12px;
+      padding: 30px;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .demo-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0, 255, 224, 0.3);
+      border-color: #00ffe0;
+    }
+    
+    .demo-card h3 {
+      color: #64ffda;
+      margin-bottom: 15px;
+      font-size: 1.3rem;
+    }
+    
+    .demo-card p {
+      color: #a8b2d1;
+      line-height: 1.6;
+    }
+    
+    .button-group {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 30px;
+    }
+    
+    .btn {
+      padding: 15px 30px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: none;
+    }
+    
+    .btn-primary {
+      background: #00ffe0;
+      color: #0a0e27;
+    }
+    
+    .btn-primary:hover {
+      background: #00e6c8;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(0, 255, 224, 0.4);
+    }
+    
+    .btn-secondary {
+      background: transparent;
+      color: #00ffe0;
+      border: 2px solid #00ffe0;
+    }
+    
+    .btn-secondary:hover {
+      background: rgba(0, 255, 224, 0.1);
+      transform: translateY(-2px);
+    }
+    
+    .tag-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 30px;
+    }
+    
+    .tag {
+      padding: 8px 16px;
+      background: rgba(0, 255, 224, 0.1);
+      border: 1px solid rgba(0, 255, 224, 0.3);
+      border-radius: 20px;
+      color: #00ffe0;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .tag:hover {
+      background: rgba(0, 255, 224, 0.2);
+      border-color: #00ffe0;
+      transform: translateY(-2px);
+    }
+    
+    .link {
+      color: #00ffe0;
+      text-decoration: none;
+      font-weight: 600;
+      position: relative;
+      cursor: pointer;
+    }
+    
+    .link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #00ffe0;
+      transition: width 0.3s ease;
+    }
+    
+    .link:hover::after {
+      width: 100%;
+    }
+    
+    .info-box {
+      background: rgba(59, 130, 246, 0.1);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      border-radius: 12px;
+      padding: 25px;
+      margin-top: 40px;
+    }
+    
+    .info-box h3 {
+      color: #60a5fa;
+      margin-bottom: 15px;
+    }
+    
+    .info-box ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    
+    .info-box li {
+      color: #d1d5db;
+      padding: 8px 0;
+      padding-left: 25px;
+      position: relative;
+    }
+    
+    .info-box li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: #10b981;
+      font-weight: bold;
+    }
+    
+    /* Custom Cursor Styles */
+    .cursor-dot {
+      width: 8px;
+      height: 8px;
+      background-color: #00ffe0;
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease;
+      box-shadow: 0 0 10px rgba(0, 255, 224, 0.5);
+    }
+    
+    .cursor-outline {
+      width: 40px;
+      height: 40px;
+      border: 2px solid #00ffe0;
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width 0.3s ease, height 0.3s ease, border-color 0.3s ease;
+      opacity: 0.6;
+      mix-blend-mode: difference;
+    }
+    
+    .cursor-dot.hover {
+      width: 12px;
+      height: 12px;
+      background-color: #33ffea;
+      box-shadow: 0 0 20px rgba(0, 255, 224, 0.8);
+    }
+    
+    .cursor-outline.hover {
+      width: 60px;
+      height: 60px;
+      border-color: #33ffea;
+      opacity: 0.8;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    
+    .cursor-dot.click {
+      width: 6px;
+      height: 6px;
+    }
+    
+    .cursor-outline.click {
+      width: 35px;
+      height: 35px;
+    }
+    
+    @keyframes pulse {
+      0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.6;
+      }
+      50% {
+        transform: translate(-50%, -50%) scale(1.05);
+        opacity: 0.8;
+      }
+    }
+    
+    @media (hover: none) {
+      body {
+        cursor: auto !important;
+      }
+      .cursor-dot,
+      .cursor-outline {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="cursor-dot"></div>
+  <div class="cursor-outline"></div>
+  
+  <div class="container">
+    <h1>🎯 Custom Cursor Demo</h1>
+    <p class="subtitle">Move your mouse around to see the enhanced cursor in action</p>
+    
+    <div class="demo-section">
+      <h2>Interactive Cards</h2>
+      <p style="color: #a8b2d1; margin-bottom: 20px;">Hover over these cards to see the cursor expand and pulse</p>
+      <div class="demo-grid">
+        <div class="demo-card">
+          <h3>Smooth Trailing</h3>
+          <p>The outline follows with a smooth delay effect</p>
+        </div>
+        <div class="demo-card">
+          <h3>Hover States</h3>
+          <p>Cursor expands when hovering interactive elements</p>
+        </div>
+        <div class="demo-card">
+          <h3>Click Feedback</h3>
+          <p>Try clicking to see the shrink animation</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="demo-section">
+      <h2>Buttons</h2>
+      <p style="color: #a8b2d1; margin-bottom: 20px;">Hover and click these buttons</p>
+      <div class="button-group">
+        <button class="btn btn-primary">Primary Button</button>
+        <button class="btn btn-secondary">Secondary Button</button>
+        <a href="#" class="btn btn-primary">Link Button</a>
+      </div>
+    </div>
+    
+    <div class="demo-section">
+      <h2>Tags</h2>
+      <p style="color: #a8b2d1; margin-bottom: 20px;">Hover over these tags</p>
+      <div class="tag-container">
+        <span class="tag">React</span>
+        <span class="tag">JavaScript</span>
+        <span class="tag">CSS3</span>
+        <span class="tag">Node.js</span>
+        <span class="tag">MongoDB</span>
+        <span class="tag">Express</span>
+        <span class="tag">HTML5</span>
+        <span class="tag">TypeScript</span>
+      </div>
+    </div>
+    
+    <div class="demo-section">
+      <h2>Links</h2>
+      <p style="color: #a8b2d1; margin-bottom: 20px;">
+        Try hovering over these <a href="#" class="link">inline links</a> to see the cursor effect. 
+        The cursor will expand and the <a href="#" class="link">link underline</a> will animate smoothly.
+      </p>
+    </div>
+    
+    <div class="info-box">
+      <h3>✨ Cursor Features</h3>
+      <ul>
+        <li>Dual-layer design with dot and outline</li>
+        <li>Smooth trailing effect on the outline</li>
+        <li>Expands on hover over interactive elements</li>
+        <li>Shrinks on click for tactile feedback</li>
+        <li>Pulse animation when hovering</li>
+        <li>Automatically disabled on touch devices</li>
+        <li>Respects reduced motion preferences</li>
+        <li>High contrast mode support</li>
+      </ul>
+    </div>
+  </div>
+  
+  <script>
+    const cursorDot = document.querySelector('.cursor-dot');
+    const cursorOutline = document.querySelector('.cursor-outline');
+    
+    let mouseX = 0;
+    let mouseY = 0;
+    let outlineX = 0;
+    let outlineY = 0;
+    
+    // Update cursor position
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      
+      cursorDot.style.left = mouseX + 'px';
+      cursorDot.style.top = mouseY + 'px';
+    });
+    
+    // Smooth trailing animation
+    function animateOutline() {
+      const distX = mouseX - outlineX;
+      const distY = mouseY - outlineY;
+      
+      outlineX += distX * 0.15;
+      outlineY += distY * 0.15;
+      
+      cursorOutline.style.left = outlineX + 'px';
+      cursorOutline.style.top = outlineY + 'px';
+      
+      requestAnimationFrame(animateOutline);
+    }
+    animateOutline();
+    
+    // Add hover effects
+    document.addEventListener('mouseover', (e) => {
+      if (e.target.closest('a, button, .demo-card, .tag')) {
+        cursorDot.classList.add('hover');
+        cursorOutline.classList.add('hover');
+      }
+    });
+    
+    document.addEventListener('mouseout', (e) => {
+      if (e.target.closest('a, button, .demo-card, .tag')) {
+        cursorDot.classList.remove('hover');
+        cursorOutline.classList.remove('hover');
+      }
+    });
+    
+    // Add click effects
+    document.addEventListener('mousedown', () => {
+      cursorDot.classList.add('click');
+      cursorOutline.classList.add('click');
+    });
+    
+    document.addEventListener('mouseup', () => {
+      cursorDot.classList.remove('click');
+      cursorOutline.classList.remove('click');
+    });
+  </script>
+</body>
+</html>

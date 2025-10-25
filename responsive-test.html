@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsive Testing - Nyxfolio</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #0a0e27;
+      color: #ffffff;
+      padding: 20px;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    h1 {
+      color: #00ffe0;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+    
+    .test-section {
+      background: #1a1e3a;
+      border: 1px solid #2a2d3a;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    
+    .test-section h2 {
+      color: #00ffe0;
+      margin-bottom: 15px;
+      font-size: 1.5rem;
+    }
+    
+    .test-item {
+      background: #0f1229;
+      padding: 15px;
+      margin-bottom: 10px;
+      border-radius: 6px;
+      border-left: 3px solid #00ffe0;
+    }
+    
+    .test-item h3 {
+      color: #64ffda;
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+    }
+    
+    .test-item p {
+      color: #a8b2d1;
+      line-height: 1.6;
+      margin-bottom: 8px;
+    }
+    
+    .status {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-top: 8px;
+    }
+    
+    .status.pass {
+      background: #10b981;
+      color: white;
+    }
+    
+    .status.fail {
+      background: #ef4444;
+      color: white;
+    }
+    
+    .status.warning {
+      background: #f59e0b;
+      color: white;
+    }
+    
+    .breakpoint-info {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+    
+    .breakpoint-card {
+      background: #0f1229;
+      padding: 15px;
+      border-radius: 6px;
+      border: 1px solid #2a2d3a;
+    }
+    
+    .breakpoint-card h4 {
+      color: #00ffe0;
+      margin-bottom: 8px;
+    }
+    
+    .breakpoint-card p {
+      color: #a8b2d1;
+      font-size: 0.9rem;
+    }
+    
+    code {
+      background: #0a0e27;
+      padding: 2px 6px;
+      border-radius: 3px;
+      color: #00ffe0;
+      font-family: 'Courier New', monospace;
+    }
+    
+    .current-viewport {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #1a1e3a;
+      border: 2px solid #00ffe0;
+      padding: 15px 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(0, 255, 224, 0.2);
+      z-index: 1000;
+    }
+    
+    .current-viewport h3 {
+      color: #00ffe0;
+      font-size: 0.9rem;
+      margin-bottom: 5px;
+    }
+    
+    .current-viewport p {
+      color: #ffffff;
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+    
+    @media (max-width: 768px) {
+      .current-viewport {
+        bottom: 10px;
+        right: 10px;
+        padding: 10px 15px;
+      }
+      
+      .breakpoint-info {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🧪 Responsive Testing Report - Nyxfolio</h1>
+    
+    <div class="test-section">
+      <h2>📏 Breakpoint Definitions</h2>
+      <div class="breakpoint-info">
+        <div class="breakpoint-card">
+          <h4>Extra Small (XS)</h4>
+          <p><code>≤ 320px</code></p>
+          <p>Mobile devices (portrait)</p>
+        </div>
+        <div class="breakpoint-card">
+          <h4>Small (SM)</h4>
+          <p><code>321px - 768px</code></p>
+          <p>Mobile devices (landscape)</p>
+        </div>
+        <div class="breakpoint-card">
+          <h4>Medium (MD)</h4>
+          <p><code>769px - 1024px</code></p>
+          <p>Tablets</p>
+        </div>
+        <div class="breakpoint-card">
+          <h4>Large (LG)</h4>
+          <p><code>≥ 1025px</code></p>
+          <p>Desktops & Laptops</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="test-section">
+      <h2>✅ Test Results by Component</h2>
+      
+      <div class="test-item">
+        <h3>1. Tag Wrapping Behavior</h3>
+        <p><strong>Test:</strong> Verify tags wrap properly on small screens without overflow</p>
+        <p><strong>Components:</strong> Skills, About, Projects</p>
+        <p><strong>Expected:</strong> Tags should wrap to new lines with consistent spacing</p>
+        <span class="status pass">PASS</span>
+        <p style="margin-top: 10px; color: #64ffda;">✓ Tags use <code>flex-wrap: wrap</code> and responsive font sizes</p>
+      </div>
+      
+      <div class="test-item">
+        <h3>2. Contact Button Stacking</h3>
+        <p><strong>Test:</strong> Buttons stack vertically on mobile (< 768px)</p>
+        <p><strong>Expected:</strong> Full-width buttons with proper touch targets (min 48px)</p>
+        <span class="status pass">PASS</span>
+        <p style="margin-top: 10px; color: #64ffda;">✓ Buttons stack with <code>flex-direction: column</code> and min-height: 48px</p>
+      </div>
+      
+      <div class="test-item">
+        <h3>3. Hero Background Visibility</h3>
+        <p><strong>Test:</strong> Background graphics adjust opacity/visibility at different sizes</p>
+        <p><strong>Expected:</strong> Full opacity on desktop, reduced on tablet, hidden on mobile</p>
+        <span class="status pass">PASS</span>
+        <p style="margin-top: 10px; color: #64ffda;">✓ Opacity: 1.0 (desktop) → 0.5 (tablet) → 0.3 (mobile) → hidden (320px)</p>
+      </div>
+      
+      <div class="test-item">
+        <h3>4. Navigation Active State (Mobile)</h3>
+        <p><strong>Test:</strong> Active state visible in hamburger menu</p>
+        <p><strong>Expected:</strong> Active link highlighted with background color</p>
+        <span class="status warning">NEEDS IMPLEMENTATION</span>
+        <p style="margin-top: 10px; color: #f59e0b;">⚠ Active state styling exists but navigation active detection not implemented (Task 4)</p>
+      </div>
+      
+      <div class="test-item">
+        <h3>5. Hover Effects on Touch Devices</h3>
+        <p><strong>Test:</strong> Hover effects don't interfere with touch interactions</p>
+        <p><strong>Expected:</strong> Touch devices should use tap/active states instead</p>
+        <span class="status pass">PASS</span>
+        <p style="margin-top: 10px; color: #64ffda;">✓ CSS uses <code>@media (hover: hover)</code> where appropriate</p>
+      </div>
+      
+      <div class="test-item">
+        <h3>6. Custom Cursor on Mobile</h3>
+        <p><strong>Test:</strong> Custom cursor disabled on touch devices</p>
+        <p><strong>Expected:</strong> Default cursor on mobile, custom on desktop</p>
+        <span class="status pass">PASS</span>
+        <p style="margin-top: 10px; color: #64ffda;">✓ Uses <code>@media (hover: none)</code> to disable custom cursor</p>
+      </div>
+      
+      <div class="test-item">
+        <h3>7. Theme Toggle Positioning</h3>
+        <p><strong>Test:</strong> Theme toggle accessible and properly positioned on all devices</p>
+        <p><strong>Expected:</strong> Fixed position, doesn't overlap content, proper touch target</p>
+        <span class="status warning">NEEDS ADJUSTMENT</span>
+        <p style="margin-top: 10px; color: #f59e0b;">⚠ Theme toggle needs better mobile positioning and z-index management</p>
+      </div>
+    </div>
+    
+    <div class="test-section">
+      <h2>🔧 Recommended Fixes</h2>
+      
+      <div class="test-item">
+        <h3>Theme Toggle Mobile Positioning</h3>
+        <p>Add fixed positioning with proper spacing from edges and ensure it doesn't overlap with other fixed elements.</p>
+        <code>bottom: 20px; right: 20px; z-index: 999;</code>
+      </div>
+      
+      <div class="test-item">
+        <h3>Touch Target Sizes</h3>
+        <p>Ensure all interactive elements meet minimum 44x44px touch target size on mobile.</p>
+        <code>min-height: 44px; min-width: 44px;</code>
+      </div>
+      
+      <div class="test-item">
+        <h3>Navbar Mobile Menu</h3>
+        <p>Verify hamburger menu toggle has proper touch target and accessibility attributes.</p>
+        <code>aria-expanded, aria-label, min-height: 44px</code>
+      </div>
+    </div>
+  </div>
+  
+  <div class="current-viewport">
+    <h3>Current Viewport</h3>
+    <p id="viewport-size">Loading...</p>
+  </div>
+  
+  <script>
+    function updateViewportSize() {
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      const viewportElement = document.getElementById('viewport-size');
+      
+      let breakpoint = '';
+      if (width <= 320) breakpoint = 'XS';
+      else if (width <= 768) breakpoint = 'SM';
+      else if (width <= 1024) breakpoint = 'MD';
+      else breakpoint = 'LG';
+      
+      viewportElement.textContent = `${width} × ${height}px (${breakpoint})`;
+    }
+    
+    updateViewportSize();
+    window.addEventListener('resize', updateViewportSize);
+  </script>
+</body>
+</html>
