@@ -3,8 +3,9 @@ const cors = require("cors");
 const nodemailer = require("nodemailer");
 const dotenv = require("dotenv");
 
-// Check if using SendGrid
+// Check which email service to use
 const USE_SENDGRID = process.env.SENDGRID_API_KEY ? true : false;
+const USE_RESEND = process.env.RESEND_API_KEY ? true : false;
 
 // Load environment variables
 dotenv.config();
@@ -102,7 +103,19 @@ app.post("/api/contact", async (req, res) => {
     // Create transporter based on available service
     let transporter;
     
-    if (USE_SENDGRID) {
+    if (USE_RESEND) {
+      // Resend configuration (simplest option)
+      transporter = nodemailer.createTransport({
+        host: "smtp.resend.com",
+        port: 465,
+        secure: true,
+        auth: {
+          user: "resend",
+          pass: process.env.RESEND_API_KEY
+        }
+      });
+      console.log("Using Resend for email delivery");
+    } else if (USE_SENDGRID) {
       // SendGrid configuration (recommended for production)
       transporter = nodemailer.createTransport({
         host: "smtp.sendgrid.net",
@@ -232,9 +245,11 @@ Reply to this email to respond to ${name}
     `;
 
     // Email options
-    const fromEmail = USE_SENDGRID 
-      ? process.env.SENDGRID_FROM_EMAIL || process.env.EMAIL_USER
-      : process.env.EMAIL_USER;
+    const fromEmail = USE_RESEND
+      ? process.env.RESEND_FROM_EMAIL || process.env.EMAIL_USER
+      : USE_SENDGRID 
+        ? process.env.SENDGRID_FROM_EMAIL || process.env.EMAIL_USER
+        : process.env.EMAIL_USER;
     
     const toEmail = process.env.RECIPIENT_EMAIL || process.env.EMAIL_USER;
     
