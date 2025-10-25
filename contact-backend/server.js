@@ -12,29 +12,19 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// Middleware
-const allowedOrigins = [
-  "http://localhost:3000",
-  "https://www.shubhampatra.dev",
-  "https://shubhampatra.dev",
-  process.env.FRONTEND_URL
-].filter(Boolean);
-
+// Middleware - Simple CORS configuration
 app.use(cors({
-  origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps or curl requests)
-    if (!origin) return callback(null, true);
-    
-    if (allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      console.log("Blocked origin:", origin);
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  methods: ["POST", "GET"],
-  credentials: true
+  origin: [
+    "http://localhost:3000",
+    "https://www.shubhampatra.dev",
+    "https://shubhampatra.dev"
+  ],
+  methods: ["GET", "POST", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true,
+  optionsSuccessStatus: 200
 }));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -49,6 +39,7 @@ app.get("/", (req, res) => {
   res.json({
     status: "running",
     message: "Portfolio Contact Form Backend",
+    version: "2.0.0",
     timestamp: new Date().toISOString()
   });
 });
@@ -56,6 +47,7 @@ app.get("/", (req, res) => {
 app.get("/health", (req, res) => {
   res.json({
     status: "healthy",
+    version: "2.0.0",
     uptime: process.uptime(),
     timestamp: new Date().toISOString()
   });
