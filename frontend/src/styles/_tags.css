@@ -1,0 +1,164 @@
+/* Tag Component Styles */
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-3);
+  background-color: var(--bg-elevated);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-full);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--text-secondary);
+  transition: var(--transition-base), transform var(--haptic-duration) var(--ease-out);
+  cursor: default;
+  white-space: nowrap;
+  will-change: transform;
+}
+
+.tag:hover {
+  background-color: var(--color-secondary-500);
+  border-color: var(--color-secondary-200);
+  color: var(--text-primary);
+  transform: translateY(-2px) scale(var(--haptic-scale-up));
+  box-shadow: var(--shadow-sm);
+}
+
+.tag:active {
+  transform: translateY(0) scale(var(--haptic-scale-down));
+  transition: transform var(--haptic-duration) var(--ease-out);
+}
+
+/* Tag Icon */
+.tag-icon {
+  font-size: var(--text-base);
+  color: var(--text-accent);
+  transition: var(--transition-colors);
+}
+
+.tag:hover .tag-icon {
+  color: var(--color-secondary-100);
+}
+
+/* Tag Variants */
+
+/* Default Variant - Standard styling (uses base tag styles) */
+
+/* Tech Variant - For technology/programming language tags */
+.tag-tech {
+  background-color: var(--bg-surface);
+  border-color: var(--border-accent);
+  color: var(--text-accent);
+  font-weight: var(--font-semibold);
+}
+
+.tag-tech:hover {
+  background-color: var(--color-secondary-600);
+  border-color: var(--color-secondary-100);
+  color: var(--text-primary);
+  transform: translateY(-2px) scale(var(--haptic-scale-up));
+  box-shadow: var(--shadow-glow-sm);
+}
+
+.tag-tech:active {
+  transform: translateY(0) scale(var(--haptic-scale-down));
+}
+
+.tag-tech .tag-icon {
+  color: var(--color-secondary-200);
+}
+
+.tag-tech:hover .tag-icon {
+  color: var(--color-secondary-50);
+}
+
+/* Skill Variant - For skill proficiency tags */
+.tag-skill {
+  background-color: var(--bg-elevated);
+  border-color: var(--border-primary);
+  color: var(--text-secondary);
+  padding: var(--space-2) var(--space-4);
+}
+
+.tag-skill:hover {
+  background-color: var(--color-secondary-500);
+  border-color: var(--color-secondary-200);
+  color: var(--text-primary);
+  transform: translateY(-2px) scale(var(--haptic-scale-up));
+  box-shadow: var(--shadow-md);
+}
+
+.tag-skill:active {
+  transform: translateY(0) scale(var(--haptic-scale-down));
+}
+
+.tag-skill .tag-icon {
+  font-size: var(--text-xl);
+  color: var(--text-accent);
+}
+
+.tag-skill:hover .tag-icon {
+  color: var(--color-secondary-100);
+}
+
+/* Category Variant - For project category badges with glassmorphism */
+.tag-category {
+  background-color: rgba(139, 92, 246, 0.15);
+  border: 1px solid rgba(139, 92, 246, 0.5);
+  backdrop-filter: blur(var(--blur-sm));
+  -webkit-backdrop-filter: blur(var(--blur-sm));
+  color: var(--text-primary);
+  font-weight: var(--font-semibold);
+  padding: var(--space-1-5) var(--space-3);
+  box-shadow: var(--shadow-sm);
+}
+
+.tag-category:hover {
+  background-color: rgba(139, 92, 246, 0.25);
+  border-color: rgba(139, 92, 246, 0.8);
+  box-shadow: var(--shadow-glow-sm);
+  transform: translateY(-2px) scale(var(--haptic-scale-up));
+}
+
+.tag-category:active {
+  transform: translateY(0) scale(var(--haptic-scale-down));
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .tag {
+    font-size: var(--text-xs);
+    padding: var(--space-1) var(--space-2-5);
+    gap: var(--space-1-5);
+  }
+
+  .tag-icon {
+    font-size: var(--text-sm);
+  }
+
+  .tag-skill {
+    padding: var(--space-1-5) var(--space-3);
+  }
+
+  .tag-skill .tag-icon {
+    font-size: var(--text-lg);
+  }
+}
+
+/* Accessibility - Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .tag,
+  .tag-tech,
+  .tag-skill,
+  .tag-category {
+    transition: none;
+  }
+
+  .tag:hover,
+  .tag-tech:hover,
+  .tag-skill:hover,
+  .tag-category:hover {
+    transform: none;
+  }
+}

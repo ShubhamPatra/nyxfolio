@@ -1,0 +1,147 @@
+/* Custom Cursor Styles - DISABLED */
+@import './variables.css';
+
+/* Restore default cursor on body */
+body {
+  cursor: auto;
+}
+
+/* Cursor Dot - Small inner circle that follows mouse directly */
+.cursor-dot {
+  width: 8px;
+  height: 8px;
+  background-color: var(--color-secondary-200);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: var(--z-tooltip);
+  transform: translate(-50%, -50%);
+  transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease;
+  opacity: 0;
+  box-shadow: 0 0 10px rgba(0, 255, 224, 0.5);
+}
+
+.cursor-dot.visible {
+  opacity: 1;
+}
+
+/* Cursor Outline - Larger circle that trails behind */
+.cursor-outline {
+  width: 40px;
+  height: 40px;
+  border: 2px solid var(--color-secondary-200);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: var(--z-tooltip);
+  transform: translate(-50%, -50%);
+  transition: width 0.3s ease, height 0.3s ease, border-color 0.3s ease, opacity 0.3s ease;
+  opacity: 0;
+  mix-blend-mode: difference;
+}
+
+.cursor-outline.visible {
+  opacity: 0.6;
+}
+
+/* Hover state - expand when over interactive elements */
+.cursor-dot.hover {
+  width: 12px;
+  height: 12px;
+  background-color: var(--color-secondary-100);
+  box-shadow: 0 0 20px rgba(0, 255, 224, 0.8);
+}
+
+.cursor-outline.hover {
+  width: 60px;
+  height: 60px;
+  border-color: var(--color-secondary-100);
+  opacity: 0.8;
+  border-width: 2px;
+}
+
+/* Click state - shrink on click */
+.cursor-dot.click {
+  width: 6px;
+  height: 6px;
+  transition: width 0.1s ease, height 0.1s ease;
+}
+
+.cursor-outline.click {
+  width: 35px;
+  height: 35px;
+  transition: width 0.1s ease, height 0.1s ease;
+}
+
+/* Pulse animation for outline */
+@keyframes pulse {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.05);
+    opacity: 0.8;
+  }
+}
+
+.cursor-outline.hover {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* Disable custom cursor on touch devices */
+@media (hover: none) and (pointer: coarse) {
+  body {
+    cursor: auto !important;
+  }
+  
+  .cursor-dot,
+  .cursor-outline {
+    display: none !important;
+  }
+}
+
+/* Restore default cursor for input fields and textareas */
+input,
+textarea,
+select {
+  cursor: text !important;
+}
+
+/* Restore pointer cursor for interactive elements when cursor is hidden */
+a,
+button {
+  cursor: pointer !important;
+}
+
+/* Special cursor states for specific elements */
+
+/* Text selection cursor */
+input:focus ~ .cursor-dot,
+textarea:focus ~ .cursor-dot {
+  width: 2px;
+  height: 16px;
+  border-radius: 2px;
+}
+
+/* Disable cursor animations for reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .cursor-dot,
+  .cursor-outline {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* High contrast mode adjustments */
+@media (prefers-contrast: high) {
+  .cursor-dot {
+    background-color: var(--color-white);
+    box-shadow: 0 0 0 2px var(--color-black);
+  }
+  
+  .cursor-outline {
+    border-width: 3px;
+    border-color: var(--color-white);
+  }
+}

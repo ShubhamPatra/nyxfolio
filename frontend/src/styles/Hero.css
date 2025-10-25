@@ -5,7 +5,7 @@
   position: relative;
   overflow: hidden;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   padding: var(--space-16) var(--space-6);
   background: var(--bg-primary);
@@ -19,37 +19,92 @@
 .hero::before {
   content: '';
   position: absolute;
-  top: -20%;
-  left: -20%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle at top right, var(--color-secondary-500), transparent 60%);
-  opacity: 0.2;
-  animation: bg-pan 20s var(--ease-in-out) infinite alternate;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 50%;
+  height: 80%;
+  background: radial-gradient(
+    circle at center,
+    rgba(0, 255, 224, 0.08) 0%,
+    rgba(0, 255, 224, 0.04) 40%,
+    transparent 70%
+  );
   pointer-events: none;
+  z-index: 0;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  right: 10%;
+  top: 30%;
+  width: 300px;
+  height: 300px;
+  border: 1px solid rgba(0, 255, 224, 0.15);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  animation: float-circle 8s var(--ease-in-out) infinite;
 }
 
 /* Text Container */
 .hero-text {
-  max-width: 600px;
+  max-width: 700px;
   z-index: var(--z-10);
+  text-align: left;
+  width: 100%;
 }
 
 .hero-text h1 {
   font-family: var(--font-heading);
-  font-size: var(--text-6xl);
-  line-height: var(--leading-tight);
-  margin-bottom: var(--space-4);
+  font-size: clamp(2.75rem, 5.5vw, 4rem);
+  line-height: 1.15;
+  margin-bottom: var(--space-8);
   color: var(--text-primary);
-  letter-spacing: var(--tracking-tight);
+  letter-spacing: -0.025em;
+  font-weight: 800;
+  /* Prevent awkward line breaks */
+  text-wrap: balance;
+  -webkit-text-wrap: balance;
+  word-spacing: 0.1em;
+  /* Prevent breaking after "I'm" */
+  white-space: normal;
+  overflow-wrap: break-word;
+  hyphens: none;
+}
+
+/* Keep "I'm Shubham Patra" together */
+.hero-text h1::after {
+  content: '';
+  display: inline-block;
+  width: 0;
 }
 
 .hero-text p {
   font-family: var(--font-primary);
-  font-size: var(--text-xl);
-  line-height: var(--leading-relaxed);
-  margin-bottom: var(--space-8);
+  font-size: clamp(1.125rem, 2.2vw, 1.5rem);
+  line-height: 1.65;
+  margin-bottom: var(--space-10);
   color: var(--text-secondary);
+  max-width: 650px;
+  /* Prevent orphaned words and awkward breaks */
+  text-wrap: pretty;
+  -webkit-text-wrap: pretty;
+  font-weight: 400;
+  /* Better text rendering */
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Prevent breaking mid-sentence */
+  orphans: 3;
+  widows: 3;
+  /* Prevent hyphenation */
+  hyphens: none;
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  word-break: keep-all;
+  overflow-wrap: normal;
 }
 
 /* Call-to-Action Button */
@@ -63,15 +118,42 @@
   font-size: var(--text-lg);
   font-weight: var(--font-medium);
   box-shadow: var(--shadow-sm);
-  transition: var(--transition-base), transform var(--duration-200) var(--ease-out);
+  transition: transform var(--magnetic-duration) var(--magnetic-ease), box-shadow var(--duration-200) var(--ease-out), background var(--duration-200) var(--ease-out);
   z-index: var(--z-10);
+  position: relative;
+  overflow: hidden;
+  will-change: transform;
+}
+
+.hero-button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: var(--ripple-color);
+  transform: translate(-50%, -50%);
+  transition: width var(--ripple-duration) ease-out, height var(--ripple-duration) ease-out;
+  pointer-events: none;
 }
 
 .hero-button:hover,
 .hero-button:focus {
   background-color: var(--color-secondary-600);
-  transform: scale(1.05);
-  box-shadow: var(--shadow-glow-md);
+  transform: scale(var(--haptic-scale-up));
+  box-shadow: var(--haptic-shadow-hover);
+}
+
+.hero-button:active {
+  transform: scale(var(--haptic-scale-down));
+}
+
+.hero-button:active::before {
+  width: var(--ripple-size);
+  height: var(--ripple-size);
+  transition: width 0s, height 0s;
 }
 
 .hero-button:focus {
@@ -149,10 +231,16 @@
   border-left: var(--space-2) solid var(--color-secondary-600);
 }
 
-/* Background Pan Animation */
-@keyframes bg-pan {
-  0% { transform: translate(0, 0) scale(1); }
-  100% { transform: translate(-10%, -10%) scale(1.1); }
+/* Float Circle Animation */
+@keyframes float-circle {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.15;
+  }
+  50% {
+    transform: translateY(-20px) scale(1.05);
+    opacity: 0.25;
+  }
 }
 
 /* Float and Rotate Animation */
@@ -178,9 +266,24 @@
 @media (max-width: var(--breakpoint-md)) {
   .hero {
     flex-direction: column;
-    text-align: center;
+    justify-content: center;
     padding: var(--space-16) var(--space-4);
     min-height: calc(100vh - var(--nav-height));
+  }
+
+  .hero-text {
+    text-align: center;
+  }
+
+  .hero::before {
+    opacity: 0.5;
+    width: 70%;
+  }
+
+  .hero::after {
+    opacity: 0.5;
+    width: 200px;
+    height: 200px;
   }
 
   .hero-text {
@@ -189,14 +292,19 @@
   }
 
   .hero-text h1 {
-    font-size: var(--text-4xl);
-    line-height: var(--leading-tight);
-    margin-bottom: var(--space-3);
+    font-size: clamp(2.25rem, 5vw, 2.75rem);
+    line-height: 1.2;
+    margin-bottom: var(--space-6);
+    letter-spacing: -0.02em;
   }
 
   .hero-text p {
-    font-size: var(--text-lg);
-    margin-bottom: var(--space-6);
+    font-size: clamp(1.0625rem, 2.5vw, 1.25rem);
+    line-height: 1.6;
+    margin-bottom: var(--space-8);
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .hero-button {
@@ -245,12 +353,23 @@
     padding: var(--space-12) var(--space-3);
   }
 
+  .hero::before,
+  .hero::after {
+    opacity: 0.3;
+  }
+
   .hero-text h1 {
-    font-size: var(--text-3xl);
+    font-size: clamp(1.875rem, 4.5vw, 2.25rem);
+    line-height: 1.25;
+    margin-bottom: var(--space-5);
+    letter-spacing: -0.015em;
   }
 
   .hero-text p {
-    font-size: var(--text-base);
+    font-size: clamp(1rem, 2.2vw, 1.125rem);
+    line-height: 1.55;
+    margin-bottom: var(--space-6);
+    max-width: 95%;
   }
 
   .hero-button {
@@ -267,19 +386,47 @@
 
 @media (max-width: var(--breakpoint-xs)) {
   .hero {
-    padding: var(--space-8) var(--space-2);
+    padding: var(--space-10) var(--space-2);
   }
 
   .hero-text h1 {
-    font-size: var(--text-2xl);
+    font-size: clamp(1.625rem, 4vw, 1.875rem);
+    line-height: 1.3;
+    margin-bottom: var(--space-4);
+    /* Ensure name stays together on very small screens */
+    word-spacing: 0.05em;
   }
 
   .hero-text p {
+    font-size: clamp(0.9375rem, 2vw, 1rem);
+    line-height: 1.5;
+    margin-bottom: var(--space-5);
+    max-width: 100%;
+  }
+
+  .hero-button {
+    padding: var(--space-2-5) var(--space-5);
     font-size: var(--text-sm);
   }
 
   .nyx-bot-text {
     font-size: var(--text-xs);
     padding: var(--space-1-5) var(--space-2);
+  }
+
+  .hero::before,
+  .hero::after {
+    display: none;
+  }
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .hero::after {
+    animation: none;
+  }
+  
+  .hero-button {
+    transition: none;
   }
 }

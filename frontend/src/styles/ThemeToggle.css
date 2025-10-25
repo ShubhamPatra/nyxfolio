@@ -1,0 +1,98 @@
+.theme-toggle {
+  background: var(--bg-elevated, rgba(42, 45, 58, 0.8));
+  border: 1px solid var(--border-primary, #2a2d3a);
+  color: var(--text-primary, #ffffff);
+  padding: 0.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--duration-300, 300ms) var(--ease-out, ease-out), transform var(--haptic-duration, 150ms) var(--ease-out, ease-out);
+  width: 48px;
+  height: 48px;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  overflow: hidden;
+  z-index: 999;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  will-change: transform;
+}
+
+.theme-toggle::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: var(--radius-full, 9999px);
+  background: var(--ripple-color, rgba(255, 255, 255, 0.3));
+  transform: translate(-50%, -50%);
+  transition: width var(--ripple-duration, 600ms) ease-out, height var(--ripple-duration, 600ms) ease-out;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.theme-toggle svg {
+  position: relative;
+  z-index: 1;
+}
+
+.theme-toggle:hover {
+  background: var(--bg-glass, rgba(42, 45, 58, 0.95));
+  border-color: var(--text-accent, #64ffda);
+  color: var(--text-accent, #64ffda);
+  transform: scale(var(--haptic-scale-up, 1.02));
+  box-shadow: var(--shadow-md, 0 4px 6px -1px rgba(0, 0, 0, 0.1)), var(--shadow-glow-sm, 0 0 5px rgba(0, 255, 224, 0.3));
+}
+
+.theme-toggle:focus {
+  outline: 2px solid var(--text-accent, #64ffda);
+  outline-offset: 2px;
+}
+
+.theme-toggle:active {
+  transform: scale(var(--haptic-scale-down, 0.95));
+  box-shadow: var(--haptic-shadow-press, 0 1px 2px 0 rgba(0, 0, 0, 0.05));
+}
+
+.theme-toggle:active::before {
+  width: var(--ripple-size, 300px);
+  height: var(--ripple-size, 300px);
+  transition: width 0s, height 0s;
+}
+
+/* Icon animation */
+.theme-toggle svg {
+  transition: transform var(--duration-300, 300ms) ease;
+  position: relative;
+  z-index: 1;
+}
+
+.theme-toggle:hover svg {
+  transform: rotate(20deg);
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+  .theme-toggle {
+    width: 44px;
+    height: 44px;
+    font-size: 1.1rem;
+    bottom: 16px;
+    right: 16px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .theme-toggle {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+    bottom: 12px;
+    right: 12px;
+  }
+}

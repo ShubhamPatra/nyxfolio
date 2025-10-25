@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Page Not Found</title>
+  <script>
+    // GitHub Pages 404 redirect script
+    // This script redirects to the main page with a 404 parameter
+    // so the React app can show the custom 404 page
+    sessionStorage.setItem('redirect', location.href);
+    location.replace(location.origin + '/?404=true');
+  </script>
+</head>
+<body>
+  <!-- This content will only be shown if JavaScript is disabled -->
+  <noscript>
+    <h1>404 - Page Not Found</h1>
+    <p>The page you're looking for doesn't exist.</p>
+    <a href="/">Go to Homepage</a>
+  </noscript>
+</body>
+</html>

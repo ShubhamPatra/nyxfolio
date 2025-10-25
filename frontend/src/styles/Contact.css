@@ -1,10 +1,14 @@
-@import './variables.css';
+@import "./variables.css";
 
 .contact {
-  padding: var(--space-16) var(--space-8);
+  padding: var(--space-16) var(--space-6);
   background-color: var(--bg-primary);
   color: var(--text-primary);
   text-align: center;
+  width: 100%;
+  box-sizing: border-box;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .contact h2 {
@@ -33,97 +37,659 @@
   margin-bottom: var(--space-12);
 }
 
-.email-button,
-.resume-button {
+/* Primary Button - Send Email */
+.email-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: var(--space-2);
   height: var(--btn-height-md);
   padding: 0 var(--btn-padding-x-md);
   background: var(--color-secondary-500);
   color: var(--text-inverse);
   font-size: var(--text-base);
   font-weight: var(--font-medium);
-  border: none;
+  border: 2px solid var(--color-secondary-500);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
   text-decoration: none;
   cursor: pointer;
-  transition: var(--transition-base);
+  transition: transform var(--magnetic-duration) var(--magnetic-ease), background var(--duration-200) var(--ease-out), box-shadow var(--duration-200) var(--ease-out);
+  position: relative;
+  overflow: hidden;
+  will-change: transform;
 }
 
-.email-button:hover,
-.resume-button:hover {
+.email-button::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: var(--ripple-color);
+  transform: translate(-50%, -50%);
+  transition: width var(--ripple-duration) ease-out, height var(--ripple-duration) ease-out;
+  pointer-events: none;
+}
+
+.email-button:hover {
   background: var(--color-secondary-600);
-  box-shadow: var(--shadow-md);
+  border-color: var(--color-secondary-600);
+  transform: translateY(-2px) scale(var(--haptic-scale-up));
+  box-shadow: var(--haptic-shadow-hover);
 }
 
-.email-button:focus,
-.resume-button:focus {
+.email-button:active {
+  transform: translateY(0) scale(var(--haptic-scale-down));
+  box-shadow: var(--haptic-shadow-press);
+}
+
+.email-button:active::before {
+  width: var(--ripple-size);
+  height: var(--ripple-size);
+  transition: width 0s, height 0s;
+}
+
+.email-button:focus {
   outline: none;
   box-shadow: 0 0 0 3px var(--border-focus);
 }
 
-/* Form container for future contact form */
-.contact-form {
-  max-width: var(--container-md);
-  margin: 0 auto var(--space-12);
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--space-4);
+/* Secondary Button - Download Resume */
+.resume-button.secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  height: var(--btn-height-md);
+  padding: 0 var(--btn-padding-x-md);
+  background: transparent;
+  color: var(--color-secondary-200);
+  font-size: var(--text-base);
+  font-weight: var(--font-medium);
+  border: 2px solid var(--color-secondary-200);
+  border-radius: var(--radius-lg);
+  box-shadow: none;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform var(--magnetic-duration) var(--magnetic-ease), background var(--duration-200) var(--ease-out), box-shadow var(--duration-200) var(--ease-out);
+  position: relative;
+  overflow: hidden;
+  will-change: transform;
 }
 
-.contact-form label {
-  font-size: var(--text-sm);
+.resume-button.secondary::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: var(--ripple-color);
+  transform: translate(-50%, -50%);
+  transition: width var(--ripple-duration) ease-out, height var(--ripple-duration) ease-out;
+  pointer-events: none;
+}
+
+.resume-button.secondary:hover {
+  background: var(--color-secondary-500);
+  color: var(--text-inverse);
+  border-color: var(--color-secondary-500);
+  transform: translateY(-2px) scale(var(--haptic-scale-up));
+  box-shadow: var(--haptic-shadow-hover);
+}
+
+.resume-button.secondary:active {
+  transform: translateY(0) scale(var(--haptic-scale-down));
+  box-shadow: var(--haptic-shadow-press);
+}
+
+.resume-button.secondary:active::before {
+  width: var(--ripple-size);
+  height: var(--ripple-size);
+  transition: width 0s, height 0s;
+}
+
+.resume-button.secondary:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--border-focus);
+}
+
+.button-icon {
+  font-size: var(--text-base);
+}
+
+/* Tertiary Button - Chat */
+.chat-button.tertiary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  height: var(--btn-height-md);
+  padding: 0 var(--btn-padding-x-md);
+  background: transparent;
   color: var(--text-secondary);
-  text-align: left;
+  font-size: var(--text-base);
+  font-weight: var(--font-medium);
+  border: 1px solid var(--border-secondary);
+  border-radius: var(--radius-lg);
+  box-shadow: none;
+  cursor: pointer;
+  transition: var(--transition-base), transform var(--haptic-duration) var(--ease-out);
+  position: relative;
+  overflow: hidden;
+  will-change: transform;
 }
 
+.chat-button.tertiary::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: var(--ripple-color);
+  transform: translate(-50%, -50%);
+  transition: width var(--ripple-duration) ease-out, height var(--ripple-duration) ease-out;
+  pointer-events: none;
+}
+
+.chat-button.tertiary:hover {
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  border-color: var(--border-primary);
+  transform: translateY(-2px) scale(var(--haptic-scale-up));
+  box-shadow: var(--haptic-shadow-hover);
+}
+
+.chat-button.tertiary:active {
+  transform: translateY(0) scale(var(--haptic-scale-down));
+  box-shadow: var(--haptic-shadow-press);
+}
+
+.chat-button.tertiary:active::before {
+  width: var(--ripple-size);
+  height: var(--ripple-size);
+  transition: width 0s, height 0s;
+}
+
+.chat-button.tertiary:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--border-focus);
+}
+
+/* Glassmorphism Form Container */
+.form-container-glass {
+  position: relative;
+  background: rgba(20, 25, 35, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  padding: var(--space-8);
+  max-width: 650px;
+  margin: 0 auto var(--space-8);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+  overflow: visible;
+}
+
+/* Contact Form */
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+/* Floating Label Container */
+.floating-field {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+/* Input and Textarea Base Styles */
 .contact-form input,
 .contact-form textarea {
   width: 100%;
-  padding: var(--space-3) var(--space-4);
-  background: var(--bg-surface);
+  padding: 18px 16px 8px 16px;
+  background: rgba(30, 35, 45, 0.5);
   color: var(--text-primary);
-  border: var(--input-border-width) solid var(--border-primary);
-  border-radius: var(--radius-base);
-  font-size: var(--text-base);
-  transition: var(--transition-base);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  font-size: 16px;
+  font-family: var(--font-primary);
+  transition: all 0.3s ease;
+  box-sizing: border-box;
 }
 
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+  color: transparent;
+}
+
+.contact-form input:hover,
+.contact-form textarea:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(30, 35, 45, 0.7);
+}
+
+/* Floating Label Styles */
+.floating-field label {
+  position: absolute;
+  left: 16px;
+  top: 18px;
+  font-size: 16px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.5);
+  background: transparent;
+  padding: 0 4px;
+  pointer-events: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: left center;
+  z-index: 1;
+}
+
+/* Floating Label Active States */
+.floating-field input:focus ~ label,
+.floating-field input:not(:placeholder-shown) ~ label,
+.floating-field textarea:focus ~ label,
+.floating-field textarea:not(:placeholder-shown) ~ label {
+  top: -10px;
+  left: 12px;
+  font-size: 12px;
+  color: rgba(0, 255, 224, 1);
+  background: rgba(20, 25, 35, 0.9);
+  padding: 0 6px;
+  font-weight: 600;
+}
+
+/* Handle Autofill */
+.floating-field input:-webkit-autofill ~ label {
+  top: -10px;
+  left: 12px;
+  font-size: 12px;
+  background: rgba(20, 25, 35, 0.9);
+  padding: 0 6px;
+}
+
+/* Focus Styles */
 .contact-form input:focus,
 .contact-form textarea:focus {
   outline: none;
-  box-shadow: var(--input-focus-ring);
-  border-color: var(--border-focus);
+  border-color: rgba(0, 255, 224, 0.6);
+  background: rgba(30, 35, 45, 0.8);
+  box-shadow: 0 0 0 3px rgba(0, 255, 224, 0.1), 0 0 20px rgba(0, 255, 224, 0.15);
+}
+
+/* Error State Styles */
+.input-error {
+  border-color: rgba(239, 68, 68, 0.6) !important;
+  background: rgba(239, 68, 68, 0.05) !important;
+  animation: shake 0.4s ease;
+}
+
+.input-error:focus {
+  border-color: rgba(239, 68, 68, 0.8) !important;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15), 0 0 20px rgba(239, 68, 68, 0.1) !important;
+}
+
+.error-message {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: rgba(239, 68, 68, 1);
+  margin-top: 6px;
+  animation: slideDown 0.3s ease;
+}
+
+.error-message::before {
+  content: '⚠';
+  font-size: 14px;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-8px); }
+  75% { transform: translateX(8px); }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Character Counter Styles */
+.char-counter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 6px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.char-count {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  transition: color 0.3s ease;
+}
+
+.char-count.warning {
+  color: rgba(255, 193, 7, 1);
+}
+
+.char-count.max {
+  color: rgba(239, 68, 68, 1);
+}
+
+.char-hint {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.3);
+  font-style: italic;
 }
 
 .contact-form textarea {
   resize: vertical;
-  min-height: var(--space-20);
+  min-height: 150px;
+  line-height: 1.6;
+  padding-top: 24px;
 }
 
-.contact-form button {
-  align-self: flex-start;
-  background: var(--color-secondary-500);
-  color: var(--text-inverse);
+.form-submit-button {
+  width: 100%;
+  background: linear-gradient(135deg, rgba(0, 255, 224, 1), rgba(0, 200, 180, 1));
+  color: rgba(10, 15, 25, 1);
   border: none;
-  padding: var(--space-3) var(--space-6);
+  padding: 16px 24px;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  will-change: transform;
+  box-shadow: 0 4px 16px rgba(0, 255, 224, 0.3);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.form-submit-button::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease-out, height 0.6s ease-out;
+  pointer-events: none;
+}
+
+.form-submit-button:hover:not(:disabled) {
+  background: linear-gradient(135deg, rgba(0, 255, 224, 1), rgba(0, 220, 200, 1));
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 255, 224, 0.4);
+}
+
+.form-submit-button:active:not(:disabled) {
+  transform: translateY(0) scale(0.98);
+  box-shadow: 0 2px 8px rgba(0, 255, 224, 0.3);
+}
+
+.form-submit-button:active:not(:disabled)::before {
+  width: 300px;
+  height: 300px;
+  transition: width 0s, height 0s;
+}
+
+.form-submit-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: rgba(100, 100, 100, 0.3);
+  box-shadow: none;
+}
+
+.form-submit-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 255, 224, 0.3), 0 4px 16px rgba(0, 255, 224, 0.3);
+}
+
+.form-status {
+  text-align: center;
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+}
+
+.form-status.success {
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--color-accent-green);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-6);
+}
+
+/* Success Checkmark Animation */
+.success-checkmark {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.checkmark-svg {
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius-full);
+}
+
+.checkmark-circle {
+  stroke: var(--color-accent-green);
+  stroke-width: 2;
+  stroke-dasharray: 166;
+  stroke-dashoffset: 166;
+  stroke-linecap: round;
+  fill: none;
+}
+
+.checkmark-check {
+  stroke: var(--color-accent-green);
+  stroke-width: 3;
+  stroke-dasharray: 48;
+  stroke-dashoffset: 48;
+  stroke-linecap: round;
+  transform-origin: 50% 50%;
+}
+
+.form-status.success.animate .checkmark-circle {
+  animation: checkmarkCircle 0.6s var(--ease-out) forwards;
+}
+
+.form-status.success.animate .checkmark-check {
+  animation: checkmarkCheck 0.3s var(--ease-out) 0.6s forwards;
+}
+
+.success-text {
   font-size: var(--text-base);
   font-weight: var(--font-medium);
-  border-radius: var(--radius-md);
-  cursor: pointer;
-  transition: var(--transition-base);
+  color: var(--color-accent-green);
+  text-align: center;
+  margin: 0;
 }
 
-.contact-form button:hover {
-  background: var(--color-accent-blue);
-  opacity: var(--opacity-90);
+.form-status.success {
+  background: rgba(16, 185, 129, 0.1);
+  color: rgba(16, 185, 129, 1);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 24px;
+  border-radius: 12px;
+  animation: slideDown 0.3s ease;
 }
 
-.contact-form button:focus {
-  outline: none;
-  box-shadow: 0 0 0 3px var(--border-focus);
+/* Success Checkmark Animation */
+.success-checkmark {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.checkmark-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.checkmark-circle {
+  stroke: rgba(16, 185, 129, 1);
+  stroke-width: 2;
+  stroke-dasharray: 166;
+  stroke-dashoffset: 166;
+  stroke-linecap: round;
+  fill: none;
+}
+
+.checkmark-check {
+  stroke: rgba(16, 185, 129, 1);
+  stroke-width: 3;
+  stroke-dasharray: 48;
+  stroke-dashoffset: 48;
+  stroke-linecap: round;
+  transform-origin: 50% 50%;
+}
+
+.form-status.success.animate .checkmark-circle {
+  animation: checkmarkCircle 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.form-status.success.animate .checkmark-check {
+  animation: checkmarkCheck 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0.6s forwards;
+}
+
+@keyframes checkmarkCircle {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes checkmarkCheck {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.success-text {
+  font-size: 15px;
+  font-weight: 600;
+  color: rgba(16, 185, 129, 1);
+  text-align: center;
+  margin: 0;
+}
+
+.form-status.error {
+  background: rgba(239, 68, 68, 0.1);
+  color: rgba(239, 68, 68, 1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 12px;
+  animation: slideDown 0.3s ease;
+}
+
+/* Skeleton Loading UI */
+.form-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  max-width: 600px;
+  margin: 0 auto var(--space-8);
+}
+
+.skeleton-item {
+  background: linear-gradient(90deg, var(--bg-surface) 0%, var(--bg-elevated) 50%, var(--bg-surface) 100%);
+  background-size: 200% 100%;
+  border-radius: var(--radius-lg);
+  animation: skeletonPulse 1.5s ease-in-out infinite;
+}
+
+.skeleton-input {
+  height: 40px;
+  width: 100%;
+}
+
+.skeleton-textarea {
+  height: 120px;
+  width: 100%;
+}
+
+.skeleton-button {
+  height: 48px;
+  width: 100%;
+}
+
+@keyframes skeletonPulse {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Divider */
+.contact-divider {
+  max-width: 600px;
+  margin: var(--space-8) auto;
+  position: relative;
+  text-align: center;
+}
+
+.contact-divider::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--border-primary);
+}
+
+.contact-divider span {
+  position: relative;
+  display: inline-block;
+  padding: 0 var(--space-4);
+  background: var(--bg-primary);
+  color: var(--text-tertiary);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
 }
 
 /* Responsive adjustments */
@@ -137,17 +703,27 @@
   .contact p {
     font-size: var(--text-base);
   }
+
+  .form-container-glass {
+    padding: var(--space-6);
+  }
+
+  .contact-form {
+    gap: var(--space-4);
+  }
+
   .contact-buttons {
     gap: var(--space-4);
     flex-direction: column;
     align-items: center;
   }
-  
+
   .email-button,
-  .resume-button {
+  .resume-button.secondary,
+  .chat-button.tertiary {
     width: 100%;
     max-width: 280px;
-    min-height: 48px; /* Better touch target */
+    min-height: 48px;
   }
 }
 
@@ -155,23 +731,58 @@
   .contact {
     padding: var(--space-8) var(--space-3);
   }
-  
+
   .contact h2 {
     font-size: var(--text-2xl);
   }
-  
+
   .contact p {
     font-size: var(--text-sm);
   }
-  
+
+  .form-container-glass {
+    padding: var(--space-5);
+    border-radius: 20px;
+  }
+
   .contact-form {
     gap: var(--space-3);
   }
-  
+
   .contact-form input,
   .contact-form textarea {
-    padding: var(--space-2-5) var(--space-3);
-    font-size: var(--text-sm);
+    padding: 16px 12px 6px 12px;
+    font-size: 15px;
+  }
+
+  .floating-field label {
+    left: 12px;
+    top: 16px;
+    font-size: 15px;
+  }
+
+  .floating-field input:focus ~ label,
+  .floating-field input:not(:placeholder-shown) ~ label,
+  .floating-field textarea:focus ~ label,
+  .floating-field textarea:not(:placeholder-shown) ~ label {
+    font-size: 11px;
+  }
+
+  .form-submit-button {
+    padding: 14px 20px;
+    font-size: 15px;
+  }
+
+  .skeleton-input {
+    height: 36px;
+  }
+
+  .skeleton-textarea {
+    height: 100px;
+  }
+
+  .skeleton-button {
+    height: 44px;
   }
 }
 
@@ -179,9 +790,19 @@
   .contact {
     padding: var(--space-6) var(--space-2);
   }
-  
+
+  .form-container-glass {
+    padding: var(--space-4);
+    border-radius: 16px;
+  }
+
+  .contact-form {
+    gap: var(--space-2-5);
+  }
+
   .email-button,
-  .resume-button {
+  .resume-button.secondary,
+  .chat-button.tertiary {
     max-width: 100%;
     padding: var(--space-3) var(--space-4);
   }

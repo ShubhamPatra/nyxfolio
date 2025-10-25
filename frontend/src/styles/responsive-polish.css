@@ -1,0 +1,438 @@
+/* Responsive Polish and Touch Device Optimizations */
+@import './variables.css';
+
+/* ===== TOUCH TARGET IMPROVEMENTS ===== */
+
+/* Ensure all interactive elements meet minimum 44x44px touch target on mobile */
+@media (max-width: 768px) {
+  /* Buttons */
+  button,
+  a[role="button"],
+  .hero-button,
+  .email-button,
+  .resume-button,
+  .chat-button {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Navigation links in mobile menu */
+  .navbar-links li a {
+    min-height: 44px;
+    padding: var(--space-3) var(--space-4);
+  }
+  
+  /* Hamburger toggle */
+  .navbar-toggle {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Theme toggle */
+  .theme-toggle {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Project card links */
+  .project-card a {
+    min-height: 44px;
+    padding: var(--space-2) var(--space-3);
+  }
+}
+
+/* Extra small devices - ensure 40x40px minimum */
+@media (max-width: 320px) {
+  button,
+  a[role="button"] {
+    min-height: 40px;
+    min-width: 40px;
+  }
+}
+
+/* ===== HOVER EFFECTS FOR TOUCH DEVICES ===== */
+
+/* Disable hover effects on touch devices, use active states instead */
+@media (hover: none) and (pointer: coarse) {
+  /* Remove hover transforms that can cause issues on touch */
+  .project-card:hover {
+    transform: none;
+  }
+  
+  .tag:hover {
+    transform: none;
+  }
+  
+  .hero-button:hover {
+    transform: none;
+  }
+  
+  /* Use active states for touch feedback */
+  .project-card:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease-out;
+  }
+  
+  .tag:active {
+    transform: scale(0.95);
+    transition: transform 0.1s ease-out;
+  }
+  
+  button:active,
+  a[role="button"]:active {
+    transform: scale(0.95);
+    transition: transform 0.1s ease-out;
+  }
+  
+  /* Keep color changes on hover for touch devices */
+  .navbar-links li a:hover,
+  .navbar-links li a:active {
+    background-color: var(--bg-elevated);
+    color: var(--text-accent);
+  }
+}
+
+/* Preserve hover effects on devices with hover capability */
+@media (hover: hover) and (pointer: fine) {
+  /* These styles are already defined in component CSS files */
+  /* This media query ensures they only apply to hover-capable devices */
+}
+
+/* ===== TAG WRAPPING OPTIMIZATIONS ===== */
+
+/* Ensure tags wrap properly at all breakpoints */
+.tech-stack,
+.skills-grid,
+.project-tech-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  /* Prevent overflow */
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+@media (max-width: 768px) {
+  .tech-stack,
+  .skills-grid,
+  .project-tech-stack {
+    gap: var(--space-2);
+  }
+}
+
+@media (max-width: 480px) {
+  .tech-stack,
+  .skills-grid,
+  .project-tech-stack {
+    gap: var(--space-1-5);
+  }
+  
+  /* Ensure tags don't get too small */
+  .tag {
+    min-width: fit-content;
+    font-size: var(--text-xs);
+  }
+}
+
+/* ===== HERO BACKGROUND RESPONSIVE BEHAVIOR ===== */
+
+/* Desktop - Full visibility */
+@media (min-width: 1025px) {
+  .hero::before,
+  .hero::after {
+    opacity: 1;
+  }
+}
+
+/* Tablet - Reduced opacity */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .hero::before {
+    opacity: 0.5;
+    width: 60%;
+  }
+  
+  .hero::after {
+    opacity: 0.5;
+    width: 200px;
+    height: 200px;
+  }
+}
+
+/* Mobile - Further reduced */
+@media (min-width: 481px) and (max-width: 768px) {
+  .hero::before {
+    opacity: 0.3;
+    width: 70%;
+  }
+  
+  .hero::after {
+    opacity: 0.3;
+    width: 150px;
+    height: 150px;
+  }
+}
+
+/* Extra small - Hidden */
+@media (max-width: 480px) {
+  .hero::before,
+  .hero::after {
+    display: none;
+  }
+}
+
+/* ===== CONTACT BUTTON STACKING ===== */
+
+/* Stack buttons vertically on mobile with proper spacing */
+@media (max-width: 768px) {
+  .contact-buttons {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-4);
+  }
+  
+  .email-button,
+  .resume-button.secondary,
+  .chat-button.tertiary {
+    width: 100%;
+    max-width: 320px;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-buttons {
+    gap: var(--space-3);
+  }
+  
+  .email-button,
+  .resume-button.secondary,
+  .chat-button.tertiary {
+    max-width: 100%;
+  }
+}
+
+/* ===== THEME TOGGLE POSITIONING ===== */
+
+/* Ensure theme toggle doesn't overlap with other fixed elements */
+.theme-toggle {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 999;
+}
+
+@media (max-width: 768px) {
+  .theme-toggle {
+    bottom: 16px;
+    right: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .theme-toggle {
+    bottom: 12px;
+    right: 12px;
+  }
+}
+
+/* Adjust if footer or other fixed elements are present */
+@media (max-width: 768px) {
+  /* Ensure theme toggle is above mobile navigation */
+  .navbar.active ~ .theme-toggle {
+    z-index: 998; /* Below navbar when menu is open */
+  }
+}
+
+/* ===== CUSTOM CURSOR DISABLED ===== */
+
+/* Custom cursor removed - restore default cursors */
+body {
+  cursor: auto !important;
+}
+
+.custom-cursor,
+.cursor-dot,
+.cursor-outline {
+  display: none !important;
+}
+
+/* Ensure default cursors */
+a, button {
+  cursor: pointer !important;
+}
+
+input, textarea, select {
+  cursor: text !important;
+}
+
+/* ===== NAVIGATION ACTIVE STATE MOBILE ===== */
+
+/* Ensure active state is visible in mobile menu */
+@media (max-width: 768px) {
+  .navbar-links li a.active {
+    background-color: var(--bg-elevated);
+    color: var(--text-accent);
+    border-left: 3px solid var(--color-secondary-200);
+    font-weight: var(--font-semibold);
+  }
+  
+  .navbar-links li a.active::after {
+    display: none; /* Remove underline in mobile menu */
+  }
+}
+
+/* ===== PREVENT HORIZONTAL SCROLL ===== */
+
+/* Ensure no component causes horizontal overflow */
+html,
+body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* ===== SAFE AREA INSETS (for notched devices) ===== */
+
+/* Support for iPhone X and similar devices */
+@supports (padding: max(0px)) {
+  .navbar {
+    padding-left: max(var(--space-4), env(safe-area-inset-left));
+    padding-right: max(var(--space-4), env(safe-area-inset-right));
+  }
+  
+  .hero,
+  .about,
+  .skills,
+  .projects,
+  .contact {
+    padding-left: max(var(--space-4), env(safe-area-inset-left));
+    padding-right: max(var(--space-4), env(safe-area-inset-right));
+  }
+  
+  .theme-toggle {
+    right: max(20px, env(safe-area-inset-right));
+    bottom: max(20px, env(safe-area-inset-bottom));
+  }
+}
+
+/* ===== REDUCED MOTION SUPPORT ===== */
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  /* Disable floating animations */
+  .hero::after,
+  .nyx-bot {
+    animation: none !important;
+  }
+}
+
+/* ===== LANDSCAPE ORIENTATION ADJUSTMENTS ===== */
+
+/* Optimize for landscape mobile devices */
+@media (max-width: 768px) and (orientation: landscape) {
+  .hero {
+    min-height: auto;
+    padding: var(--space-8) var(--space-4);
+  }
+  
+  .hero-text h1 {
+    font-size: var(--text-3xl);
+  }
+  
+  .hero-nyx {
+    display: none; /* Hide decorative element in landscape */
+  }
+  
+  .navbar {
+    padding: var(--space-2) var(--space-4);
+  }
+}
+
+/* ===== PRINT STYLES ===== */
+
+@media print {
+  /* Hide interactive elements when printing */
+  .navbar-toggle,
+  .theme-toggle,
+  .custom-cursor,
+  .hero-button,
+  .contact-buttons {
+    display: none !important;
+  }
+  
+  /* Optimize for print */
+  body {
+    background: white;
+    color: black;
+  }
+  
+  .hero::before,
+  .hero::after {
+    display: none;
+  }
+}
+
+/* ===== FOCUS VISIBLE ENHANCEMENTS ===== */
+
+/* Ensure focus indicators are visible on all devices */
+*:focus-visible {
+  outline: 2px solid var(--color-secondary-200);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* Specific focus states for better visibility */
+@media (max-width: 768px) {
+  button:focus-visible,
+  a:focus-visible {
+    outline-width: 3px;
+    outline-offset: 3px;
+  }
+}
+
+/* ===== HIGH CONTRAST MODE SUPPORT ===== */
+
+@media (prefers-contrast: high) {
+  /* Increase border widths for better visibility */
+  .tag,
+  .project-card,
+  .navbar {
+    border-width: 2px;
+  }
+  
+  /* Increase text contrast */
+  .text-secondary {
+    color: var(--text-primary);
+  }
+}
+
+/* ===== DARK MODE ADJUSTMENTS ===== */
+
+/* Dark mode contrast is already handled by variables.css */
+/* This section is reserved for future dark mode specific adjustments */
+
+/* ===== VIEWPORT HEIGHT FIX FOR MOBILE BROWSERS ===== */
+
+/* Fix for mobile browsers with dynamic toolbars */
+.hero {
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+}
+
+@supports (-webkit-touch-callout: none) {
+  .hero {
+    min-height: -webkit-fill-available;
+  }
+}

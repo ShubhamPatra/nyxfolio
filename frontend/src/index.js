@@ -3,13 +3,23 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 
-// 🔹 Wake up backend as soon as possible (non-blocking)
+// 🔹 Wake up backends as soon as possible (non-blocking)
 (async () => {
   try {
+    // Ping chatbot backend
     await fetch(`${process.env.REACT_APP_BACKEND_URL}/ping`);
-//    console.log("Backend pinged early 🚀");
+//    console.log("Chatbot backend pinged 🚀");
   } catch (err) {
-//    console.error("Backend ping failed:", err);
+//    console.error("Chatbot backend ping failed:", err);
+  }
+  
+  try {
+    // Ping contact backend
+    const contactBackendUrl = process.env.REACT_APP_CONTACT_BACKEND_URL || 'http://localhost:3001';
+    await fetch(`${contactBackendUrl}/health`);
+//    console.log("Contact backend pinged 📧");
+  } catch (err) {
+//    console.error("Contact backend ping failed:", err);
   }
 })();
 

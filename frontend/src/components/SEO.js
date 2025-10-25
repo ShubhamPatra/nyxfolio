@@ -162,6 +162,7 @@ const SEO = () => {
         <meta name="author" content="Shubham Patra" />
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href="https://www.shubhampatra.dev" />
+        {/* Open Graph Meta Tags */}
         <meta property="og:type" content="website" />
         <meta property="og:title" content="Shubham Patra | Full Stack Developer Portfolio" />
         <meta
@@ -170,12 +171,21 @@ const SEO = () => {
         />
         <meta property="og:url" content="https://www.shubhampatra.dev" />
         <meta property="og:site_name" content="ShubhamPatra.dev" />
+        <meta property="og:image" content="https://www.shubhampatra.dev/og-image.svg" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:type" content="image/svg+xml" />
+        <meta property="og:image:alt" content="Shubham Patra - Full Stack Developer Portfolio" />
+        
+        {/* Twitter Card Meta Tags */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Shubham Patra | Full Stack Developer Portfolio" />
         <meta
           name="twitter:description"
           content="Shubham Patra – Final-year B.Tech student, Full Stack Developer, Web Developer, MERN Developer creating real-time web apps and AI assistants."
         />
+        <meta name="twitter:image" content="https://www.shubhampatra.dev/og-image.svg" />
+        <meta name="twitter:image:alt" content="Shubham Patra - Full Stack Developer Portfolio" />
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       </Helmet>
     </HelmetProvider>
