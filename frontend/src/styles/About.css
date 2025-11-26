@@ -146,7 +146,7 @@
 }
 
 .cta-button:hover {
-  background: var(--color-secondary-600);
+  background: var(--color-secondary-500);
   transform: translateY(-2px) scale(1.05);
   box-shadow: var(--shadow-xl), var(--shadow-glow-lg);
 }

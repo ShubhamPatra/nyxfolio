@@ -192,7 +192,6 @@
 /* Hover & Focus Interaction */
 .nyx-floating-button:hover,
 .nyx-floating-button:focus {
-  animation: rotateHover var(--btn-hover-duration) var(--ease-out) both;
   outline: none;
 }
 
@@ -288,8 +287,8 @@
 
 .chat-header .close-btn:hover,
 .chat-header .close-btn:focus {
-  color: var(--color-secondary-200);
-  box-shadow: var(--shadow-glow-sm);
+  color: var(--text-secondary);
+  box-shadow: none;
   transform: scale(var(--haptic-scale-up));
   outline: none;
 }
@@ -415,7 +414,7 @@
   border: none;
   border-radius: var(--radius-sm);
   cursor: pointer;
-  transition: background var(--duration-150) var(--ease-out), transform var(--haptic-duration) var(--ease-out), box-shadow var(--duration-150) var(--ease-out);
+  transition: transform var(--haptic-duration) var(--ease-out), box-shadow var(--duration-150) var(--ease-out);
   box-shadow: var(--shadow-sm);
   position: relative;
   overflow: hidden;
@@ -439,7 +438,7 @@
 
 .chat-input button:hover,
 .chat-input button:focus {
-  background: linear-gradient(135deg, var(--color-secondary-600), var(--color-secondary-500));
+  background: linear-gradient(135deg, var(--color-secondary-500), var(--color-secondary-400));
   transform: scale(var(--haptic-scale-up));
   box-shadow: var(--shadow-glow-sm);
   outline: none;

@@ -63,10 +63,6 @@
     transform: none;
   }
   
-  .hero-button:hover {
-    transform: none;
-  }
-  
   /* Use active states for touch feedback */
   .project-card:active {
     transform: scale(0.98);

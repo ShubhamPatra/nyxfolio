@@ -88,8 +88,8 @@
 }
 
 .email-button:hover {
-  background: var(--color-secondary-600);
-  border-color: var(--color-secondary-600);
+  background: var(--color-secondary-500);
+  border-color: var(--color-secondary-500);
   transform: translateY(-2px) scale(var(--haptic-scale-up));
   box-shadow: var(--haptic-shadow-hover);
 }
@@ -127,7 +127,7 @@
   box-shadow: none;
   text-decoration: none;
   cursor: pointer;
-  transition: transform var(--magnetic-duration) var(--magnetic-ease), background var(--duration-200) var(--ease-out), box-shadow var(--duration-200) var(--ease-out);
+  transition: transform var(--magnetic-duration) var(--magnetic-ease), box-shadow var(--duration-200) var(--ease-out);
   position: relative;
   overflow: hidden;
   will-change: transform;
@@ -150,9 +150,9 @@
 }
 
 .resume-button.secondary:hover {
-  background: var(--color-secondary-500);
-  color: var(--text-inverse);
-  border-color: var(--color-secondary-500);
+  background: transparent;
+  color: var(--color-secondary-200);
+  border-color: var(--color-secondary-200);
   transform: translateY(-2px) scale(var(--haptic-scale-up));
   box-shadow: var(--haptic-shadow-hover);
 }
@@ -216,9 +216,9 @@
 }
 
 .chat-button.tertiary:hover {
-  background: var(--bg-elevated);
-  color: var(--text-primary);
-  border-color: var(--border-primary);
+  background: transparent;
+  color: var(--text-secondary);
+  border-color: var(--border-secondary);
   transform: translateY(-2px) scale(var(--haptic-scale-up));
   box-shadow: var(--haptic-shadow-hover);
 }
@@ -466,7 +466,7 @@
 }
 
 .form-submit-button:hover:not(:disabled) {
-  background: linear-gradient(135deg, rgba(0, 255, 224, 1), rgba(0, 220, 200, 1));
+  background: linear-gradient(135deg, rgba(0, 255, 224, 1), rgba(0, 200, 180, 1));
   transform: translateY(-2px);
   box-shadow: 0 8px 24px rgba(0, 255, 224, 0.4);
 }

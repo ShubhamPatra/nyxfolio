@@ -114,8 +114,8 @@
 }
 
 .not-found-button:hover {
-  background-color: var(--color-secondary-400);
-  border-color: var(--color-secondary-400);
+  background-color: var(--color-secondary-500);
+  border-color: var(--color-secondary-500);
   transform: translateY(-2px);
   box-shadow: var(--shadow-glow-md);
 }

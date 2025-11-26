@@ -119,8 +119,7 @@
   font-weight: var(--font-medium);
   box-shadow: var(--shadow-sm);
   transition: transform var(--magnetic-duration) var(--magnetic-ease),
-    box-shadow var(--duration-200) var(--ease-out),
-    background var(--duration-200) var(--ease-out);
+    box-shadow var(--duration-200) var(--ease-out);
   z-index: var(--z-10);
   position: relative;
   overflow: hidden;
@@ -146,7 +145,7 @@
 
 .hero-button:hover,
 .hero-button:focus {
-  background-color: var(--color-secondary-600);
+  background-color: var(--color-secondary-500);
   transform: scale(var(--haptic-scale-up));
   box-shadow: var(--haptic-shadow-hover);
 }

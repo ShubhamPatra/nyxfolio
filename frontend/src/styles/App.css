@@ -55,7 +55,7 @@ a {
 }
 a:hover,
 a:focus {
-  color: var(--color-accent-blue);
+  color: var(--text-accent);
 }
 a:focus {
   outline: none;
