@@ -15,6 +15,10 @@
   cursor: default;
   white-space: nowrap;
   will-change: transform;
+  /* Ensure tags maintain minimum width and prevent text breaking */
+  min-width: fit-content;
+  word-break: keep-all;
+  overflow-wrap: normal;
 }
 
 .tag:hover {
