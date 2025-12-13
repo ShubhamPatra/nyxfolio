@@ -36,6 +36,17 @@ const projectList = [
     image: "./nyx.png",
     demoLink: "https://nyxai.onrender.com/",
     githubLink: "https://github.com/ShubhamPatra/Nyx"
+  },
+  {
+    name: "Student Management System",
+    description:
+      "A comprehensive Java Swing desktop application that enables educational institutions to manage student records, calculate grades, and generate PDF reports. The system provides administrators with tools to create student profiles and input marks, while students can access their personalized dashboards to view grades and performance metrics through a secure authentication interface.",
+    stack: ["Java", "MySQL", "Java Swing", "JDBC", "OpenPDF"],
+    category: "Desktop App",
+    status: "Complete",
+    image: "./student-management-system.png",
+    demoLink: null,
+    githubLink: "https://github.com/ShubhamPatra/StudentManagementSystem"
   }
 ];
 
@@ -45,14 +56,22 @@ function Projects() {
   return (
     <section className="section">
       <section ref={ref} className={`projects fade-in ${isVisible ? 'visible' : ''}`} id="projects">
-        <h2>Projects</h2>
-        <div className="project-list">
-          {projectList.map((project, index) => (
-            <div 
-              className={`project-card stagger-animation ${isVisible ? 'visible' : ''}`} 
-              key={index}
-              style={{ animationDelay: `${index * 150}ms` }}
-            >
+        <div className="projects-container">
+          <h2>Projects</h2>
+          <div className="project-list">
+            {projectList.map((project, index) => (
+              <div 
+                className={`project-card stagger-animation ${isVisible ? 'visible' : ''}`} 
+                key={index}
+                style={{ animationDelay: `${index * 150}ms` }}
+              >
+              <div className="project-image-wrapper">
+                <img
+                  src={project.image}
+                  alt={`${project.name} project screenshot`}
+                />
+                <div className="project-image-overlay"></div>
+              </div>
               <div className="project-badges">
                 <Tag variant="category" className={`category-${project.category.toLowerCase().replace(/\s+/g, '-')}`}>
                   {project.category}
@@ -61,13 +80,6 @@ function Projects() {
                   <span className="status-dot"></span>
                   {project.status}
                 </span>
-              </div>
-              <div className="project-image-wrapper">
-                <img
-                  src={project.image}
-                  alt={`${project.name} project screenshot`}
-                />
-                <div className="project-image-overlay"></div>
               </div>
               <h3>{project.name}</h3>
               <p>{project.description}</p>
@@ -92,6 +104,7 @@ function Projects() {
               </div>
             </div>
           ))}
+        </div>
         </div>
       </section>
     </section>

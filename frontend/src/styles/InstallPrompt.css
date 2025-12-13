@@ -1,0 +1,149 @@
+@import './variables.css';
+
+.install-prompt {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  animation: slideInUp 0.4s var(--ease-out);
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.install-prompt-content {
+  background: var(--bg-elevated);
+  border: 2px solid var(--border-primary);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-xl), 0 0 40px rgba(211, 238, 229, 0.15);
+  max-width: 320px;
+  position: relative;
+  backdrop-filter: blur(var(--blur-lg));
+  -webkit-backdrop-filter: blur(var(--blur-lg));
+}
+
+.install-prompt-close {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: var(--space-2);
+  border-radius: var(--radius-md);
+  transition: var(--transition-colors);
+  font-size: var(--text-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.install-prompt-close:hover {
+  color: var(--text-primary);
+  background: var(--bg-surface);
+}
+
+.install-prompt-icon {
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, var(--color-secondary-200), var(--color-secondary-100));
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto var(--space-4);
+  font-size: var(--text-xl);
+  color: var(--bg-primary);
+}
+
+.install-prompt-title {
+  font-family: var(--font-heading);
+  font-size: var(--text-xl);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 var(--space-2);
+  text-align: center;
+}
+
+.install-prompt-description {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  line-height: var(--leading-relaxed);
+  margin: 0 0 var(--space-6);
+  text-align: center;
+}
+
+.install-prompt-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.install-prompt-button {
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-lg);
+  font-family: var(--font-primary);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-base);
+  border: none;
+  text-align: center;
+}
+
+.install-button {
+  background: linear-gradient(135deg, var(--color-secondary-200), var(--color-secondary-100));
+  color: var(--bg-primary);
+  box-shadow: 0 2px 8px rgba(211, 238, 229, 0.2);
+}
+
+.install-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(211, 238, 229, 0.3);
+}
+
+.install-button:active {
+  transform: translateY(0);
+}
+
+.dismiss-button {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-primary);
+}
+
+.dismiss-button:hover {
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  border-color: var(--border-secondary);
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .install-prompt {
+    bottom: 16px;
+    right: 16px;
+    left: 16px;
+  }
+
+  .install-prompt-content {
+    max-width: 100%;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .install-prompt {
+    animation: none;
+  }
+}

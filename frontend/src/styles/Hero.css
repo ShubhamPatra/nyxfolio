@@ -26,8 +26,8 @@
   height: 80%;
   background: radial-gradient(
     circle at center,
-    rgba(0, 255, 224, 0.08) 0%,
-    rgba(0, 255, 224, 0.04) 40%,
+    rgba(211, 238, 229, 0.08) 0%,
+    rgba(211, 238, 229, 0.04) 40%,
     transparent 70%
   );
   pointer-events: none;
@@ -41,7 +41,7 @@
   top: 30%;
   width: 300px;
   height: 300px;
-  border: 1px solid rgba(0, 255, 224, 0.15);
+  border: 1px solid rgba(211, 238, 229, 0.15);
   border-radius: 50%;
   pointer-events: none;
   z-index: 0;
@@ -54,24 +54,39 @@
   z-index: var(--z-10);
   text-align: left;
   width: 100%;
+  padding: 0;
 }
 
 .hero-text h1 {
   font-family: var(--font-heading);
-  font-size: clamp(1.875rem, 4vw + 1rem, 4rem);
-  line-height: clamp(1.25, 1.15vw + 1, 1.15);
+  font-size: clamp(1.75rem, 5vw, 4rem);
+  line-height: clamp(1.15, 1.1vw + 1, 1.1);
   margin-bottom: var(--space-8);
   color: var(--text-primary);
-  letter-spacing: -0.025em;
-  font-weight: 800;
+  letter-spacing: -0.03em;
+  font-weight: 700;
   /* Prevent awkward line breaks */
   text-wrap: balance;
   -webkit-text-wrap: balance;
-  word-spacing: 0.1em;
+  word-spacing: 0.05em;
   /* Prevent breaking after "I'm" */
   white-space: normal;
   overflow-wrap: break-word;
   hyphens: none;
+}
+
+@media (max-width: 768px) {
+  .hero-text h1 {
+    font-size: clamp(1.75rem, 8vw, 2.5rem);
+    margin-bottom: var(--space-6);
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-text h1 {
+    font-size: clamp(1.5rem, 9vw, 2rem);
+    margin-bottom: var(--space-4);
+  }
 }
 
 /* Keep "I'm Shubham Patra" together */
@@ -81,10 +96,95 @@
   width: 0;
 }
 
+/* ===== HERO RESPONSIVE & MOBILE OPTIMIZATIONS ===== */
+
+/* Mobile touch targets */
+@media (max-width: 768px) {
+  .hero-button {
+    min-height: 48px;
+    min-width: 48px;
+    padding: var(--space-3) var(--space-5);
+  }
+  
+  .hero {
+    padding: var(--space-12) var(--space-4);
+    min-height: calc(100vh - 60px);
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    padding-left: var(--space-3);
+    padding-right: var(--space-3);
+  }
+}
+
+/* Hero background responsive behavior */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .hero::before {
+    opacity: 0.5;
+    width: 60%;
+  }
+  
+  .hero::after {
+    opacity: 0.5;
+    width: 200px;
+    height: 200px;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+  .hero::before {
+    opacity: 0.3;
+    width: 70%;
+  }
+  
+  .hero::after {
+    opacity: 0.3;
+    width: 150px;
+    height: 150px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero::before,
+  .hero::after {
+    display: none;
+  }
+}
+
+/* Viewport height fix for mobile browsers */
+.hero {
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+}
+
+@supports (-webkit-touch-callout: none) {
+  .hero {
+    min-height: -webkit-fill-available;
+  }
+}
+
+/* Landscape orientation adjustments */
+@media (max-width: 768px) and (orientation: landscape) {
+  .hero {
+    min-height: auto;
+    padding: var(--space-8) var(--space-4);
+  }
+  
+  .hero-text h1 {
+    font-size: var(--text-3xl);
+  }
+  
+  .hero-nyx {
+    display: none;
+  }
+}
+
 .hero-text p {
   font-family: var(--font-primary);
-  font-size: clamp(1.0625rem, 1.5vw + 0.5rem, 1.5rem);
-  line-height: clamp(1.5, 0.5vw + 1.4, 1.65);
+  font-size: clamp(0.9375rem, 3vw, 1.375rem);
+  line-height: clamp(1.6, 0.5vw + 1.5, 1.7);
   margin-bottom: var(--space-10);
   color: var(--text-secondary);
   max-width: 650px;
@@ -92,6 +192,7 @@
   text-wrap: pretty;
   -webkit-text-wrap: pretty;
   font-weight: 400;
+  letter-spacing: 0.01em;
   /* Better text rendering */
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -107,11 +208,26 @@
   overflow-wrap: break-word;
 }
 
+@media (max-width: 768px) {
+  .hero-text p {
+    font-size: clamp(0.9375rem, 4vw, 1.125rem);
+    margin-bottom: var(--space-8);
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-text p {
+    font-size: clamp(0.875rem, 4.5vw, 1rem);
+    margin-bottom: var(--space-6);
+  }
+}
+
 /* Call-to-Action Button */
 .hero-button {
   display: inline-block;
-  background-color: var(--color-secondary-500);
-  color: var(--text-primary);
+  background-color: var(--btn-primary-bg, #d3eee5);
+  color: var(--btn-primary-text, #191f1d);
   padding: var(--space-3) var(--space-6);
   border-radius: var(--radius-lg);
   text-decoration: none;
@@ -136,7 +252,7 @@
   width: 0;
   height: 0;
   border-radius: 50%;
-  background: var(--ripple-color);
+  background: rgba(0, 0, 0, 0.1);
   transform: translate(-50%, -50%);
   transition: width var(--ripple-duration) ease-out,
     height var(--ripple-duration) ease-out;
@@ -145,12 +261,15 @@
 
 .hero-button:hover,
 .hero-button:focus {
-  background-color: var(--color-secondary-500);
+  background-color: var(--btn-primary-bg, #d3eee5);
+  color: var(--btn-primary-text, #191f1d);
   transform: scale(var(--haptic-scale-up));
   box-shadow: var(--haptic-shadow-hover);
+  filter: brightness(1.05);
 }
 
 .hero-button:active {
+  color: var(--btn-primary-text, #191f1d);
   transform: scale(var(--haptic-scale-down));
 }
 
@@ -387,7 +506,7 @@
   }
 
   .hero-button {
-    padding: var(--space-2-5) var(--space-5);
+    padding: var(--space-2-5) var(--space-4);
     font-size: var(--text-sm);
   }
 

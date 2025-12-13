@@ -7,7 +7,11 @@
     <link rel="icon" type="image/png" href="https://www.shubhampatra.dev/logo-icon.png">
 
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=yes, minimum-scale=1, maximum-scale=5" />
-    <meta name="theme-color" content="#00ffe0" />
+    <meta name="theme-color" content="#191f1d" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Shubham.dev" />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo-icon.png" />
     <meta name="google-site-verification" content="snQnwG3ozbexUHBrbhV2MGlJ1RVTSknHJ5YmuAHESmM" />
     
     <!-- Favicon Switcher - Load before other scripts -->
@@ -16,28 +20,38 @@
     <!-- Google Fonts - Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
     <!-- SEO Meta Tags -->
     <title>Shubham Patra | Full Stack Developer Portfolio</title>
-    <meta name="description" content="Shubham Patra – Full Stack Developer portfolio showcasing modern web projects, coding expertise, and technical skills." />
-    <meta name="robots" content="index, follow" />
+    <meta name="description" content="Full-stack developer specializing in React, Node.js, and modern web technologies. Explore my portfolio featuring AI-powered applications, real-time collaboration tools, and innovative web solutions." />
+    <meta name="keywords" content="Full Stack Developer, React Developer, Node.js, MERN Stack, Web Developer, Portfolio, JavaScript, Express.js, MongoDB, AI Applications, Web Development" />
+    <meta name="author" content="Shubham Patra" />
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
     <link rel="canonical" href="https://www.shubhampatra.dev/" />
     <link rel="alternate" href="https://www.shubhampatra.dev/" hreflang="en-IN" />
+    <link rel="alternate" href="https://www.shubhampatra.dev/" hreflang="en" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Shubham Patra | Full Stack Developer Portfolio" />
-    <meta property="og:description" content="Shubham Patra – Full Stack Developer portfolio showcasing modern web projects, coding expertise, and technical skills." />
+    <meta property="og:description" content="Full-stack developer specializing in React, Node.js, and modern web technologies. Building innovative web applications with AI integration." />
     <meta property="og:url" content="https://www.shubhampatra.dev/" />
-    <meta property="og:site_name" content="ShubhamPatra.dev" />
-    <meta property="og:image" content="https://www.shubhampatra.dev/logo-icon.svg" />
-    <meta property="og:image:alt" content="ShubhamPatra.dev Logo" />
+    <meta property="og:site_name" content="Shubham Patra Portfolio" />
+    <meta property="og:image" content="https://www.shubhampatra.dev/logo-icon.png" />
+    <meta property="og:image:secure_url" content="https://www.shubhampatra.dev/logo-icon.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Shubham Patra - Full Stack Developer" />
+    <meta property="og:locale" content="en_US" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Shubham Patra | Full Stack Developer Portfolio" />
-    <meta name="twitter:description" content="Shubham Patra – Full Stack Developer portfolio showcasing modern web projects, coding expertise, and technical skills." />
+    <meta name="twitter:description" content="Full-stack developer specializing in React, Node.js, and modern web technologies. Building innovative web applications with AI integration." />
+    <meta name="twitter:image" content="https://www.shubhampatra.dev/logo-icon.png" />
+    <meta name="twitter:creator" content="@ShubhamPatra" />
+    <meta name="twitter:site" content="@ShubhamPatra" />
 
     <!-- Preload CSS -->
     <link rel="preload" href="/static/css/main.87ee8143.css" as="style">
@@ -121,35 +135,40 @@
         }
       ],
       "knowsAbout": [
-        "Full Stack Developer","Web Developer","MERN Developer","Frontend Developer","Backend Developer",
-        "Software Developer","Java","C","C++","JavaScript","PHP","React.js","HTML5","CSS3",
-        "Node.js","Express.js","MongoDB","MySQL","Data Structures","Algorithms","Problem Solving"
+        "Full Stack Development","Web Development","MERN Stack","Frontend Development","Backend Development",
+        "Software Engineering","JavaScript","TypeScript","React.js","Node.js","Express.js",
+        "MongoDB","MySQL","RESTful APIs","Git","Agile Methodologies","Problem Solving"
       ],
       "hasOccupation": [
         {
           "@type": "Occupation",
           "name": "Full Stack Developer Intern",
-          "description": "Working on real-world web applications in a fast-paced startup environment using React, Node.js, MongoDB."
+          "description": "Working on real-world web applications in a fast-paced startup environment using React, Node.js, MongoDB.",
+          "skills": ["React", "Node.js", "MongoDB", "Express.js", "JavaScript"]
         }
       ],
       "worksOn": [
         {
-          "@type": "CreativeWork",
+          "@type": "SoftwareApplication",
           "name": "CodeTogether",
           "description": "A real-time collaborative code editor with live syncing and cursor sharing.",
-          "url": "https://codetogetherfrontend.onrender.com/"
+          "url": "https://codetogetherfrontend.onrender.com/",
+          "applicationCategory": "DeveloperApplication",
+          "operatingSystem": "Web Browser"
         },
         {
-          "@type": "CreativeWork",
+          "@type": "WebApplication",
           "name": "CareerConnect",
           "description": "A comprehensive PHP-based job application portal for job seekers and administrators.",
-          "url": "https://careerconnect.wuaze.com/"
+          "url": "https://careerconnect.wuaze.com/",
+          "applicationCategory": "BusinessApplication"
         },
         {
-          "@type": "CreativeWork",
+          "@type": "SoftwareApplication",
           "name": "Nyx",
           "description": "A sophisticated full-stack AI chat application featuring Nyx, a cryptic AI oracle.",
-          "url": "https://nyxai.onrender.com/"
+          "url": "https://nyxai.onrender.com/",
+          "applicationCategory": "ChatApplication"
         }
       ],
       "description": "Final-year B.Tech student at SOA University (ITER), specializing in Computer Science & IT. Full Stack Developer, Web Developer, MERN Developer working on modern web apps and AI assistants like Nyx."

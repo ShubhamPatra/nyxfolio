@@ -30,7 +30,7 @@ const SimpleNavbar = () => {
         onClick={toggleMenu}
         style={{
           background: 'none',
-          border: '1px solid #2a2d3a',
+          border: '1px solid #2a2d2d',
           color: 'white',
           padding: '8px',
           borderRadius: '4px',
@@ -56,10 +56,10 @@ const SimpleNavbar = () => {
         left: window.innerWidth <= 768 ? '0' : 'auto',
         right: window.innerWidth <= 768 ? '0' : 'auto',
         background: window.innerWidth <= 768 ? '#1a1d29' : 'transparent',
-        border: window.innerWidth <= 768 ? '1px solid #2a2d3a' : 'none',
+        border: window.innerWidth <= 768 ? '1px solid #2a2d2d' : 'none',
         borderTop: 'none'
       }}>
-        <li style={{ margin: 0, padding: 0, borderBottom: window.innerWidth <= 768 ? '1px solid #2a2d3a' : 'none' }}>
+        <li style={{ margin: 0, padding: 0, borderBottom: window.innerWidth <= 768 ? '1px solid #2a2d2d' : 'none' }}>
           <a href="#home" style={{ 
             color: 'white', 
             textDecoration: 'none', 
@@ -70,7 +70,7 @@ const SimpleNavbar = () => {
             Home
           </a>
         </li>
-        <li style={{ margin: 0, padding: 0, borderBottom: window.innerWidth <= 768 ? '1px solid #2a2d3a' : 'none' }}>
+        <li style={{ margin: 0, padding: 0, borderBottom: window.innerWidth <= 768 ? '1px solid #2a2d2d' : 'none' }}>
           <a href="#about" style={{ 
             color: 'white', 
             textDecoration: 'none', 
@@ -81,7 +81,7 @@ const SimpleNavbar = () => {
             About
           </a>
         </li>
-        <li style={{ margin: 0, padding: 0, borderBottom: window.innerWidth <= 768 ? '1px solid #2a2d3a' : 'none' }}>
+        <li style={{ margin: 0, padding: 0, borderBottom: window.innerWidth <= 768 ? '1px solid #2a2d2d' : 'none' }}>
           <a href="#experience" style={{ 
             color: 'white', 
             textDecoration: 'none', 
@@ -92,7 +92,7 @@ const SimpleNavbar = () => {
             Experience
           </a>
         </li>
-        <li style={{ margin: 0, padding: 0, borderBottom: window.innerWidth <= 768 ? '1px solid #2a2d3a' : 'none' }}>
+        <li style={{ margin: 0, padding: 0, borderBottom: window.innerWidth <= 768 ? '1px solid #2a2d2d' : 'none' }}>
           <a href="#skills" style={{ 
             color: 'white', 
             textDecoration: 'none', 
@@ -103,7 +103,7 @@ const SimpleNavbar = () => {
             Skills
           </a>
         </li>
-        <li style={{ margin: 0, padding: 0, borderBottom: window.innerWidth <= 768 ? '1px solid #2a2d3a' : 'none' }}>
+        <li style={{ margin: 0, padding: 0, borderBottom: window.innerWidth <= 768 ? '1px solid #2a2d2d' : 'none' }}>
           <a href="#projects" style={{ 
             color: 'white', 
             textDecoration: 'none', 

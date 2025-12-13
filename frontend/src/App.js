@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import "./styles/App.css";
 import SEO from "./components/SEO"; // import the SEO component
 import Hero from "./components/Hero";
-import ChatModal from "./components/ChatModal";
 import Projects from "./components/Projects";
 import About from "./components/About";
 import Contact from "./components/Contact";
@@ -11,6 +10,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Experience from "./components/Experience";
 import NotFound from "./components/NotFound";
+import InstallPrompt from "./components/InstallPrompt";
 
 function App() {
   const [is404, setIs404] = useState(false);
@@ -43,9 +43,8 @@ function App() {
       <Skills />
       <Projects />
       <Contact />
-      {/* ChatModal is now integrated into Contact section */}
-      <ChatModal />
       <Footer />
+      <InstallPrompt />
     </div>
   );
 }

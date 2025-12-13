@@ -43,7 +43,7 @@ const ParticleBackground = () => {
       }
 
       draw() {
-        ctx.fillStyle = `rgba(0, 255, 224, ${this.opacity})`;
+        ctx.fillStyle = `rgba(211, 238, 229, ${this.opacity})`;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fill();

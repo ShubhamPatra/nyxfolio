@@ -181,11 +181,12 @@ function Contact() {
         id="contact"
         aria-labelledby="contact-heading"
       >
-        <h2 id="contact-heading">Contact Me</h2>
-        <p>
-          If you'd like to collaborate, hire, or just chat, drop a message below
-          or email me directly.
-        </p>
+        <div className="contact-container">
+          <h2 id="contact-heading">Contact Me</h2>
+          <p>
+            If you'd like to collaborate, hire, or just chat, drop a message below
+            or email me directly.
+          </p>
 
         <div className="form-container-glass">
           <form className="contact-form" onSubmit={handleSubmit}>
@@ -364,6 +365,7 @@ function Contact() {
             <FaDownload className="button-icon" />
             Download Resume
           </a>
+        </div>
         </div>
       </section>
     </section>

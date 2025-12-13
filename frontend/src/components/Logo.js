@@ -331,7 +331,7 @@ const logoStyles = `
   
   .logo-component:hover .logo-svg .logo-domain {
     fill: var(--color-secondary-100);
-    filter: drop-shadow(0 0 4px rgba(0, 255, 224, 0.4));
+    filter: drop-shadow(0 0 4px rgba(211, 238, 229, 0.4));
     transition: fill var(--duration-200) var(--ease-out), filter var(--duration-200) var(--ease-out);
   }
   

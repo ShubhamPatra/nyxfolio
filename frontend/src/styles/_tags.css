@@ -45,6 +45,25 @@
   color: var(--color-secondary-100);
 }
 
+/* ===== TAGS RESPONSIVE & MOBILE OPTIMIZATIONS ===== */
+
+/* Disable hover effects on touch devices, use active states instead */
+@media (hover: none) and (pointer: coarse) {
+  .tag:hover {
+    transform: none;
+  }
+  
+  .tag:active {
+    transform: scale(0.95);
+    transition: transform 0.1s ease-out;
+  }
+}
+
+/* Preserve hover effects on devices with hover capability */
+@media (hover: hover) and (pointer: fine) {
+  /* Hover styles already defined above */
+}
+
 /* Tag Variants */
 
 /* Default Variant - Standard styling (uses base tag styles) */

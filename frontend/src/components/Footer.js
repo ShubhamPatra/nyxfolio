@@ -125,10 +125,6 @@ const Footer = () => {
           <p className="footer-text">
             © {currentYear} Shubham Patra. All rights reserved.
           </p>
-          <p className="footer-text footer-tagline">
-            Crafted with <FaHeart className="footer-heart" aria-label="love" />{" "}
-            and lots of coffee ☕
-          </p>
         </div>
 
         <button

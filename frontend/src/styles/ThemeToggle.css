@@ -1,6 +1,6 @@
 .theme-toggle {
   background: var(--bg-elevated, rgba(42, 45, 58, 0.8));
-  border: 1px solid var(--border-primary, #2a2d3a);
+  border: 1px solid var(--border-primary, #2a2d2d);
   color: var(--text-primary, #ffffff);
   padding: 0.5rem;
   border-radius: 6px;
@@ -43,14 +43,14 @@
 
 .theme-toggle:hover {
   background: var(--bg-glass, rgba(42, 45, 58, 0.95));
-  border-color: var(--text-accent, #64ffda);
-  color: var(--text-accent, #64ffda);
+  border-color: var(--text-accent, #d3eee5);
+  color: var(--text-accent, #d3eee5);
   transform: scale(var(--haptic-scale-up, 1.02));
-  box-shadow: var(--shadow-md, 0 4px 6px -1px rgba(0, 0, 0, 0.1)), var(--shadow-glow-sm, 0 0 5px rgba(0, 255, 224, 0.3));
+  box-shadow: var(--shadow-md, 0 4px 6px -1px rgba(0, 0, 0, 0.1)), var(--shadow-glow-sm, 0 0 5px rgba(211, 238, 229, 0.3));
 }
 
 .theme-toggle:focus {
-  outline: 2px solid var(--text-accent, #64ffda);
+  outline: 2px solid var(--text-accent, #d3eee5);
   outline-offset: 2px;
 }
 
@@ -84,6 +84,8 @@
     font-size: 1.1rem;
     bottom: 16px;
     right: 16px;
+    min-height: 48px;
+    min-width: 48px;
   }
 }
 

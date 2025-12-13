@@ -22,7 +22,7 @@
   height: 600px;
   background: radial-gradient(
     circle at center,
-    rgba(0, 255, 224, 0.05) 0%,
+    rgba(211, 238, 229, 0.05) 0%,
     transparent 70%
   );
   pointer-events: none;
@@ -44,19 +44,19 @@
   line-height: var(--leading-none);
   margin: 0;
   margin-bottom: var(--space-4);
-  text-shadow: 0 0 40px rgba(0, 255, 224, 0.3);
+  text-shadow: 0 0 40px rgba(211, 238, 229, 0.3);
   animation: glow 2s ease-in-out infinite alternate;
 }
 
 @keyframes glow {
   from {
-    text-shadow: 0 0 20px rgba(0, 255, 224, 0.3),
-                 0 0 30px rgba(0, 255, 224, 0.2);
+    text-shadow: 0 0 20px rgba(211, 238, 229, 0.3),
+                 0 0 30px rgba(211, 238, 229, 0.2);
   }
   to {
-    text-shadow: 0 0 30px rgba(0, 255, 224, 0.5),
-                 0 0 40px rgba(0, 255, 224, 0.3),
-                 0 0 50px rgba(0, 255, 224, 0.2);
+    text-shadow: 0 0 30px rgba(211, 238, 229, 0.5),
+                 0 0 40px rgba(211, 238, 229, 0.3),
+                 0 0 50px rgba(211, 238, 229, 0.2);
   }
 }
 
@@ -183,7 +183,7 @@
 @media (prefers-reduced-motion: reduce) {
   .not-found-heading {
     animation: none;
-    text-shadow: 0 0 30px rgba(0, 255, 224, 0.4);
+    text-shadow: 0 0 30px rgba(211, 238, 229, 0.4);
   }
 
   .not-found-button {

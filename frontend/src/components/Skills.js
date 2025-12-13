@@ -31,20 +31,22 @@ function Skills() {
   return (
     <section className="section" aria-labelledby="skills-heading">
       <section ref={ref} className={`skills fade-in ${isVisible ? 'visible' : ''}`} id="skills">
-        <h2 id="skills-heading">Skills &amp; Tools</h2>
-        
-        <div className="skills-grid">
-          {skillsData.map((skill, index) => (
-            <div 
-              key={skill.name} 
-              className={`skill-item slide-in-left ${isVisible ? 'visible' : ''}`}
-              style={{ animationDelay: `${index * 50}ms` }}
-            >
-              <Tag variant="skill" icon={skill.icon}>
-                {skill.name}
-              </Tag>
-            </div>
-          ))}
+        <div className="skills-container">
+          <h2 id="skills-heading">Skills &amp; Tools</h2>
+          
+          <div className="skills-grid">
+            {skillsData.map((skill, index) => (
+              <div 
+                key={skill.name} 
+                className={`skill-item slide-in-left ${isVisible ? 'visible' : ''}`}
+                style={{ animationDelay: `${index * 50}ms` }}
+              >
+                <Tag variant="skill" icon={skill.icon}>
+                  {skill.name}
+                </Tag>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
     </section>

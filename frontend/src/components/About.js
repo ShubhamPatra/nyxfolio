@@ -18,34 +18,34 @@ function About() {
       <div className="about-container">
         <div className="about-content">
           <p>
-            I'm <strong>Shubham Patra</strong>, a final-year B.Tech student at
-            ITER, SOA University, specializing in Computer Science & Information
-            Technology. I focus on full-stack web development and love solving
-            real-world problems through clean, efficient, and scalable code.
+            I'm <strong>Shubham Patra</strong>, a final-year B.Tech student in
+            Computer Science & Information Technology at ITER, SOA University,
+            with a strong focus on full-stack web development and building
+            systems that solve real problems.
           </p>
           <p>
-            From building a real-time collaborative code editor to creating AI
-            assistants like Nyx, I enjoy working on projects that are practical,
-            creative, and impactful. I value logic over layout and simplicity
-            over overengineering.
+            I enjoy turning ideas into scalable, production-ready
+            applications—from real-time collaborative tools to AI-powered
+            assistants like Nyx. I care more about logic than layout and prefer
+            simplicity over overengineering.
           </p>
           <p>
-            Currently, I'm working as a{" "}
-            <strong>Full Stack Developer Intern</strong> at Kurators,
-            collaborating on live production features and following Agile
-            workflows. It's been a great opportunity to build scalable web apps
-            and gain industry-level experience.
-          </p>
-          <p>
-            I thrive in late-night coding sessions, powered by coffee. I'm
-            constantly learning, building, and exploring new ideas — preferably
-            in dark mode.
+            Recently, I completed a{" "}
+            <strong>Full Stack Developer Internship</strong> at Kurators (Aug–Dec
+            2025), where I worked on live production features, collaborated with
+            cross-functional teams, and followed Agile development workflows. The
+            experience helped me understand how real-world systems are built,
+            optimized, and maintained at scale.
           </p>
           <p>
             I believe in shipping fast, learning by doing, and writing code
-            that's not just functional but also readable and maintainable. Clean
-            architecture, meaningful variable names, and thoughtful
-            problem-solving are core principles I follow.
+            that's easy to read and maintain. Clean architecture, meaningful
+            variable names, and thoughtful problem-solving guide everything I
+            build.
+          </p>
+          <p>
+            I'm constantly exploring new technologies, improving my craft, and
+            building things that actually matter.
           </p>
         </div>
 

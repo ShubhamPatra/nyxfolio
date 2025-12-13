@@ -2,7 +2,7 @@
 :root {
   /* ===== COLOR PALETTE ===== */
 
-  /* Primary Colors - Dark Theme Base */
+  /* Primary Colors - Charcoal Theme Base */
   --color-primary-900: #0a0a0a;
   --color-primary-800: #0e0e0e;
   --color-primary-700: #111111;
@@ -14,25 +14,45 @@
   --color-primary-100: #666666;
   --color-primary-50: #808080;
 
-  /* Secondary Colors - Cyan/Teal Accent */
-  --color-secondary-900: #003d36;
-  --color-secondary-800: #004d44;
-  --color-secondary-700: #006b5d;
-  --color-secondary-600: #008a76;
-  --color-secondary-500: #00a88f;
-  --color-secondary-400: #00c7a8;
-  --color-secondary-300: #00e6c1;
-  --color-secondary-200: #00ffe0;
-  --color-secondary-100: #33ffea;
-  --color-secondary-50: #66fff4;
+  /* Secondary Colors - Teal/Mint Accent */
+  --color-secondary-900: #0d3d2f;
+  --color-secondary-800: #115542;
+  --color-secondary-700: #157052;
+  --color-secondary-600: #1a8c64;
+  --color-secondary-500: #26d99d;
+  --color-secondary-400: #91d4be;
+  --color-secondary-300: #bae5d5;
+  --color-secondary-200: #d3eee5;
+  --color-secondary-100: #e8f7f2;
+  --color-secondary-50: #f4fbf9;
 
   /* Accent Colors */
-  --color-accent-purple: #8b5cf6;
-  --color-accent-blue: #3b82f6;
+  --color-accent-mint: #91d4be;
+  --color-accent-teal: #26d99d;
+  --color-accent-blue: #8ca6d9;
+  --color-accent-purple: #a936e2;
+  --color-accent-cyan: #30c9e8;
+  --color-accent-lime: #afdb57;
+  --color-accent-magenta: #b82e8a;
   --color-accent-green: #10b981;
   --color-accent-yellow: #f59e0b;
   --color-accent-red: #ef4444;
   --color-accent-pink: #ec4899;
+
+  /* Chart Colors */
+  --chart-1: #26d99d;
+  --chart-2: #a936e2;
+  --chart-3: #30c9e8;
+  --chart-4: #afdb57;
+  --chart-5: #b82e8a;
+
+  /* UI Specific Colors */
+  --color-card: #101412;
+  --color-muted-bg: #2a2d2d;
+  --color-input: #3f4040;
+  --color-focus: #d0d6d8;
+  --color-destructive: #442222;
+  --color-destructive-text: #f87272;
 
   /* Neutral Colors */
   --color-white: #ffffff;
@@ -49,41 +69,47 @@
   --color-gray-900: #111827;
 
   /* Semantic Colors */
-  --color-success: var(--color-accent-green);
-  --color-warning: var(--color-accent-yellow);
-  --color-error: var(--color-accent-red);
-  --color-info: var(--color-accent-blue);
+  --color-success: #26d99d;
+  --color-warning: #f59e0b;
+  --color-error: #f87272;
+  --color-info: #8ca6d9;
 
   /* Background Colors */
-  --bg-primary: var(--color-primary-900);
-  --bg-secondary: var(--color-primary-800);
-  --bg-tertiary: var(--color-primary-700);
-  --bg-surface: var(--color-primary-600);
-  --bg-elevated: var(--color-primary-500);
+  --bg-primary: #191f1d;
+  --bg-secondary: #101412;
+  --bg-tertiary: #272e2f;
+  --bg-surface: #101412;
+  --bg-elevated: #2a2d2d;
   --bg-overlay: rgba(0, 0, 0, 0.8);
   --bg-glass: rgba(255, 255, 255, 0.05);
 
   /* Text Colors */
-  --text-primary: var(--color-white);
-  --text-secondary: var(--color-gray-300);
+  --text-primary: #91d4be;
+  --text-secondary: #bac3c5;
   --text-tertiary: var(--color-gray-400);
-  --text-muted: var(--color-gray-500);
-  --text-accent: var(--color-secondary-200);
-  --text-inverse: var(--color-black);
+  --text-muted: #bac3c5;
+  --text-accent: #d3eee5;
+  --text-accent-secondary: #8ca6d9;
+  --text-inverse: #191f1d;
+
+  /* CTA & Button Colors */
+  --btn-primary-bg: #d3eee5;
+  --btn-primary-text: #191f1d;
+  --btn-secondary-bg: #272e2f;
+  --btn-secondary-text: #91d4be;
 
   /* Border Colors */
-  --border-primary: var(--color-primary-400);
-  --border-secondary: var(--color-primary-300);
-  --border-accent: var(--color-secondary-200);
-  --border-focus: var(--color-secondary-400);
+  --border-primary: #2a2d2d;
+  --border-secondary: #373b43;
+  --border-accent: #d3eee5;
+  --border-focus: #d0d6d8;
 
   /* ===== TYPOGRAPHY SCALE ===== */
 
   /* Font Families */
-  --font-primary: "Segoe UI", -apple-system, BlinkMacSystemFont, "Roboto",
-    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  --font-secondary: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono",
+  --font-primary: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    "Oxygen", "Ubuntu", "Cantarell", "Helvetica Neue", sans-serif;
+  --font-secondary: "JetBrains Mono", "SF Mono", "Monaco", "Inconsolata", "Roboto Mono",
     "Source Code Pro", monospace;
   --font-heading: "Inter", var(--font-primary);
 
@@ -104,11 +130,11 @@
 
   /* Line Heights */
   --leading-none: 1;
-  --leading-tight: 1.25;
-  --leading-snug: 1.375;
+  --leading-tight: 1.2;
+  --leading-snug: 1.35;
   --leading-normal: 1.5;
-  --leading-relaxed: 1.625;
-  --leading-loose: 2;
+  --leading-relaxed: 1.65;
+  --leading-loose: 1.8;
 
   /* Font Weights */
   --font-thin: 100;
@@ -122,12 +148,12 @@
   --font-black: 900;
 
   /* Letter Spacing */
-  --tracking-tighter: -0.05em;
-  --tracking-tight: -0.025em;
+  --tracking-tighter: -0.04em;
+  --tracking-tight: -0.02em;
   --tracking-normal: 0em;
-  --tracking-wide: 0.025em;
-  --tracking-wider: 0.05em;
-  --tracking-widest: 0.1em;
+  --tracking-wide: 0.02em;
+  --tracking-wider: 0.04em;
+  --tracking-widest: 0.08em;
 
   /* ===== SPACING SCALE (8px Grid System) ===== */
 
@@ -194,10 +220,10 @@
   --shadow-none: 0 0 #0000;
 
   /* Glow Shadows (for accent elements) */
-  --shadow-glow-sm: 0 0 5px rgba(0, 255, 224, 0.3);
-  --shadow-glow-md: 0 0 10px rgba(0, 255, 224, 0.4);
-  --shadow-glow-lg: 0 0 20px rgba(0, 255, 224, 0.5);
-  --shadow-glow-xl: 0 0 30px rgba(0, 255, 224, 0.6);
+  --shadow-glow-sm: 0 0 5px rgba(211, 238, 229, 0.15);
+  --shadow-glow-md: 0 0 10px rgba(211, 238, 229, 0.20);
+  --shadow-glow-lg: 0 0 20px rgba(211, 238, 229, 0.25);
+  --shadow-glow-xl: 0 0 30px rgba(211, 238, 229, 0.30);
 
   /* ===== ANIMATION & TRANSITIONS ===== */
 
@@ -279,7 +305,7 @@
   --input-height: var(--space-10);
   --input-padding-x: var(--space-3);
   --input-border-width: 1px;
-  --input-focus-ring: 0 0 0 3px rgba(0, 255, 224, 0.1);
+  --input-focus-ring: 0 0 0 3px rgba(208, 214, 216, 0.15);
 
   /* Cards */
   --card-padding: var(--space-6);
@@ -345,7 +371,7 @@
 
   /* Icon Animations */
   --icon-scale-hover: 1.15;
-  --icon-glow-color: var(--color-secondary-200);
+  --icon-glow-color: #91d4be;
   --icon-transition: transform var(--duration-200) var(--ease-out),
     color var(--duration-200) var(--ease-out),
     filter var(--duration-200) var(--ease-out);

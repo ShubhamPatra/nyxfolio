@@ -230,14 +230,14 @@ p,
 
 /* Ensure text selection has sufficient contrast */
 ::selection {
-  background-color: var(--color-secondary-400, #00c7a8);
-  color: var(--text-inverse, #000000);
+  background-color: var(--color-secondary-400, #91d4be);
+  color: var(--text-inverse, #191f1d);
   /* Ensure minimum 4.5:1 contrast ratio for WCAG AA compliance */
 }
 
 ::-moz-selection {
-  background-color: var(--color-secondary-400, #00c7a8);
-  color: var(--text-inverse, #000000);
+  background-color: var(--color-secondary-400, #91d4be);
+  color: var(--text-inverse, #191f1d);
 }
 
 /* ===== ACCESSIBILITY ENHANCEMENTS ===== */
@@ -249,7 +249,7 @@ input:focus,
 textarea:focus,
 select:focus,
 [tabindex]:focus {
-  outline: 2px solid var(--border-focus, #00c7a8);
+  outline: 2px solid var(--border-focus, #d0d6d8);
   outline-offset: 2px;
 }
 

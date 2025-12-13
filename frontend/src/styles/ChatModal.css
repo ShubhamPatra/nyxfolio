@@ -225,7 +225,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: var(--color-secondary-300);
+  color: var(--text-accent, #d3eee5);
   font-size: var(--text-sm);
   font-weight: var(--font-semibold);
   animation: floatHint var(--duration-2000) var(--ease-in-out) infinite;
@@ -238,7 +238,7 @@
   margin-top: var(--space-1);
   border-left: var(--space-1) solid transparent;
   border-right: var(--space-1) solid transparent;
-  border-top: 8px solid var(--color-secondary-300);
+  border-top: 8px solid var(--text-accent, #d3eee5);
 }
 
 .chat-modal {
@@ -253,10 +253,10 @@
   flex-direction: column;
   overflow: hidden;
   z-index: var(--z-modal);
-  background: var(--bg-glass);
+  background: var(--bg-surface, #1f1a14);
   backdrop-filter: blur(var(--blur-lg));
   -webkit-backdrop-filter: blur(var(--blur-lg));
-  border: 1px solid var(--color-secondary-500);
+  border: 1px solid var(--border-accent, #d3eee5);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg), var(--shadow-glow-md);
   color: var(--text-primary);
@@ -270,14 +270,15 @@
   align-items: center;
   font-weight: var(--font-semibold);
   font-size: var(--text-lg);
-  background: linear-gradient(135deg, var(--color-secondary-600), var(--color-secondary-700));
-  border-bottom: 2px solid var(--color-secondary-400);
+  background: linear-gradient(135deg, var(--btn-primary-bg, #d3eee5), var(--color-secondary-400, #91d4be));
+  color: var(--btn-primary-text, #191f1d);
+  border-bottom: 2px solid var(--border-accent, #d3eee5);
 }
 
 .chat-header .close-btn {
   background: transparent;
   border: none;
-  color: var(--text-secondary);
+  color: var(--btn-primary-text, #191f1d);
   font-size: var(--text-xl);
   cursor: pointer;
   transition: color var(--duration-150) var(--ease-out), box-shadow var(--duration-150) var(--ease-out), transform var(--haptic-duration) var(--ease-out);
@@ -287,10 +288,11 @@
 
 .chat-header .close-btn:hover,
 .chat-header .close-btn:focus {
-  color: var(--text-secondary);
+  color: var(--btn-primary-text, #191f1d);
   box-shadow: none;
   transform: scale(var(--haptic-scale-up));
   outline: none;
+  opacity: 0.8;
 }
 
 .chat-header .close-btn:active {
@@ -318,8 +320,8 @@
 
 .chat-msg.user {
   align-self: flex-end;
-  background-color: var(--color-secondary-600);
-  color: var(--text-primary);
+  background-color: var(--btn-primary-bg, #d3eee5);
+  color: var(--btn-primary-text, #191f1d);
   border-bottom-right-radius: 0;
   box-shadow: var(--shadow-glow-sm);
 }
@@ -327,8 +329,8 @@
 .chat-msg.nyx {
   align-self: flex-start;
   padding: var(--space-3);
-  background: linear-gradient(135deg, var(--color-secondary-300), var(--color-secondary-200));
-  color: var(--text-inverse);
+  background: var(--color-muted-bg, #2a2d2d);
+  color: var(--text-primary, #91d4be);
   border-bottom-left-radius: 0;
   box-shadow: var(--shadow-glow-sm);
 }
@@ -344,8 +346,8 @@
   display: inline-block;
   width: var(--space-4);
   height: var(--space-4);
-  border: var(--input-border-width) solid var(--text-secondary);
-  border-top-color: var(--color-secondary-400);
+  border: var(--input-border-width) solid var(--text-muted, #bac3c5);
+  border-top-color: var(--text-accent, #d3eee5);
   border-radius: var(--radius-full);
   animation: spinner var(--duration-500) var(--ease-in-out) infinite;
 }
@@ -365,7 +367,7 @@
   display: block;
   width: var(--space-2);
   height: var(--space-2);
-  background: var(--color-secondary-400);
+  background: var(--text-accent, #d3eee5);
   border-radius: var(--radius-full);
   animation: typingDots var(--duration-1000) var(--ease-in-out) infinite;
 }
@@ -382,25 +384,25 @@
   display: flex;
   gap: var(--space-2);
   padding: var(--space-3);
-  background: var(--bg-glass);
+  background: var(--bg-secondary, #101412);
   backdrop-filter: blur(var(--blur-sm));
   -webkit-backdrop-filter: blur(var(--blur-sm));
-  border-top: 1px solid var(--color-secondary-500);
+  border-top: 1px solid var(--border-accent, #d3eee5);
 }
 
 .chat-input input {
   flex: 1;
-  background: var(--color-secondary-800);
-  border: none;
+  background: var(--color-input, #3f4040);
+  border: 1px solid var(--border-primary, #2a2d2d);
   padding: var(--space-2);
   border-radius: var(--radius-sm);
-  color: var(--text-primary);
+  color: var(--text-primary, #91d4be);
   outline: none;
   transition: box-shadow var(--duration-150) var(--ease-out);
 }
 
 .chat-input input:focus {
-  box-shadow: 0 0 0 3px var(--color-secondary-400);
+  box-shadow: 0 0 0 2px var(--border-focus, #d0d6d8);
 }
 
 .chat-input input::placeholder {
@@ -409,8 +411,8 @@
 
 .chat-input button {
   padding: var(--space-2) var(--space-4);
-  background: linear-gradient(135deg, var(--color-secondary-500), var(--color-secondary-400));
-  color: var(--text-inverse);
+  background: var(--btn-primary-bg, #d3eee5);
+  color: var(--btn-primary-text, #191f1d);
   border: none;
   border-radius: var(--radius-sm);
   cursor: pointer;
@@ -429,7 +431,7 @@
   width: 0;
   height: 0;
   border-radius: var(--radius-full);
-  background: var(--ripple-color);
+  background: rgba(0, 0, 0, 0.1);
   transform: translate(-50%, -50%);
   transition: width var(--ripple-duration) ease-out, height var(--ripple-duration) ease-out;
   pointer-events: none;
@@ -438,9 +440,11 @@
 
 .chat-input button:hover,
 .chat-input button:focus {
-  background: linear-gradient(135deg, var(--color-secondary-500), var(--color-secondary-400));
+  background: var(--btn-primary-bg, #d3eee5);
+  color: var(--btn-primary-text, #191f1d);
   transform: scale(var(--haptic-scale-up));
   box-shadow: var(--shadow-glow-sm);
+  filter: brightness(1.05);
   outline: none;
 }
 

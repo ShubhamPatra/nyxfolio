@@ -7,6 +7,9 @@
   text-align: center;
   width: 100%;
   box-sizing: border-box;
+}
+
+.contact-container {
   max-width: 1200px;
   margin: 0 auto;
 }
@@ -48,6 +51,173 @@
   margin-bottom: var(--space-12);
 }
 
+@media (max-width: 768px) {
+  .contact {
+    padding: var(--space-12) var(--space-4);
+  }
+
+  .contact-container {
+    padding: 0;
+    max-width: 100%;
+  }
+
+  .contact h2 {
+    font-size: clamp(1.5rem, 6vw, 2.25rem);
+    margin-bottom: var(--space-3);
+  }
+
+  .contact p {
+    font-size: clamp(0.9375rem, 4vw, 1.0625rem);
+    margin-bottom: var(--space-4);
+    padding: 0 var(--space-2);
+  }
+
+  .contact-buttons {
+    gap: var(--space-4);
+    margin-bottom: var(--space-10);
+    padding: 0 var(--space-2);
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .email-button,
+  .resume-button {
+    width: 100%;
+    max-width: 400px;
+    justify-content: center;
+  }
+
+  .form-container-glass {
+    margin: 0;
+    width: 100%;
+  }
+
+  .contact-form {
+    padding: var(--space-6);
+  }
+
+  .form-group label {
+    font-size: var(--text-sm);
+  }
+}
+
+/* ===== CONTACT RESPONSIVE & MOBILE OPTIMIZATIONS ===== */
+
+/* Mobile touch targets and form inputs */
+@media (max-width: 768px) {
+  input[type="text"],
+  input[type="email"],
+  textarea,
+  select {
+    min-height: 48px;
+    padding: var(--space-3) var(--space-4);
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+
+  textarea {
+    min-height: 120px;
+  }
+  
+  /* Stack buttons vertically */
+  .contact-buttons {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-4);
+  }
+  
+  .email-button,
+  .resume-button.secondary,
+  .chat-button.tertiary {
+    width: 100%;
+    max-width: 320px;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact {
+    padding-left: var(--space-3);
+    padding-right: var(--space-3);
+  }
+  
+  .contact-buttons {
+    gap: var(--space-3);
+  }
+  
+  .email-button,
+  .resume-button.secondary,
+  .chat-button.tertiary {
+    max-width: 100%;
+  }
+  
+  .contact-buttons > *,
+  .project-links > * {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    font-size: 16px;
+    padding: var(--space-3);
+    width: 100%;
+  }
+
+  .contact-form button[type="submit"] {
+    width: 100%;
+    padding: var(--space-4);
+    font-size: var(--text-base);
+  }
+}
+
+@media (max-width: 480px) {
+  .contact {
+    padding: var(--space-10) var(--space-3);
+  }
+
+  .contact h2 {
+    font-size: clamp(1.25rem, 7vw, 1.75rem);
+    margin-bottom: var(--space-2);
+  }
+
+  .contact p {
+    font-size: clamp(0.875rem, 4.5vw, 1rem);
+    margin-bottom: var(--space-3);
+  }
+
+  .contact-buttons {
+    gap: var(--space-3);
+    margin-bottom: var(--space-8);
+  }
+
+  .email-button,
+  .resume-button {
+    padding: var(--space-3) var(--space-4);
+    font-size: var(--text-sm);
+    min-height: 44px;
+  }
+
+  .contact-form {
+    padding: var(--space-4);
+    border-radius: var(--radius-lg);
+  }
+
+  .form-group {
+    margin-bottom: var(--space-4);
+  }
+
+  .form-group input,
+  .form-group textarea {
+    padding: var(--space-2-5);
+    font-size: var(--text-sm);
+  }
+
+  .contact-form button[type="submit"] {
+    padding: var(--space-3);
+    font-size: var(--text-sm);
+  }
+}
+
 /* Primary Button - Send Email */
 .email-button {
   display: inline-flex;
@@ -56,11 +226,11 @@
   gap: var(--space-2);
   height: var(--btn-height-md);
   padding: var(--space-3) var(--space-6);
-  background: var(--color-secondary-500);
-  color: var(--text-inverse);
+  background: var(--btn-primary-bg, #d3eee5);
+  color: var(--btn-primary-text, #191f1d);
   font-size: var(--text-base);
   font-weight: var(--font-medium);
-  border: 2px solid var(--color-secondary-500);
+  border: 2px solid var(--btn-primary-bg, #d3eee5);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
   text-decoration: none;
@@ -81,20 +251,23 @@
   width: 0;
   height: 0;
   border-radius: 50%;
-  background: var(--ripple-color);
+  background: rgba(0, 0, 0, 0.1);
   transform: translate(-50%, -50%);
   transition: width var(--ripple-duration) ease-out, height var(--ripple-duration) ease-out;
   pointer-events: none;
 }
 
 .email-button:hover {
-  background: var(--color-secondary-500);
-  border-color: var(--color-secondary-500);
+  background: var(--btn-primary-bg, #d3eee5);
+  color: var(--btn-primary-text, #191f1d);
+  border-color: var(--btn-primary-bg, #d3eee5);
   transform: translateY(-2px) scale(var(--haptic-scale-up));
   box-shadow: var(--haptic-shadow-hover);
+  filter: brightness(1.05);
 }
 
 .email-button:active {
+  color: var(--btn-primary-text, #191f1d);
   transform: translateY(0) scale(var(--haptic-scale-down));
   box-shadow: var(--haptic-shadow-press);
 }
@@ -242,15 +415,15 @@
 /* Glassmorphism Form Container */
 .form-container-glass {
   position: relative;
-  background: rgba(20, 25, 35, 0.6);
+  background: var(--bg-surface, #1f1a14);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--border-primary, #2a2d2d);
   border-radius: 24px;
   padding: var(--space-8);
   max-width: 650px;
   margin: 0 auto var(--space-8);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(211, 238, 229, 0.05) inset;
   overflow: visible;
 }
 
@@ -279,10 +452,10 @@
 .contact-form input,
 .contact-form textarea {
   width: 100%;
-  padding: 18px 16px 8px 16px;
-  background: rgba(30, 35, 45, 0.5);
-  color: var(--text-primary);
-  border: 2px solid rgba(255, 255, 255, 0.1);
+  padding: 16px;
+  background: var(--color-input, #3f4040);
+  color: var(--text-primary, #91d4be);
+  border: 2px solid var(--border-primary, #2a2d2d);
   border-radius: 12px;
   font-size: 16px;
   font-family: var(--font-primary);
@@ -297,18 +470,20 @@
 
 .contact-form input:hover,
 .contact-form textarea:hover {
-  border-color: rgba(255, 255, 255, 0.2);
-  background: rgba(30, 35, 45, 0.7);
+  border-color: var(--border-secondary, #373b43);
+  background: var(--color-input, #3f4040);
+  filter: brightness(1.1);
 }
 
 /* Floating Label Styles */
 .floating-field label {
   position: absolute;
   left: 16px;
-  top: 18px;
+  top: 50%;
+  transform: translateY(-50%);
   font-size: 16px;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--text-muted, #bac3c5);
   background: transparent;
   padding: 0 4px;
   pointer-events: none;
@@ -324,9 +499,10 @@
 .floating-field textarea:not(:placeholder-shown) ~ label {
   top: -10px;
   left: 12px;
+  transform: translateY(0);
   font-size: 12px;
-  color: rgba(0, 255, 224, 1);
-  background: rgba(20, 25, 35, 0.9);
+  color: var(--text-accent, #d3eee5);
+  background: var(--bg-surface, #1f1a14);
   padding: 0 6px;
   font-weight: 600;
 }
@@ -336,7 +512,7 @@
   top: -10px;
   left: 12px;
   font-size: 12px;
-  background: rgba(20, 25, 35, 0.9);
+  background: var(--bg-surface, #1f1a14);
   padding: 0 6px;
 }
 
@@ -344,21 +520,22 @@
 .contact-form input:focus,
 .contact-form textarea:focus {
   outline: none;
-  border-color: rgba(0, 255, 224, 0.6);
-  background: rgba(30, 35, 45, 0.8);
-  box-shadow: 0 0 0 3px rgba(0, 255, 224, 0.1), 0 0 20px rgba(0, 255, 224, 0.15);
+  border-color: var(--border-focus, #d0d6d8);
+  background: var(--color-input, #3f4040);
+  filter: brightness(1.15);
+  box-shadow: 0 0 0 3px rgba(211, 238, 229, 0.15), 0 0 20px rgba(211, 238, 229, 0.15);
 }
 
 /* Error State Styles */
 .input-error {
-  border-color: rgba(239, 68, 68, 0.6) !important;
-  background: rgba(239, 68, 68, 0.05) !important;
+  border-color: var(--color-destructive-text, #f87272) !important;
+  background: var(--color-destructive, #442222) !important;
   animation: shake 0.4s ease;
 }
 
 .input-error:focus {
-  border-color: rgba(239, 68, 68, 0.8) !important;
-  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15), 0 0 20px rgba(239, 68, 68, 0.1) !important;
+  border-color: var(--color-destructive-text, #f87272) !important;
+  box-shadow: 0 0 0 3px rgba(248, 114, 114, 0.2), 0 0 20px rgba(248, 114, 114, 0.1) !important;
 }
 
 .error-message {
@@ -366,7 +543,7 @@
   align-items: center;
   gap: 6px;
   font-size: 13px;
-  color: rgba(239, 68, 68, 1);
+  color: var(--color-destructive-text, #f87272);
   margin-top: 6px;
   animation: slideDown 0.3s ease;
 }
@@ -400,7 +577,7 @@
   align-items: center;
   margin-top: 6px;
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.4);
+  color: var(--text-muted, #bac3c5);
 }
 
 .char-count {
@@ -419,7 +596,7 @@
 
 .char-hint {
   font-size: 11px;
-  color: rgba(255, 255, 255, 0.3);
+  color: var(--text-tertiary, #9ca3af);
   font-style: italic;
 }
 
@@ -427,13 +604,19 @@
   resize: vertical;
   min-height: 150px;
   line-height: 1.6;
-  padding-top: 24px;
+  padding: 16px;
+}
+
+/* Textarea label should start at top */
+.floating-field textarea ~ label {
+  top: 24px;
+  transform: translateY(0);
 }
 
 .form-submit-button {
   width: 100%;
-  background: linear-gradient(135deg, rgba(0, 255, 224, 1), rgba(0, 200, 180, 1));
-  color: rgba(10, 15, 25, 1);
+  background: linear-gradient(135deg, rgba(211, 238, 229, 1), rgba(145, 212, 190, 1));
+  color: var(--btn-primary-text, #191f1d);
   border: none;
   padding: 16px 24px;
   font-size: 16px;
@@ -444,7 +627,7 @@
   position: relative;
   overflow: hidden;
   will-change: transform;
-  box-shadow: 0 4px 16px rgba(0, 255, 224, 0.3);
+  box-shadow: 0 4px 16px rgba(211, 238, 229, 0.3);
   letter-spacing: 0.5px;
   text-transform: uppercase;
   white-space: nowrap;
@@ -466,14 +649,14 @@
 }
 
 .form-submit-button:hover:not(:disabled) {
-  background: linear-gradient(135deg, rgba(0, 255, 224, 1), rgba(0, 200, 180, 1));
+  background: linear-gradient(135deg, rgba(211, 238, 229, 1), rgba(145, 212, 190, 1));
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0, 255, 224, 0.4);
+  box-shadow: 0 8px 24px rgba(211, 238, 229, 0.4);
 }
 
 .form-submit-button:active:not(:disabled) {
   transform: translateY(0) scale(0.98);
-  box-shadow: 0 2px 8px rgba(0, 255, 224, 0.3);
+  box-shadow: 0 2px 8px rgba(211, 238, 229, 0.3);
 }
 
 .form-submit-button:active:not(:disabled)::before {
@@ -491,7 +674,7 @@
 
 .form-submit-button:focus {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(0, 255, 224, 0.3), 0 4px 16px rgba(0, 255, 224, 0.3);
+  box-shadow: 0 0 0 3px rgba(211, 238, 229, 0.3), 0 4px 16px rgba(211, 238, 229, 0.3);
 }
 
 .form-status {
