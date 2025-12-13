@@ -4,19 +4,19 @@
   "description": "Full-stack developer specializing in React, Node.js, and modern web technologies. Features offline support and installable PWA.",
   "icons": [
     {
-      "src": "logo-icon.png",
+      "src": "logo-icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "logo-icon.png",
+      "src": "logo-icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "logo-icon.png",
+      "src": "logo-icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable"
