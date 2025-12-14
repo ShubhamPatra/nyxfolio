@@ -7,8 +7,8 @@ const projectList = [
   {
     name: "CodeTogether",
     description:
-      "A real-time collaborative code editor with live syncing and cursor sharing.",
-    stack: ["React", "Node", "Express", "Socket.io"],
+      "A real-time collaborative code editor enabling multiple developers to code simultaneously with live cursor tracking, integrated chat, file management, and syntax highlighting for multiple languages using WebSocket-based synchronization.",
+    stack: ["React", "TypeScript", "Node", "Express", "Socket.io"],
     category: "Web App",
     status: "Live",
     image: "./codetogether.png",
@@ -18,19 +18,41 @@ const projectList = [
   {
     name: "CareerConnect",
     description:
-      "A comprehensive PHP-based job application portal that enables job seekers to browse and apply for positions while providing administrators with powerful tools to manage job listings and applications through a secure dashboard interface.",
-    stack: ["PHP", "MySQL", "HTML", "CSS", "JavaScript"],
+      "A full-stack job portal with role-based authentication enabling recruiters to post jobs and manage applicants through admin dashboard with real-time statistics, data export, and secure file upload system with RESTful API endpoints.",
+    stack: ["PHP", "MySQL", "Bootstrap"],
     category: "Web App",
     status: "Live",
     image: "./careerconnect.png",
-    demoLink: "https://careerconnect.wuaze.com/",
+    demoLink: "https://careerconnect.infinityfreeapp.com",
     githubLink: "https://github.com/ShubhamPatra/CareerConnect"
+  },
+  {
+    name: "Student Management System",
+    description:
+      "A desktop application using Java Swing with 3-tier MVC architecture, implementing student registration, authentication, automated grade calculation for 6 subjects, and PDF report generation with OpenPDF library.",
+    stack: ["Java", "MySQL", "Java Swing", "JDBC", "OpenPDF"],
+    category: "Desktop App",
+    status: "Complete",
+    image: "./student-management-system.png",
+    demoLink: null,
+    githubLink: "https://github.com/ShubhamPatra/StudentManagementSystem"
+  },
+  {
+    name: "Nyxfolio",
+    description:
+      "An AI-powered portfolio with React 19 and dual Express.js backends, integrating Google Gemini API for intelligent chatbot interactions and secure contact form with rate limiting, XSS protection, and Helmet.js security measures. Achieved 95+ Lighthouse performance score.",
+    stack: ["React", "Node", "Express", "Gemini API"],
+    category: "Web App",
+    status: "Live",
+    image: "./nyxfolio.png",
+    demoLink: "https://www.shubhampatra.dev",
+    githubLink: "https://github.com/ShubhamPatra/nyxfolio"
   },
   {
     name: "Nyx",
     description:
-      "A sophisticated full-stack AI chat application featuring Nyx, a cryptic AI oracle with Moon Knight-inspired personality. Built with React 19, Vite 7, Express.js, and OpenRouter AI API integration.",
-    stack: ["React", "Node", "Express", "API"],
+      "A sophisticated full-stack AI chat application featuring Nyx, a cryptic AI oracle with Moon Knight-inspired personality. Built with React 19, Vite, Express.js, and OpenRouter API integration with intelligent model selection.",
+    stack: ["React", "Node", "Express", "OpenRouter API", "Vite"],
     category: "AI",
     status: "Live",
     image: "./nyx.png",
@@ -38,15 +60,15 @@ const projectList = [
     githubLink: "https://github.com/ShubhamPatra/Nyx"
   },
   {
-    name: "Student Management System",
+    name: "Bash System Maintenance Suite",
     description:
-      "A comprehensive Java Swing desktop application that enables educational institutions to manage student records, calculate grades, and generate PDF reports. The system provides administrators with tools to create student profiles and input marks, while students can access their personalized dashboards to view grades and performance metrics through a secure authentication interface.",
-    stack: ["Java", "MySQL", "Java Swing", "JDBC", "OpenPDF"],
-    category: "Desktop App",
+      "A comprehensive automation suite with 5 interconnected Bash scripts for Linux system maintenance, featuring a menu-driven interface for backup operations, system updates, log monitoring, and health diagnostics with real-time resource tracking.",
+    stack: ["Bash", "Linux", "Shell Scripting"],
+    category: "CLI Tool",
     status: "Complete",
-    image: "./student-management-system.png",
+    image: null,
     demoLink: null,
-    githubLink: "https://github.com/ShubhamPatra/StudentManagementSystem"
+    githubLink: "https://github.com/ShubhamPatra/Bash-System-Maintenance-Suite"
   }
 ];
 
@@ -66,11 +88,15 @@ function Projects() {
                 style={{ animationDelay: `${index * 150}ms` }}
               >
               <div className="project-image-wrapper">
-                <img
-                  src={project.image}
-                  alt={`${project.name} project screenshot`}
-                />
-                <div className="project-image-overlay"></div>
+                {project.image && (
+                  <>
+                    <img
+                      src={project.image}
+                      alt={`${project.name} project screenshot`}
+                    />
+                    <div className="project-image-overlay"></div>
+                  </>
+                )}
               </div>
               <div className="project-badges">
                 <Tag variant="category" className={`category-${project.category.toLowerCase().replace(/\s+/g, '-')}`}>
