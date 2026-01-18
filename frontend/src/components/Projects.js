@@ -5,6 +5,17 @@ import { useScrollAnimation } from "../hooks/useScrollAnimation";
 
 const projectList = [
   {
+    name: "Split-It",
+    description:
+      "A full-featured expense sharing application with real-time WebSocket updates, optimized debt simplification algorithm, multi-currency support, PWA capabilities, and payment confirmation flow. Features recurring expenses, push notifications, email digests, and comprehensive analytics.",
+    stack: ["React", "Node", "Express", "MongoDB", "Socket.io", "Tailwind CSS"],
+    category: "Web App",
+    status: "Live",
+    image: "./split-it.png",
+    demoLink: "https://split-it.live",
+    githubLink: "https://github.com/ShubhamPatra/split-it"
+  },
+  {
     name: "CodeTogether",
     description:
       "A real-time collaborative code editor enabling multiple developers to code simultaneously with live cursor tracking, integrated chat, file management, and syntax highlighting for multiple languages using WebSocket-based synchronization.",
