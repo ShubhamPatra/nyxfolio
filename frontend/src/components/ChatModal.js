@@ -1,12 +1,36 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import "../styles/ChatModal.css";
-import ChatbotLogo from "./ChatbotLogo";
+
+// New minimal chat icon SVG component
+const ChatIcon = () => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className="chat-icon-svg"
+    aria-hidden="true"
+  >
+    <path
+      d="M12 2C6.48 2 2 5.58 2 10c0 2.24 1.12 4.26 2.92 5.72L4 22l5.26-2.63C10.14 19.45 11.06 19.5 12 19.5c5.52 0 10-3.58 10-8.5S17.52 2 12 2z"
+      fill="currentColor"
+    />
+    <circle cx="8" cy="10" r="1.5" fill="var(--bg-surface, #1f1a14)" />
+    <circle cx="12" cy="10" r="1.5" fill="var(--bg-surface, #1f1a14)" />
+    <circle cx="16" cy="10" r="1.5" fill="var(--bg-surface, #1f1a14)" />
+  </svg>
+);
 
 function ChatModal() {
   const [isOpen, setIsOpen] = useState(false);
   const [chat, setChat] = useState([]);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+
+  // Dragging state
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+  const dragStartRef = useRef({ x: 0, y: 0 });
+  const modalRef = useRef(null);
 
   const inputRef = useRef(null);
   const buttonRef = useRef(null);
@@ -22,12 +46,12 @@ function ChatModal() {
     clearTimeout(attentionTimeoutRef.current);
     attentionTimeoutRef.current = setTimeout(() => {
       setButtonState("idle");
-    }, 800); // matches --btn-attention-duration
+    }, 800);
   }, []);
 
   // Schedule periodic attention between 10-15s
   const scheduleAttention = useCallback(() => {
-    const delay = Math.floor(Math.random() * 5000) + 10000; // 10000ms - 15000ms
+    const delay = Math.floor(Math.random() * 5000) + 10000;
     attentionTimeoutRef.current = setTimeout(() => {
       triggerAttention();
       scheduleAttention();
@@ -38,6 +62,8 @@ function ChatModal() {
   useEffect(() => {
     if (!isOpen) {
       scheduleAttention();
+      // Reset position when modal closes
+      setPosition({ x: 0, y: 0 });
     } else {
       setButtonState("active");
       clearTimeout(attentionTimeoutRef.current);
@@ -105,6 +131,65 @@ function ChatModal() {
     };
   }, []);
 
+  // Dragging handlers
+  const handleDragStart = useCallback((e) => {
+    // Only allow dragging from header
+    if (e.target.closest('.chat-header') && !e.target.closest('.close-btn')) {
+      setIsDragging(true);
+      const clientX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
+      const clientY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
+      dragStartRef.current = {
+        x: clientX - position.x,
+        y: clientY - position.y,
+      };
+      e.preventDefault();
+    }
+  }, [position]);
+
+  const handleDragMove = useCallback((e) => {
+    if (!isDragging) return;
+
+    const clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
+    const clientY = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
+
+    const newX = clientX - dragStartRef.current.x;
+    const newY = clientY - dragStartRef.current.y;
+
+    // Limit dragging within viewport
+    const modal = modalRef.current;
+    if (modal) {
+      const rect = modal.getBoundingClientRect();
+      const maxX = window.innerWidth - rect.width;
+      const maxY = window.innerHeight - rect.height;
+
+      setPosition({
+        x: Math.max(-maxX, Math.min(0, newX)),
+        y: Math.max(-maxY, Math.min(0, newY)),
+      });
+    }
+  }, [isDragging]);
+
+  const handleDragEnd = useCallback(() => {
+    setIsDragging(false);
+  }, []);
+
+  // Add global mouse/touch event listeners for dragging
+  useEffect(() => {
+    if (isDragging) {
+      window.addEventListener('mousemove', handleDragMove);
+      window.addEventListener('mouseup', handleDragEnd);
+      window.addEventListener('touchmove', handleDragMove, { passive: false });
+      window.addEventListener('touchend', handleDragEnd);
+    }
+
+    return () => {
+      window.removeEventListener('mousemove', handleDragMove);
+      window.removeEventListener('mouseup', handleDragEnd);
+      window.removeEventListener('touchmove', handleDragMove);
+      window.removeEventListener('touchend', handleDragEnd);
+    };
+  }, [isDragging, handleDragMove, handleDragEnd]);
+
   // Send user message and fetch Nyx's reply
   const handleSend = async () => {
     if (!input.trim()) return;
@@ -166,20 +251,9 @@ function ChatModal() {
 
   return (
     <>
-      {!isOpen && (
-        <div
-          className="nyx-speech-bubble"
-          aria-label="Chat assistant prompt"
-        >
-          <span className="speech-text">Talk to Nyx</span>
-          <div className="speech-pointer"></div>
-        </div>
-      )}
-
       <div
-        className={`nyx-floating-button${
-          buttonState !== "idle" ? ` nyx-floating-button--${buttonState}` : ""
-        }`}
+        className={`nyx-floating-button${buttonState !== "idle" ? ` nyx-floating-button--${buttonState}` : ""
+          }`}
         role="button"
         aria-label={isOpen ? "Close chat" : "Open Nyx AI assistant"}
         aria-live="polite"
@@ -192,17 +266,26 @@ function ChatModal() {
         onAnimationEnd={handleAnimationEnd}
         ref={buttonRef}
       >
-        <ChatbotLogo type="icon" size="sm" className="chat-logo" />
+        <ChatIcon />
       </div>
 
       {isOpen && (
         <div
-          className="chat-modal"
+          ref={modalRef}
+          className={`chat-modal ${isDragging ? 'chat-modal--dragging' : ''}`}
           role="dialog"
           aria-modal="true"
           aria-labelledby="chatTitle"
+          style={{
+            transform: `translate(${position.x}px, ${position.y}px)`,
+          }}
         >
-          <div className="chat-header">
+          <div
+            className="chat-header"
+            onMouseDown={handleDragStart}
+            onTouchStart={handleDragStart}
+            style={{ cursor: isDragging ? 'grabbing' : 'grab' }}
+          >
             <span id="chatTitle">Nyx</span>
             <button
               className="close-btn"
@@ -224,9 +307,8 @@ function ChatModal() {
               <div
                 key={idx}
                 className={`chat-msg ${msg.sender}`}
-                aria-label={`${msg.sender === "user" ? "You" : "Nyx"}: ${
-                  msg.text
-                }`}
+                aria-label={`${msg.sender === "user" ? "You" : "Nyx"}: ${msg.text
+                  }`}
               >
                 {msg.text.split("\n").map((line, i) => (
                   <p key={i}>{line}</p>

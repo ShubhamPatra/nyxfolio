@@ -1,9 +1,10 @@
 /* eslint-disable no-restricted-globals */
-// Service Worker for Shubham Patra Portfolio
-// Version 1.0.3 - Enhanced PWA features
+// Service Worker for Shubham Patra Portfolio (v1.shubhampatra.dev)
+// Version 1.0.4 - Subdomain-scoped PWA
 
-const CACHE_NAME = 'shubham-portfolio-v1.0.3';
-const RUNTIME_CACHE = 'runtime-cache-v1.0.3';
+// Subdomain-specific cache names to avoid conflicts with other subdomains
+const CACHE_NAME = 'v1-shubhampatra-portfolio-v1.0.4';
+const RUNTIME_CACHE = 'v1-shubhampatra-runtime-v1.0.4';
 
 // Assets to cache on install
 const PRECACHE_ASSETS = [
@@ -18,12 +19,12 @@ const PRECACHE_ASSETS = [
 // Install event - cache core assets
 self.addEventListener('install', (event) => {
   console.log('[ServiceWorker] Installing...');
-  
+
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then((cache) => {
         console.log('[ServiceWorker] Precaching app shell');
-        return cache.addAll(PRECACHE_ASSETS.map(url => new Request(url, {cache: 'reload'})));
+        return cache.addAll(PRECACHE_ASSETS.map(url => new Request(url, { cache: 'reload' })));
       })
       .then(() => self.skipWaiting())
       .catch((error) => {
@@ -35,7 +36,7 @@ self.addEventListener('install', (event) => {
 // Activate event - clean up old caches
 self.addEventListener('activate', (event) => {
   console.log('[ServiceWorker] Activating...');
-  
+
   event.waitUntil(
     caches.keys()
       .then((cacheNames) => {
@@ -88,29 +89,29 @@ self.addEventListener('fetch', (event) => {
 // Cache-first strategy
 async function cacheFirst(request) {
   const cachedResponse = await caches.match(request);
-  
+
   if (cachedResponse) {
     return cachedResponse;
   }
 
   try {
     const networkResponse = await fetch(request);
-    
+
     if (networkResponse.ok) {
       const cache = await caches.open(RUNTIME_CACHE);
       cache.put(request, networkResponse.clone());
     }
-    
+
     return networkResponse;
   } catch (error) {
     console.error('[ServiceWorker] Fetch failed:', error);
-    
+
     // Return offline page if available
     if (request.destination === 'document') {
       const offlinePage = await caches.match('/offline.html');
       return offlinePage || caches.match('/index.html');
     }
-    
+
     throw error;
   }
 }
@@ -119,20 +120,20 @@ async function cacheFirst(request) {
 async function networkFirst(request) {
   try {
     const networkResponse = await fetch(request);
-    
+
     if (networkResponse.ok) {
       const cache = await caches.open(RUNTIME_CACHE);
       cache.put(request, networkResponse.clone());
     }
-    
+
     return networkResponse;
   } catch (error) {
     const cachedResponse = await caches.match(request);
-    
+
     if (cachedResponse) {
       return cachedResponse;
     }
-    
+
     throw error;
   }
 }
@@ -142,7 +143,7 @@ async function staleWhileRevalidate(request) {
   try {
     // Try network first
     const networkResponse = await fetch(request);
-    
+
     if (networkResponse && networkResponse.ok) {
       const responseClone = networkResponse.clone();
       const cache = await caches.open(RUNTIME_CACHE);
@@ -152,13 +153,13 @@ async function staleWhileRevalidate(request) {
   } catch (error) {
     console.log('[ServiceWorker] Network failed, trying cache:', error.message);
   }
-  
+
   // Fallback to cache if network fails
   const cachedResponse = await caches.match(request);
   if (cachedResponse) {
     return cachedResponse;
   }
-  
+
   // If no cache either, throw error
   throw new Error('No network and no cache available');
 }

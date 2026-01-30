@@ -155,7 +155,21 @@
   transition: transform var(--duration-150) var(--ease-out), box-shadow var(--duration-150) var(--ease-out);
 }
 
-/* ChatbotLogo integration */
+/* Chat Icon SVG Styles */
+.chat-icon-svg {
+  width: 60%;
+  height: 60%;
+  display: block;
+  color: var(--text-primary, #d3eee5);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+  transition: transform var(--duration-200) var(--ease-out);
+}
+
+.nyx-floating-button:hover .chat-icon-svg {
+  transform: scale(1.1);
+}
+
+/* Legacy ChatbotLogo support */
 .chat-logo {
   display: flex;
   justify-content: center;
@@ -174,7 +188,7 @@
 
 /* Fallback emoji if ChatbotLogo fails */
 .chat-logo:empty::before {
-  content: "🤖";
+  content: "💬";
   font-size: var(--text-3xl);
   pointer-events: none;
 }
@@ -261,6 +275,13 @@
   box-shadow: var(--shadow-lg), var(--shadow-glow-md);
   color: var(--text-primary);
   animation: modalOpen var(--duration-200) var(--ease-out) both;
+  transition: box-shadow var(--duration-150) var(--ease-out);
+}
+
+/* Dragging state for modal */
+.chat-modal--dragging {
+  box-shadow: var(--shadow-xl), var(--shadow-glow-lg);
+  user-select: none;
 }
 
 .chat-header {
@@ -273,6 +294,12 @@
   background: linear-gradient(135deg, var(--btn-primary-bg, #d3eee5), var(--color-secondary-400, #91d4be));
   color: var(--btn-primary-text, #191f1d);
   border-bottom: 2px solid var(--border-accent, #d3eee5);
+  cursor: grab;
+  user-select: none;
+}
+
+.chat-header:active {
+  cursor: grabbing;
 }
 
 .chat-header .close-btn {

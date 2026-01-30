@@ -10,7 +10,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Experience from "./components/Experience";
 import NotFound from "./components/NotFound";
-import InstallPrompt from "./components/InstallPrompt";
+import ChatModal from "./components/ChatModal";
 
 function App() {
   const [is404, setIs404] = useState(false);
@@ -44,7 +44,7 @@ function App() {
       <Projects />
       <Contact />
       <Footer />
-      <InstallPrompt />
+      <ChatModal />
     </div>
   );
 }

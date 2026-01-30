@@ -43,4 +43,4 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./frontend/build
-          cname: www.shubhampatra.dev
+          cname: v1.shubhampatra.dev

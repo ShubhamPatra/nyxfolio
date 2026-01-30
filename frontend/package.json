@@ -2,8 +2,9 @@
   "name": "nyxfolio",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://www.shubhampatra.dev",
+  "homepage": "https://v1.shubhampatra.dev",
   "dependencies": {
+    "@formspree/react": "^3.0.0",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
@@ -44,5 +45,11 @@
   },
   "devDependencies": {
     "gh-pages": "^6.1.1"
+  },
+  "overrides": {
+    "react-helmet-async": {
+      "react": "$react",
+      "react-dom": "$react-dom"
+    }
   }
 }
