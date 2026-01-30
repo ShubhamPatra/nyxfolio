@@ -7,7 +7,7 @@ Disallow: /static/js/*.map
 Disallow: /static/css/*.map
 
 # Specify sitemap location
-Sitemap: https://www.shubhampatra.dev/sitemap.xml
+Sitemap: https://v1.shubhampatra.dev/sitemap.xml
 
 # Crawl-delay (optional, to reduce server load)
 Crawl-delay: 10
