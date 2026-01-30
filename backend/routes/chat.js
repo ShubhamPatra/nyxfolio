@@ -3,13 +3,11 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const fs = require("fs");
-const { GoogleGenerativeAI } = require("@google/generative-ai");
+const axios = require("axios");
 
 const router = express.Router();
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 const memoryFile = "memory.txt";
-
 let lastRoast = "";
 
 router.use(cors({
@@ -35,7 +33,7 @@ router.post("/", async (req, res) => {
       memory = fs.readFileSync(memoryFile, "utf-8");
     }
 
-    const prompt = `
+    const systemPrompt = `
 You are Nyx — the official AI assistant and spokesperson for **Boss** (real name: Shubham Patra).
 
 Identity rules:
@@ -55,23 +53,40 @@ If the question is irrelevant, lazy, or trolling → respond sarcastically with 
 
 Here is Boss's full profile and behavior rules:
 ${memory}
-
-User: ${message}
 `.trim();
 
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-    const result = await model.generateContent(prompt, { temperature: 0.9 }); // more variety
+    const response = await axios.post(
+      "https://openrouter.ai/api/v1/chat/completions",
+      {
+        model: "meta-llama/llama-3.3-70b-instruct",
+        messages: [
+          { role: "system", content: systemPrompt },
+          { role: "user", content: message }
+        ],
+        temperature: 0.9,
+      },
+      {
+        headers: {
+          "Authorization": `Bearer ${process.env.OPENROUTER_API_KEY}`,
+          "HTTP-Referer": "https://v1.shubhampatra.dev",
+          "X-Title": "NyxFolio",
+          "Content-Type": "application/json"
+        }
+      }
+    );
 
-    const reply = result.response.text();
+    const reply = response.data.choices[0].message.content;
 
-    // Save last roast in memory only
+    // Save last roast in memory only if it looks like a roast/error
+    // (This heuristic was in the original code, keeping it for now)
     if (reply && reply.length < 120 && /[0-9]{3}|error|Exception|fault|teapot|roast/i.test(reply)) {
       lastRoast = reply;
     }
 
     res.json({ response: reply });
+
   } catch (err) {
-    console.error("❌ Gemini API Error:", err?.response?.data || err.message);
+    console.error("❌ OpenRouter/Llama API Error:", err?.response?.data || err.message);
     res.status(500).json({ error: "Something went wrong with Nyx." });
   }
 });
