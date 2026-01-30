@@ -3,140 +3,111 @@ import PropTypes from 'prop-types';
 
 // SVG Logo Components
 const FullLogo = ({ className, size }) => (
-  <svg 
-    width={size === 'sm' ? '120' : size === 'md' ? '160' : '200'} 
-    height={size === 'sm' ? '28' : size === 'md' ? '36' : '48'} 
-    viewBox={size === 'sm' ? '0 0 120 28' : size === 'md' ? '0 0 160 36' : '0 0 200 48'} 
-    xmlns="http://www.w3.org/2000/svg" 
-    role="img" 
+  <svg
+    width={size === 'sm' ? '120' : size === 'md' ? '160' : '200'}
+    height={size === 'sm' ? '28' : size === 'md' ? '36' : '48'}
+    viewBox={size === 'sm' ? '0 0 120 28' : size === 'md' ? '0 0 160 36' : '0 0 200 48'}
+    xmlns="http://www.w3.org/2000/svg"
+    role="img"
     aria-labelledby="logo-title"
     className={className}
   >
     <title id="logo-title">Shubham.dev - Full Stack Developer</title>
-    
+
     <defs>
       {/* Gradient for icon */}
       <linearGradient id={`iconGradient-${size}`} x1="0%" y1="0%" x2="100%" y2="100%">
         <stop offset="0%" style={{ stopColor: 'var(--color-secondary-200)', stopOpacity: 1 }} />
         <stop offset="100%" style={{ stopColor: 'var(--color-secondary-400)', stopOpacity: 1 }} />
       </linearGradient>
-      
+
       {/* Glow filter for icon */}
       <filter id={`iconGlow-${size}`} x="-50%" y="-50%" width="200%" height="200%">
-        <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
+        <feGaussianBlur stdDeviation="1.5" result="coloredBlur" />
         <feMerge>
-          <feMergeNode in="coloredBlur"/>
-          <feMergeNode in="SourceGraphic"/>
+          <feMergeNode in="coloredBlur" />
+          <feMergeNode in="SourceGraphic" />
         </feMerge>
       </filter>
-      
+
       {/* Text gradient */}
       <linearGradient id={`textGradient-${size}`} x1="0%" y1="0%" x2="100%" y2="0%">
         <stop offset="0%" style={{ stopColor: '#ffffff', stopOpacity: 1 }} />
         <stop offset="100%" style={{ stopColor: '#e5e7eb', stopOpacity: 0.9 }} />
       </linearGradient>
     </defs>
-    
+
     {/* Background glow circle */}
-    <circle 
-      cx={size === 'sm' ? '11' : size === 'md' ? '13' : '15'} 
-      cy={size === 'sm' ? '14' : size === 'md' ? '18' : '24'} 
-      r={size === 'sm' ? '12' : size === 'md' ? '14' : '16'} 
+    <circle
+      cx={size === 'sm' ? '11' : size === 'md' ? '13' : '15'}
+      cy={size === 'sm' ? '14' : size === 'md' ? '18' : '24'}
+      r={size === 'sm' ? '12' : size === 'md' ? '14' : '16'}
       fill="none"
       stroke={`url(#iconGradient-${size})`}
       strokeWidth="0.5"
       opacity="0.15"
       className="logo-glow-circle"
     />
-    
+
     {/* Developer Icon: Angular brackets with code cursor */}
     <g className="logo-icon" filter={`url(#iconGlow-${size})`}>
-      {/* Left bracket with enhanced design */}
-      <path 
-        d={size === 'sm' ? 'M6 7 L1.5 14 L6 21' : size === 'md' ? 'M7 9 L1.5 18 L7 27' : 'M8 12 L2 24 L8 36'} 
+      {/* Left bracket < */}
+      <path
+        d={size === 'sm' ? 'M7 7 L2 14 L7 21' : size === 'md' ? 'M8 9 L2 18 L8 27' : 'M10 12 L3 24 L10 36'}
         stroke={`url(#iconGradient-${size})`}
-        strokeWidth={size === 'sm' ? '2.5' : '3'} 
-        fill="none" 
-        strokeLinecap="round" 
+        strokeWidth={size === 'sm' ? '2.5' : '3'}
+        fill="none"
+        strokeLinecap="round"
         strokeLinejoin="round"
         className="logo-bracket-left"
       />
-      
-      {/* Right bracket with enhanced design */}
-      <path 
-        d={size === 'sm' ? 'M16 7 L20.5 14 L16 21' : size === 'md' ? 'M18 9 L23.5 18 L18 27' : 'M22 12 L28 24 L22 36'} 
+
+      {/* Right bracket > */}
+      <path
+        d={size === 'sm' ? 'M19 7 L24 14 L19 21' : size === 'md' ? 'M24 9 L30 18 L24 27' : 'M30 12 L37 24 L30 36'}
         stroke={`url(#iconGradient-${size})`}
-        strokeWidth={size === 'sm' ? '2.5' : '3'} 
-        fill="none" 
-        strokeLinecap="round" 
+        strokeWidth={size === 'sm' ? '2.5' : '3'}
+        fill="none"
+        strokeLinecap="round"
         strokeLinejoin="round"
         className="logo-bracket-right"
       />
-      
-      {/* Code cursor/terminal line with gradient */}
-      <rect 
-        x={size === 'sm' ? '9' : size === 'md' ? '10' : '12'} 
-        y={size === 'sm' ? '12' : size === 'md' ? '16' : '22'} 
-        width={size === 'sm' ? '4' : size === 'md' ? '5' : '6'} 
-        height={size === 'sm' ? '3' : '4'} 
-        fill={`url(#iconGradient-${size})`}
-        rx="1"
-        className="logo-cursor"
-      >
-        <animate attributeName="opacity" values="1;0.4;1" dur="1.8s" repeatCount="indefinite"/>
-      </rect>
-      
-      {/* Enhanced code dots with glow */}
-      <circle 
-        cx={size === 'sm' ? '15' : size === 'md' ? '17' : '20'} 
-        cy={size === 'sm' ? '10' : size === 'md' ? '13' : '18'} 
-        r={size === 'sm' ? '1' : '1.2'} 
-        fill="var(--color-secondary-200)" 
-        opacity="0.8"
-        className="logo-dot"
-      />
-      <circle 
-        cx={size === 'sm' ? '15' : size === 'md' ? '17' : '20'} 
-        cy={size === 'sm' ? '14' : size === 'md' ? '18' : '24'} 
-        r={size === 'sm' ? '1' : '1.2'} 
-        fill="var(--color-secondary-200)" 
-        opacity="0.8"
-        className="logo-dot"
-      />
-      <circle 
-        cx={size === 'sm' ? '15' : size === 'md' ? '17' : '20'} 
-        cy={size === 'sm' ? '18' : size === 'md' ? '23' : '30'} 
-        r={size === 'sm' ? '1' : '1.2'} 
-        fill="var(--color-secondary-200)" 
-        opacity="0.8"
-        className="logo-dot"
+
+      {/* Forward slash / */}
+      <path
+        d={size === 'sm' ? 'M15 6 L11 22' : size === 'md' ? 'M19 7 L13 29' : 'M24 9 L16 39'}
+        stroke="#ffffff"
+        strokeWidth={size === 'sm' ? '2' : '2.5'}
+        fill="none"
+        strokeLinecap="round"
+        className="logo-slash"
       />
     </g>
-    
+
     {/* Text: Shubham.dev */}
     <g className="logo-text">
       {/* Shubham with gradient */}
-      <text 
-        x={size === 'sm' ? '28' : size === 'md' ? '32' : '40'} 
-        y={size === 'sm' ? '12' : size === 'md' ? '15' : '20'} 
-        fontFamily="var(--font-heading)" 
-        fontSize={size === 'sm' ? '12' : size === 'md' ? '14' : '16'} 
-        fontWeight="700" 
+      <text
+        x={size === 'sm' ? '28' : size === 'md' ? '32' : '40'}
+        y={size === 'sm' ? '12' : size === 'md' ? '15' : '20'}
+        fontFamily="var(--font-heading)"
+        fontSize={size === 'sm' ? '12' : size === 'md' ? '14' : '16'}
+        fontWeight="700"
         fill={`url(#textGradient-${size})`}
         letterSpacing="-0.025em"
         className="logo-name"
       >
         Shubham
       </text>
-      
+
       {/* .dev with accent color and enhanced styling */}
-      <text 
-        x={size === 'sm' ? '28' : size === 'md' ? '32' : '40'} 
-        y={size === 'sm' ? '22' : size === 'md' ? '27' : '34'} 
-        fontFamily="var(--font-secondary)" 
-        fontSize={size === 'sm' ? '10' : size === 'md' ? '12' : '14'} 
-        fontWeight="600" 
-        fill="var(--color-secondary-200)" 
+      <text
+        x={size === 'sm' ? '28' : size === 'md' ? '32' : '40'}
+        y={size === 'sm' ? '22' : size === 'md' ? '27' : '34'}
+        fontFamily="var(--font-secondary)"
+        fontSize={size === 'sm' ? '10' : size === 'md' ? '12' : '14'}
+        fontWeight="600"
+        fill="var(--color-secondary-200)"
         letterSpacing="0.05em"
         className="logo-domain"
       >
@@ -148,118 +119,110 @@ const FullLogo = ({ className, size }) => (
 
 const IconLogo = ({ className, size }) => {
   const iconSize = size === 'sm' ? '24' : size === 'md' ? '28' : '32';
-  
+
   return (
-    <svg 
-      width={iconSize} 
-      height={iconSize} 
-      viewBox="0 0 32 32" 
-      xmlns="http://www.w3.org/2000/svg" 
-      role="img" 
+    <svg
+      width={iconSize}
+      height={iconSize}
+      viewBox="0 0 32 32"
+      xmlns="http://www.w3.org/2000/svg"
+      role="img"
       aria-labelledby="icon-title"
       className={className}
     >
       <title id="icon-title">Shubham.dev Logo</title>
-      
+
       <defs>
         {/* Gradient for icon */}
         <linearGradient id={`iconGradientIcon-${size}`} x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" style={{ stopColor: 'var(--color-secondary-200)', stopOpacity: 1 }} />
           <stop offset="100%" style={{ stopColor: 'var(--color-secondary-400)', stopOpacity: 1 }} />
         </linearGradient>
-        
+
         {/* Glow filter */}
         <filter id={`iconGlowIcon-${size}`} x="-50%" y="-50%" width="200%" height="200%">
-          <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
+          <feGaussianBlur stdDeviation="1.5" result="coloredBlur" />
           <feMerge>
-            <feMergeNode in="coloredBlur"/>
-            <feMergeNode in="SourceGraphic"/>
+            <feMergeNode in="coloredBlur" />
+            <feMergeNode in="SourceGraphic" />
           </feMerge>
         </filter>
-        
+
         {/* Radial gradient for background */}
         <radialGradient id={`bgGradient-${size}`}>
           <stop offset="0%" style={{ stopColor: 'var(--color-secondary-200)', stopOpacity: 0.1 }} />
           <stop offset="100%" style={{ stopColor: 'var(--color-secondary-200)', stopOpacity: 0 }} />
         </radialGradient>
       </defs>
-      
+
       {/* Background glow */}
-      <circle 
-        cx="16" 
-        cy="16" 
-        r="14" 
+      <circle
+        cx="16"
+        cy="16"
+        r="14"
         fill={`url(#bgGradient-${size})`}
         className="logo-bg-glow"
       />
-      
+
       {/* Outer ring */}
-      <circle 
-        cx="16" 
-        cy="16" 
-        r="15" 
-        fill="none" 
+      <circle
+        cx="16"
+        cy="16"
+        r="15"
+        fill="none"
         stroke={`url(#iconGradientIcon-${size})`}
-        strokeWidth="0.5" 
+        strokeWidth="0.5"
         opacity="0.3"
         className="logo-outer-ring"
       />
-      
+
       {/* Developer Icon: Angular brackets with code cursor - optimized for small sizes */}
       <g className="logo-icon" filter={`url(#iconGlowIcon-${size})`}>
-        {/* Left bracket */}
-        <path 
-          d="M6 8 L2 16 L6 24" 
+        {/* Left bracket < */}
+        <path
+          d="M10 8 L4 16 L10 24"
           stroke={`url(#iconGradientIcon-${size})`}
-          strokeWidth="2.5" 
-          fill="none" 
-          strokeLinecap="round" 
+          strokeWidth="2.5"
+          fill="none"
+          strokeLinecap="round"
           strokeLinejoin="round"
           className="logo-bracket-left"
         />
-        
-        {/* Right bracket */}
-        <path 
-          d="M26 8 L30 16 L26 24" 
+
+        {/* Right bracket > */}
+        <path
+          d="M22 8 L28 16 L22 24"
           stroke={`url(#iconGradientIcon-${size})`}
-          strokeWidth="2.5" 
-          fill="none" 
-          strokeLinecap="round" 
+          strokeWidth="2.5"
+          fill="none"
+          strokeLinecap="round"
           strokeLinejoin="round"
           className="logo-bracket-right"
         />
-        
-        {/* Code cursor/terminal line */}
-        <rect 
-          x="13" 
-          y="14" 
-          width="6" 
-          height="4" 
-          fill={`url(#iconGradientIcon-${size})`}
-          rx="1"
-          className="logo-cursor"
-        >
-          <animate attributeName="opacity" values="1;0.4;1" dur="1.8s" repeatCount="indefinite"/>
-        </rect>
-        
-        {/* Code dots - enhanced */}
-        <circle cx="22" cy="12" r="1.2" fill="var(--color-secondary-200)" opacity="0.8" className="logo-dot"/>
-        <circle cx="22" cy="16" r="1.2" fill="var(--color-secondary-200)" opacity="0.8" className="logo-dot"/>
-        <circle cx="22" cy="20" r="1.2" fill="var(--color-secondary-200)" opacity="0.8" className="logo-dot"/>
+
+        {/* Forward slash / */}
+        <path
+          d="M18 6 L14 26"
+          stroke="#ffffff"
+          strokeWidth="2.5"
+          fill="none"
+          strokeLinecap="round"
+          className="logo-slash"
+        />
       </g>
     </svg>
   );
 };
 
-const Logo = ({ 
-  size = 'md', 
-  type = 'full', 
-  className = '', 
+const Logo = ({
+  size = 'md',
+  type = 'full',
+  className = '',
   responsive = false,
-  ...props 
+  ...props
 }) => {
   const baseClasses = `logo-component ${className}`;
-  
+
   // Handle responsive behavior
   if (responsive) {
     return (
@@ -273,7 +236,7 @@ const Logo = ({
       </div>
     );
   }
-  
+
   // Render based on type prop
   if (type === 'icon') {
     return (
@@ -282,7 +245,7 @@ const Logo = ({
       </div>
     );
   }
-  
+
   return (
     <div className={baseClasses} {...props}>
       <FullLogo className="logo-svg" size={size} />
@@ -329,6 +292,12 @@ const logoStyles = `
     transition: transform var(--duration-200) var(--ease-out);
   }
   
+  .logo-component:hover .logo-svg .logo-slash {
+    transform: rotate(5deg);
+    transition: transform var(--duration-300) var(--ease-out);
+    opacity: 0.8;
+  }
+  
   .logo-component:hover .logo-svg .logo-domain {
     fill: var(--color-secondary-100);
     filter: drop-shadow(0 0 4px rgba(211, 238, 229, 0.4));
@@ -339,12 +308,6 @@ const logoStyles = `
     opacity: 0.3;
     r: 18;
     transition: opacity var(--duration-300) var(--ease-out);
-  }
-  
-  .logo-component:hover .logo-svg .logo-dot {
-    opacity: 1;
-    filter: drop-shadow(0 0 2px var(--color-secondary-200));
-    transition: opacity var(--duration-200) var(--ease-out), filter var(--duration-200) var(--ease-out);
   }
   
   /* Active state */
@@ -388,12 +351,10 @@ const logoStyles = `
   
   /* Reduced motion support */
   @media (prefers-reduced-motion: reduce) {
-    .logo-svg .logo-cursor {
-      animation: none !important;
-    }
     .logo-component:hover .logo-svg .logo-icon,
     .logo-component:hover .logo-svg .logo-bracket-left,
-    .logo-component:hover .logo-svg .logo-bracket-right {
+    .logo-component:hover .logo-svg .logo-bracket-right,
+    .logo-component:hover .logo-svg .logo-slash {
       transform: none !important;
     }
   }

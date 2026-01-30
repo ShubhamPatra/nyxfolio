@@ -12,15 +12,6 @@ import App from './App';
   } catch (err) {
     //    console.error("Chatbot backend ping failed:", err);
   }
-
-  try {
-    // Ping contact backend
-    const contactBackendUrl = process.env.REACT_APP_CONTACT_BACKEND_URL || 'http://localhost:3001';
-    await fetch(`${contactBackendUrl}/health`);
-    //    console.log("Contact backend pinged 📧");
-  } catch (err) {
-    //    console.error("Contact backend ping failed:", err);
-  }
 })();
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -45,6 +36,29 @@ if ('serviceWorker' in navigator) {
         .register('/service-worker.js')
         .then((registration) => {
           console.log('✅ Service Worker registered:', registration.scope);
+
+          // Check for updates manually
+          registration.onupdatefound = () => {
+            const installingWorker = registration.installing;
+            if (installingWorker == null) {
+              return;
+            }
+            installingWorker.onstatechange = () => {
+              if (installingWorker.state === 'installed') {
+                if (navigator.serviceWorker.controller) {
+                  // New content available; please refresh.
+                  console.log('🔄 New content is available and will be used when all tabs for this page are closed.');
+
+                  // Optional: Force update toast here if desired
+                  // alert('New version available! Refreshing...');
+                  // window.location.reload(); 
+                } else {
+                  // Content is cached for offline use.
+                  console.log('⚡ Content is cached for offline use.');
+                }
+              }
+            };
+          };
         })
         .catch((error) => {
           console.error('❌ Service Worker registration failed:', error);
