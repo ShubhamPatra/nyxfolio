@@ -1,13 +1,28 @@
 /* eslint-disable no-restricted-globals */
-// Service Worker for Shubham Patra Portfolio (v1.shubhampatra.dev)
-// Version 1.0.4 - Subdomain-scoped PWA
 
-// Subdomain-specific cache names to avoid conflicts with other subdomains
-const CACHE_NAME = 'v1-shubhampatra-portfolio-v1.0.4';
-const RUNTIME_CACHE = 'v1-shubhampatra-runtime-v1.0.4';
+// 🛡️ STRICT ISOLATION: Self-destruct if not on approved domain
+const ALLOWED_DOMAINS = ['v1.shubhampatra.dev', 'localhost', '127.0.0.1'];
+if (!ALLOWED_DOMAINS.includes(self.location.hostname)) {
+  console.warn('[ServiceWorker] ⛔ Illegal domain detected. Unregistering immediately.');
+  self.registration.unregister();
+}
 
-// Assets to cache on install
-const PRECACHE_ASSETS = [
+// 📦 CACHE CONFIGURATION
+// Use a generic name. We rely on filename hashing for versioning, not this string.
+const CACHE_NAME = 'nyxfolio-v1-cache';
+const RUNTIME_CACHE = 'nyxfolio-v1-runtime';
+
+// 🛑 EXCLUSIONS
+// Never cache these (API requests, etc.)
+const NON_CACHEABLE_PATTERNS = [
+  '/api/',
+  '/socket.io/',
+  'sockjs-node',
+  'hot-update' // Dev mode HMR
+];
+
+// ✅ PRECACHE ASSETS
+const PRECACHE_URLS = [
   '/',
   '/index.html',
   '/offline.html',
@@ -16,155 +31,111 @@ const PRECACHE_ASSETS = [
   '/favicon-dark.svg'
 ];
 
-// Install event - cache core assets
+// 🚀 INSTALL: Cache core assets
 self.addEventListener('install', (event) => {
-  console.log('[ServiceWorker] Installing...');
-
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then((cache) => {
-        console.log('[ServiceWorker] Precaching app shell');
-        return cache.addAll(PRECACHE_ASSETS.map(url => new Request(url, { cache: 'reload' })));
-      })
-      .then(() => self.skipWaiting())
-      .catch((error) => {
-        console.error('[ServiceWorker] Precache failed:', error);
-      })
+    caches.open(CACHE_NAME).then((cache) => {
+      return cache.addAll(PRECACHE_URLS);
+    }).then(() => {
+      // Force activation for faster updates
+      return self.skipWaiting();
+    })
   );
 });
 
-// Activate event - clean up old caches
+// 🧹 ACTIVATE: Clean up old caches
 self.addEventListener('activate', (event) => {
-  console.log('[ServiceWorker] Activating...');
-
+  const currentCaches = [CACHE_NAME, RUNTIME_CACHE];
   event.waitUntil(
-    caches.keys()
-      .then((cacheNames) => {
-        return Promise.all(
-          cacheNames
-            .filter((cacheName) => {
-              return cacheName !== CACHE_NAME && cacheName !== RUNTIME_CACHE;
-            })
-            .map((cacheName) => {
-              console.log('[ServiceWorker] Deleting old cache:', cacheName);
-              return caches.delete(cacheName);
-            })
-        );
-      })
-      .then(() => self.clients.claim())
+    caches.keys().then((cacheNames) => {
+      return Promise.all(
+        cacheNames.map((cacheName) => {
+          if (!currentCaches.includes(cacheName)) {
+            console.log('[ServiceWorker] Deleting old cache:', cacheName);
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    }).then(() => {
+      return self.clients.claim();
+    })
   );
 });
 
-// Fetch event - serve from cache, fallback to network
+// 📡 FETCH: The core strategy
 self.addEventListener('fetch', (event) => {
-  const { request } = event;
-  const url = new URL(request.url);
+  const url = new URL(event.request.url);
 
-  // Skip cross-origin requests
-  if (url.origin !== self.location.origin) {
+  // 1. Ignore non-GET requests and cross-origin (unless critical assets)
+  if (event.request.method !== 'GET' || !url.protocol.startsWith('http')) return;
+
+  // 2. Ignore exclusions (API, sockets)
+  if (NON_CACHEABLE_PATTERNS.some(pattern => url.pathname.includes(pattern))) {
     return;
   }
 
-  // Network-first for API calls
-  if (url.pathname.startsWith('/api/')) {
-    event.respondWith(networkFirst(request));
+  // 3. STRATEGY: Stale-While-Revalidate for HTML (Network First effectively for index.html)
+  // We want index.html to be fresh so it points to new hashed JS/CSS files.
+  if (event.request.mode === 'navigate' || url.pathname === '/index.html' || url.pathname === '/') {
+    event.respondWith(
+      fetch(event.request)
+        .then((networkResponse) => {
+          return caches.open(CACHE_NAME).then((cache) => {
+            cache.put(event.request, networkResponse.clone());
+            return networkResponse;
+          });
+        })
+        .catch(() => {
+          // Offline fallback
+          return caches.match(event.request).then((cachedResp) => {
+            return cachedResp || caches.match('/offline.html');
+          });
+        })
+    );
     return;
   }
 
-  // Cache-first for static assets
+  // 4. STRATEGY: Cache First for Hashed Assets (JS/CSS/Images)
+  // Files with hashes like main.87ee8143.css never change content, only name.
   if (
-    request.destination === 'style' ||
-    request.destination === 'script' ||
-    request.destination === 'image' ||
-    request.destination === 'font'
+    url.pathname.startsWith('/static/') ||
+    url.pathname.match(/\.[0-9a-f]{8}\./) // Matches hash pattern
   ) {
-    event.respondWith(cacheFirst(request));
+    event.respondWith(
+      caches.match(event.request).then((cachedResponse) => {
+        if (cachedResponse) {
+          return cachedResponse;
+        }
+        return fetch(event.request).then((networkResponse) => {
+          return caches.open(RUNTIME_CACHE).then((cache) => {
+            // Only cache valid responses
+            if (networkResponse.status === 200) {
+              cache.put(event.request, networkResponse.clone());
+            }
+            return networkResponse;
+          });
+        });
+      })
+    );
     return;
   }
 
-  // Stale-while-revalidate for HTML
-  event.respondWith(staleWhileRevalidate(request));
+  // 5. STRATEGY: Stale-While-Revalidate for everything else
+  event.respondWith(
+    caches.match(event.request).then((cachedResponse) => {
+      const fetchPromise = fetch(event.request).then((networkResponse) => {
+        return caches.open(RUNTIME_CACHE).then((cache) => {
+          cache.put(event.request, networkResponse.clone());
+          return networkResponse;
+        });
+      }).catch(err => console.log('Network fetch failed', err));
+
+      return cachedResponse || fetchPromise;
+    })
+  );
 });
 
-// Cache-first strategy
-async function cacheFirst(request) {
-  const cachedResponse = await caches.match(request);
-
-  if (cachedResponse) {
-    return cachedResponse;
-  }
-
-  try {
-    const networkResponse = await fetch(request);
-
-    if (networkResponse.ok) {
-      const cache = await caches.open(RUNTIME_CACHE);
-      cache.put(request, networkResponse.clone());
-    }
-
-    return networkResponse;
-  } catch (error) {
-    console.error('[ServiceWorker] Fetch failed:', error);
-
-    // Return offline page if available
-    if (request.destination === 'document') {
-      const offlinePage = await caches.match('/offline.html');
-      return offlinePage || caches.match('/index.html');
-    }
-
-    throw error;
-  }
-}
-
-// Network-first strategy
-async function networkFirst(request) {
-  try {
-    const networkResponse = await fetch(request);
-
-    if (networkResponse.ok) {
-      const cache = await caches.open(RUNTIME_CACHE);
-      cache.put(request, networkResponse.clone());
-    }
-
-    return networkResponse;
-  } catch (error) {
-    const cachedResponse = await caches.match(request);
-
-    if (cachedResponse) {
-      return cachedResponse;
-    }
-
-    throw error;
-  }
-}
-
-// Stale-while-revalidate strategy (Network-first approach for development)
-async function staleWhileRevalidate(request) {
-  try {
-    // Try network first
-    const networkResponse = await fetch(request);
-
-    if (networkResponse && networkResponse.ok) {
-      const responseClone = networkResponse.clone();
-      const cache = await caches.open(RUNTIME_CACHE);
-      await cache.put(request, responseClone);
-      return networkResponse;
-    }
-  } catch (error) {
-    console.log('[ServiceWorker] Network failed, trying cache:', error.message);
-  }
-
-  // Fallback to cache if network fails
-  const cachedResponse = await caches.match(request);
-  if (cachedResponse) {
-    return cachedResponse;
-  }
-
-  // If no cache either, throw error
-  throw new Error('No network and no cache available');
-}
-
-// Handle messages from clients
+// 🔄 SKIP WAITING message
 self.addEventListener('message', (event) => {
   if (event.data && event.data.type === 'SKIP_WAITING') {
     self.skipWaiting();
