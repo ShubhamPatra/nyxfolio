@@ -13,7 +13,12 @@ const memoryFile = "memory.txt";
 let lastRoast = "";
 
 router.use(cors({
-  origin: "https://www.shubhampatra.dev",
+  origin: [
+    "https://www.shubhampatra.dev",
+    "https://v1.shubhampatra.dev",
+    "http://localhost:3000",
+    "http://127.0.0.1:3000"
+  ],
   methods: ["GET", "POST", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"]
 }));
