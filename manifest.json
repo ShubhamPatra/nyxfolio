@@ -30,18 +30,26 @@
   ],
   "start_url": "/",
   "display": "standalone",
-  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "display_override": [
+    "window-controls-overlay",
+    "standalone",
+    "minimal-ui"
+  ],
   "theme_color": "#191f1d",
   "background_color": "#0f1419",
   "orientation": "any",
   "scope": "/",
-  "categories": ["portfolio", "developer", "technology"],
+  "categories": [
+    "portfolio",
+    "developer",
+    "technology"
+  ],
   "lang": "en-US",
   "dir": "ltr",
   "prefer_related_applications": false,
   "screenshots": [
     {
-      "src": "logo-icon.png",
+      "src": "logo-icon-512.png",
       "sizes": "1280x720",
       "type": "image/png",
       "form_factor": "wide"

@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Icon Generator - SVG to PNG Converter</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            min-height: 100vh;
+            padding: 40px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 8px;
+            color: #00ffe0;
+        }
+
+        p.subtitle {
+            color: #888;
+            margin-bottom: 40px;
+        }
+
+        .preview-section {
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        .preview-card {
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+        }
+
+        .preview-card h3 {
+            font-size: 0.875rem;
+            color: #666;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .preview-card canvas,
+        .preview-card img {
+            display: block;
+            margin: 0 auto 16px;
+            background: #0a0a0a;
+            border-radius: 8px;
+        }
+
+        .preview-card .size-label {
+            font-size: 0.75rem;
+            color: #444;
+        }
+
+        .actions {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        button {
+            background: #00ffe0;
+            color: #000;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        button:hover {
+            background: #00ccb3;
+            transform: translateY(-2px);
+        }
+
+        button.secondary {
+            background: #222;
+            color: #fff;
+        }
+
+        button.secondary:hover {
+            background: #333;
+        }
+
+        .svg-source {
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 40px;
+        }
+
+        .svg-source h3 {
+            font-size: 0.875rem;
+            color: #666;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        #svgPreview {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            background: #0a0a0a;
+            border-radius: 8px;
+        }
+
+        #svgPreview svg {
+            max-width: 200px;
+            max-height: 200px;
+        }
+
+        .info {
+            background: #0d1f1d;
+            border: 1px solid #00ffe033;
+            border-radius: 8px;
+            padding: 16px;
+            color: #00ffe0;
+            font-size: 0.875rem;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Icon Generator</h1>
+    <p class="subtitle">Convert your logo-icon.svg to PNG formats for PWA</p>
+
+    <div class="svg-source">
+        <h3>Source SVG</h3>
+        <div id="svgPreview">Loading...</div>
+    </div>
+
+    <div class="preview-section">
+        <div class="preview-card">
+            <h3>512×512</h3>
+            <canvas id="canvas512" width="512" height="512"></canvas>
+            <span class="size-label">logo-icon-512.png</span>
+        </div>
+
+        <div class="preview-card">
+            <h3>192×192</h3>
+            <canvas id="canvas192" width="192" height="192"></canvas>
+            <span class="size-label">logo-icon-192.png</span>
+        </div>
+
+        <div class="preview-card">
+            <h3>32×32 Favicon</h3>
+            <canvas id="canvas32" width="32" height="32"></canvas>
+            <span class="size-label">favicon.png</span>
+        </div>
+
+        <div class="preview-card">
+            <h3>16×16 Favicon</h3>
+            <canvas id="canvas16" width="16" height="16"></canvas>
+            <span class="size-label">favicon-16.png</span>
+        </div>
+    </div>
+
+    <div class="actions">
+        <button onclick="downloadAll()">Download All PNGs</button>
+        <button class="secondary" onclick="download512()">Download 512×512</button>
+        <button class="secondary" onclick="download192()">Download 192×192</button>
+    </div>
+
+    <div class="info">
+        <strong>Instructions:</strong> Open this page in a browser, then click "Download All PNGs" to get all icon
+        sizes.
+        Replace the existing PNG files in the public folder with the downloaded ones.
+    </div>
+
+    <script>
+        const svgPath = 'logo-icon.svg';
+
+        async function init() {
+            try {
+                const response = await fetch(svgPath);
+                const svgText = await response.text();
+
+                // Show SVG preview
+                document.getElementById('svgPreview').innerHTML = svgText;
+
+                // Convert to image for canvas rendering
+                const svgBlob = new Blob([svgText], { type: 'image/svg+xml;charset=utf-8' });
+                const url = URL.createObjectURL(svgBlob);
+
+                const img = new Image();
+                img.onload = () => {
+                    // Render to all canvas sizes
+                    renderToCanvas('canvas512', img, 512);
+                    renderToCanvas('canvas192', img, 192);
+                    renderToCanvas('canvas32', img, 32);
+                    renderToCanvas('canvas16', img, 16);
+
+                    URL.revokeObjectURL(url);
+                };
+                img.src = url;
+
+            } catch (error) {
+                document.getElementById('svgPreview').innerHTML =
+                    '<p style="color: #ff4444;">Error loading SVG. Make sure logo-icon.svg is in the same folder.</p>';
+                console.error('Error:', error);
+            }
+        }
+
+        function renderToCanvas(canvasId, img, size) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext('2d');
+
+            // Clear canvas
+            ctx.clearRect(0, 0, size, size);
+
+            // Draw with high quality
+            ctx.imageSmoothingEnabled = true;
+            ctx.imageSmoothingQuality = 'high';
+
+            // Draw SVG
+            ctx.drawImage(img, 0, 0, size, size);
+        }
+
+        function downloadCanvas(canvasId, filename) {
+            const canvas = document.getElementById(canvasId);
+            const link = document.createElement('a');
+            link.download = filename;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+
+        function download512() {
+            downloadCanvas('canvas512', 'logo-icon-512.png');
+        }
+
+        function download192() {
+            downloadCanvas('canvas192', 'logo-icon-192.png');
+        }
+
+        function downloadAll() {
+            downloadCanvas('canvas512', 'logo-icon-512.png');
+            setTimeout(() => downloadCanvas('canvas192', 'logo-icon-192.png'), 100);
+            setTimeout(() => downloadCanvas('canvas32', 'favicon-32.png'), 200);
+            setTimeout(() => downloadCanvas('canvas16', 'favicon-16.png'), 300);
+        }
+
+        // Initialize on load
+        init();
+    </script>
+</body>
+
+</html>

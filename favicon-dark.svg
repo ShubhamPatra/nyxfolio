@@ -1,49 +1,34 @@
-<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="icon-title-dark">
-  <title id="icon-title-dark">Shubham.dev Logo - Dark Theme</title>
+<svg width="32" height="32" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="icon-title-dark">
+  <title id="icon-title-dark">Shubham Patra - Developer (Dark Theme)</title>
   
-  <!-- Dark theme optimized - bright teal on dark background -->
-  <g class="logo-icon">
-    <!-- Left bracket -->
-    <path d="M6 8 L2 16 L6 24" 
-          stroke="#00ffe0" 
-          stroke-width="2" 
-          fill="none" 
-          stroke-linecap="round" 
-          stroke-linejoin="round"/>
+  <!-- Transparent background for dark theme favicon -->
+  
+  <!-- Main icon group -->
+  <g id="logo">
+    <!-- Left angle bracket < -->
+    <path 
+      d="M180 160 L100 256 L180 352" 
+      stroke="#00ffe0" 
+      stroke-width="32" 
+      fill="none" 
+      stroke-linecap="round" 
+      stroke-linejoin="round"/>
     
-    <!-- Right bracket -->
-    <path d="M26 8 L30 16 L26 24" 
-          stroke="#00ffe0" 
-          stroke-width="2" 
-          fill="none" 
-          stroke-linecap="round" 
-          stroke-linejoin="round"/>
+    <!-- Right angle bracket > -->
+    <path 
+      d="M332 160 L412 256 L332 352" 
+      stroke="#00ffe0" 
+      stroke-width="32" 
+      fill="none" 
+      stroke-linecap="round" 
+      stroke-linejoin="round"/>
     
-    <!-- Code cursor/terminal line -->
-    <rect x="13" y="14" width="6" height="4" fill="#00ffe0" rx="1">
-      <animate attributeName="opacity" values="1;0.4;1" dur="1.8s" repeatCount="indefinite"/>
-    </rect>
-    
-    <!-- Code dots -->
-    <circle cx="22" cy="12" r="1.2" fill="#ffffff" opacity="0.7"/>
-    <circle cx="22" cy="16" r="1.2" fill="#ffffff" opacity="0.7"/>
-    <circle cx="22" cy="20" r="1.2" fill="#ffffff" opacity="0.7"/>
+    <!-- Forward slash / -->
+    <path 
+      d="M290 140 L222 372" 
+      stroke="#ffffff" 
+      stroke-width="28" 
+      fill="none" 
+      stroke-linecap="round"/>
   </g>
-  
-  <!-- Background circle for better contrast -->
-  <circle cx="16" cy="16" r="15" fill="none" stroke="#00ffe0" stroke-width="0.5" opacity="0.2"/>
-  
-  <style>
-    .logo-icon {
-      transform-origin: 16px 16px;
-    }
-    
-    /* Reduced motion support */
-    @media (prefers-reduced-motion: reduce) {
-      .logo-icon rect {
-        animation: none;
-        opacity: 1;
-      }
-    }
-  </style>
 </svg>
